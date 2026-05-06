@@ -425,7 +425,6 @@ export default function EventWindDispersion({ breakdown, eventData }) {
                       <tr>
                         <th style={{ textAlign: 'left', padding: '3px 8px' }}>{t('wind_compound_col')}</th>
                         <th style={{ textAlign: 'right', padding: '3px 8px' }}>Q (g/s)</th>
-                        <th style={{ textAlign: 'right', padding: '3px 8px' }}>T_n (EUR/t)</th>
                         <th style={{ textAlign: 'center', padding: '3px 8px' }}>{t('wind_map_col')}</th>
                       </tr>
                     </thead>
@@ -436,7 +435,6 @@ export default function EventWindDispersion({ breakdown, eventData }) {
                           onClick={() => setSelectedId(c.compoundId)}>
                           <td style={{ padding: '3px 8px' }}>{c.compoundName}</td>
                           <td style={{ textAlign: 'right', padding: '3px 8px' }}>{c.emissionRateGs.toExponential(2)}</td>
-                          <td style={{ textAlign: 'right', padding: '3px 8px' }}>{c.baseRate != null ? c.baseRate.toLocaleString() : '-'}</td>
                           <td style={{ textAlign: 'center', padding: '3px 8px' }}>
                             <button style={{ fontSize: '0.7rem', padding: '1px 4px' }}
                               onClick={e => { e.stopPropagation(); setSelectedId(c.compoundId); }}>●</button>

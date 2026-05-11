@@ -75,8 +75,8 @@ const ObjectSelector = ({ selectedEventObjects, onEventObjectsChange, specialist
                 K_kat:{' '}
                 <input
                   type="number"
-                  step="0.01"
-                  min="0"
+                  step="0.1"
+                  min="1"
                   value={getEntry(obj.idObject).kKat}
                   onChange={(e) => handleFieldChange(obj.idObject, 'kKat', e.target.value)}
                   placeholder="pvz. 1.0"

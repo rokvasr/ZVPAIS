@@ -8,7 +8,7 @@ namespace ŽVPAIS_API.Services
 {
     public static class PdfGenerator
     {
-        public static byte[] Generate(Event ev, DamageEvaluation? report, EventDamageBreakdownDto breakdown, byte[]? mapImageBytes)
+        public static byte[] Generate(Event ev, DamageEvaluation? report, EventDamageBreakdownDto breakdown, byte[]? mapImageBytes, byte[]? dispersionImageBytes = null)
         {
             return Document.Create(container =>
             {
@@ -154,6 +154,71 @@ namespace ŽVPAIS_API.Services
                         x.Span(DateTime.Now.ToString("yyyy-MM-dd HH:mm")).FontSize(8).FontColor(Colors.Grey.Medium);
                     });
                 });
+                // Dispersion page — only for fire events when image was captured
+                if (dispersionImageBytes is { Length: > 0 } && ev.EventType == "gaisras")
+                {
+                    container.Page(page =>
+                    {
+                        page.Size(PageSizes.A4);
+                        page.Margin(2, Unit.Centimetre);
+                        page.DefaultTextStyle(x => x.FontSize(10).FontFamily("Arial"));
+
+                        page.Header().Column(header =>
+                        {
+                            header.Item().Text("Teršalų sklaidos vėjo žemėlapis")
+                                .SemiBold().FontSize(16).FontColor(Colors.Blue.Darken2);
+                            header.Item().PaddingTop(2).BorderBottom(1).BorderColor(Colors.Grey.Lighten2);
+                        });
+
+                        page.Content().PaddingTop(12).Column(col =>
+                        {
+                            col.Item()
+                                .Text($"Įvykis #{ev.IdEvent} · {ev.EventDate.ToLocalTime():yyyy-MM-dd} · {(string.IsNullOrEmpty(ev.Location) ? "" : ev.Location)}")
+                                .FontSize(9).FontColor(Colors.Grey.Medium);
+
+                            col.Item().PaddingTop(4)
+                                .Text("Gauso sklaidos modelis. Pavaizduotas didžiausios emisijos junginio sklaidos laukas įvykio metu.")
+                                .FontSize(9).FontColor(Colors.Grey.Medium);
+
+                            col.Item().PaddingTop(10)
+                                .Border(1).BorderColor(Colors.Grey.Lighten2)
+                                .Image(dispersionImageBytes).FitWidth();
+
+                            col.Item().PaddingTop(10).Text("Koncentracijos (µg/m³):").SemiBold().FontSize(9);
+
+                            col.Item().PaddingTop(4).Table(table =>
+                            {
+                                table.ColumnsDefinition(c =>
+                                {
+                                    c.RelativeColumn(); c.RelativeColumn(); c.RelativeColumn();
+                                    c.RelativeColumn(); c.RelativeColumn(); c.RelativeColumn();
+                                });
+                                void Band(string label, string hex)
+                                {
+                                    var r = Convert.ToByte(hex[1..3], 16);
+                                    var g = Convert.ToByte(hex[3..5], 16);
+                                    var b = Convert.ToByte(hex[5..7], 16);
+                                    table.Cell()
+                                        .Background($"#{hex[1..]}").Padding(4)
+                                        .Text(label).FontSize(8)
+                                        .FontColor(r + g + b < 382 ? Colors.White : Colors.Black);
+                                }
+                                Band("< 1", "#c7e9b4");
+                                Band("1 – 10", "#7fcdbb");
+                                Band("10 – 100", "#41b6c4");
+                                Band("100 – 1 000", "#2c7fb8");
+                                Band("1 000 – 10 000", "#f97316");
+                                Band("≥ 10 000", "#dc2626");
+                            });
+                        });
+
+                        page.Footer().AlignCenter().Text(x =>
+                        {
+                            x.Span("Sugeneruota: ").FontSize(8).FontColor(Colors.Grey.Medium);
+                            x.Span(DateTime.Now.ToString("yyyy-MM-dd HH:mm")).FontSize(8).FontColor(Colors.Grey.Medium);
+                        });
+                    });
+                }
             }).GeneratePdf();
         }
 

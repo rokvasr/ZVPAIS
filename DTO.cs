@@ -244,6 +244,7 @@ namespace ŽVPAIS_API
     public class PdfRequestDto
     {
         public string? MapImageBase64 { get; set; }
+        public string? DispersionImageBase64 { get; set; }
     }
 
     // --- Wind dispersion DTOs ---

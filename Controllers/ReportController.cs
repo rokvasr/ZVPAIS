@@ -126,7 +126,15 @@ namespace ŽVPAIS_API.Controllers
                 mapImageBytes = Convert.FromBase64String(b64);
             }
 
-            var pdfBytes = PdfGenerator.Generate(ev, report, breakdown, mapImageBytes);
+            byte[]? dispersionImageBytes = null;
+            if (!string.IsNullOrEmpty(dto?.DispersionImageBase64))
+            {
+                var b64 = dto.DispersionImageBase64;
+                if (b64.Contains(',')) b64 = b64[(b64.IndexOf(',') + 1)..];
+                dispersionImageBytes = Convert.FromBase64String(b64);
+            }
+
+            var pdfBytes = PdfGenerator.Generate(ev, report, breakdown, mapImageBytes, dispersionImageBytes);
             return File(pdfBytes, "application/pdf", $"ataskaita-ivykis-{eventId}.pdf");
         }
 

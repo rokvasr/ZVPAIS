@@ -157,7 +157,7 @@ namespace ŽVPAIS_API.Services
             string component, string substanceType)
         {
             if (component == "air")
-                return tN * iN * (decimal)qN * kKat;
+                return tN * iN * (decimal)qN;
 
             bool isBds7OrSuspended = substanceType == "bds7" || substanceType == "suspended";
             if (isBds7OrSuspended && qN > 1.0)

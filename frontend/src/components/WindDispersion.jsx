@@ -219,7 +219,8 @@ export default function WindDispersion() {
 
       <div style={{ flex: '1 1 500px', minWidth: 300 }}>
         <div style={{ height: 420, borderRadius: 8, overflow: 'hidden', border: '1px solid #ddd', marginBottom: '1rem' }}>
-          <MapContainer center={mapCenter} zoom={11} style={{ height: '100%' }}>
+          <MapContainer center={mapCenter} zoom={11} style={{ height: '100%' }}
+            maxBounds={[[53.5, 20.0], [57.0, 27.5]]} maxBoundsViscosity={1.0} minZoom={7}>
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'

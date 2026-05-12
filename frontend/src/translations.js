@@ -130,6 +130,7 @@ export const T = {
   obj_back_to_list:     { lt: 'Grįžti į sąrašą',                          en: 'Back to list' },
   obj_materials_section:{ lt: 'Objekto medžiagos',                         en: 'Object Materials' },
   obj_save_error:       { lt: 'Klaida išsaugant objektą.',                 en: 'Error saving object.' },
+  obj_fetch_error:      { lt: 'Klaida įkeliant objekto duomenis.',          en: 'Error loading object data.' },
 
   // Object material manager
   obj_mat_no_materials:    { lt: 'Šis objektas neturi medžiagų.',   en: 'This object has no materials.' },
@@ -182,6 +183,7 @@ export const T = {
   mat_paper_long:           { lt: 'Popierius / kartonas (paper)',             en: 'Paper / cardboard' },
   mat_emission_hint:        { lt: 'Nustato emisijų faktorių šiai medžiagai gaisro sklaidoje.', en: 'Sets the emission factor for this material in fire dispersion.' },
   mat_save_error:           { lt: 'Klaida išsaugant medžiagą.',              en: 'Error saving material.' },
+  mat_fetch_error:          { lt: 'Klaida įkeliant medžiagos duomenis.',     en: 'Error loading material data.' },
 
   // Reports list
   reports_title:        { lt: 'Žalos vertinimo ataskaitos',          en: 'Damage Assessment Reports' },

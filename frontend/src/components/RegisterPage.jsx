@@ -30,7 +30,10 @@ export default function RegisterPage() {
       await register(form);
       navigate('/');
     } catch (err) {
-      setError(err.response?.data || t('register_error'));
+      const d = err.response?.data;
+      const msg = typeof d === 'string' ? d
+        : Object.values(d?.errors ?? {}).flat().join(' ') || d?.title || t('register_error');
+      setError(msg);
     } finally {
       setLoading(false);
     }
@@ -61,7 +64,7 @@ export default function RegisterPage() {
               value={form.password}
               onChange={handleChange}
               required
-              minLength={6}
+              minLength={8}
             />
           </div>
           <div className="auth-checkbox-row">

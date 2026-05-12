@@ -21,7 +21,10 @@ export default function LoginPage() {
       await login(form.email, form.password);
       navigate('/');
     } catch (err) {
-      setError(err.response?.data || t('login_error'));
+      const d = err.response?.data;
+      const msg = typeof d === 'string' ? d
+        : Object.values(d?.errors ?? {}).flat().join(' ') || d?.title || t('login_error');
+      setError(msg);
     } finally {
       setLoading(false);
     }

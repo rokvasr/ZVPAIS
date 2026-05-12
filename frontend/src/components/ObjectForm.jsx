@@ -16,6 +16,7 @@ const ObjectForm = () => {
   const [totalVolume, setTotalVolume] = useState('');
   const [loading, setLoading] = useState(false);
   const [savedId, setSavedId] = useState(isEditing ? parseInt(id) : null);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (isEditing) {
@@ -26,7 +27,10 @@ const ObjectForm = () => {
           setTotalMass(res.data.totalMass != null ? String(res.data.totalMass) : '');
           setTotalVolume(res.data.totalVolume != null ? String(res.data.totalVolume) : '');
         })
-        .catch(console.error);
+        .catch(err => {
+          setError(t('obj_fetch_error'));
+          console.error(err);
+        });
     }
   }, [id, isEditing]);
 
@@ -48,9 +52,12 @@ const ObjectForm = () => {
         const newId = res.data.idObject;
         setSavedId(newId);
       }
-    } catch (error) {
-      alert(t('obj_save_error'));
-      console.error(error);
+    } catch (err) {
+      const d = err.response?.data;
+      const msg = typeof d === 'string' ? d
+        : Object.values(d?.errors ?? {}).flat().join(' ') || d?.title || t('obj_save_error');
+      setError(msg);
+      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -59,6 +66,7 @@ const ObjectForm = () => {
   return (
     <div>
       <h2>{isEditing ? t('obj_edit_title') : t('obj_new_title')}</h2>
+      {error && <div style={{ color: 'red', marginBottom: '8px' }}>{error}</div>}
       <form onSubmit={handleSubmit}>
         <div>
           <label>{t('obj_name_label')}</label>

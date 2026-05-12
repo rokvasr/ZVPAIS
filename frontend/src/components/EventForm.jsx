@@ -95,7 +95,10 @@ const EventForm = () => {
       }
       navigate('/events');
     } catch (err) {
-      setSubmitError(t('event_save_error'));
+      const d = err.response?.data;
+      const msg = typeof d === 'string' ? d
+        : Object.values(d?.errors ?? {}).flat().join(' ') || d?.title || t('event_save_error');
+      setSubmitError(msg);
       console.error(err);
     } finally {
       setLoading(false);

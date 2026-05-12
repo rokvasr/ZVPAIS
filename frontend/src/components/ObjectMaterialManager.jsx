@@ -68,9 +68,12 @@ const ObjectMaterialManager = ({ objectId }) => {
     try {
       await api.delete(`/environmentobjects/${objectId}/materials/${materialId}`);
       fetchObjectMaterials();
-    } catch (error) {
-      alert(t('obj_mat_remove_error'));
-      console.error(error);
+    } catch (err) {
+      const d = err.response?.data;
+      const msg = typeof d === 'string' ? d
+        : Object.values(d?.errors ?? {}).flat().join(' ') || d?.title || t('obj_mat_remove_error');
+      alert(msg);
+      console.error(err);
     }
   };
 

@@ -196,6 +196,7 @@ const ReportList = () => {
             style={{ width: '700px', height: '450px' }}
             zoomControl={false}
             attributionControl={false}
+            maxBounds={[[53.5, 20.0], [57.0, 27.5]]} maxBoundsViscosity={1.0} minZoom={7}
             preferCanvas={true}
           >
             <TileLayer

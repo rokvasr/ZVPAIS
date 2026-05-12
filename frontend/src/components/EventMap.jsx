@@ -90,7 +90,8 @@ const EventMap = () => {
     <div>
       <h2>{t('map_title')}</h2>
       <p style={{ color: '#666', marginTop: 0 }}>{approved.length} {t('status_approved').toLowerCase()}</p>
-      <MapContainer center={[55.0, 24.0]} zoom={7} style={{ height: '600px', width: '100%' }}>
+      <MapContainer center={[55.0, 24.0]} zoom={7} style={{ height: '600px', width: '100%' }}
+        maxBounds={[[53.5, 20.0], [57.0, 27.5]]} maxBoundsViscosity={1.0} minZoom={7}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'

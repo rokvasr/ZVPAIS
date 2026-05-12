@@ -255,6 +255,7 @@ const EventManagement = () => {
             center={[55.0, 24.0]}
             zoom={7}
             style={{ height: '520px', width: '100%', borderRadius: '4px', border: '1px solid #ddd' }}
+            maxBounds={[[53.5, 20.0], [57.0, 27.5]]} maxBoundsViscosity={1.0} minZoom={7}
           >
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

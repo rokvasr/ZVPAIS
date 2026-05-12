@@ -19,6 +19,7 @@ const MaterialForm = () => {
     emissionCategory: ''
   });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (isEditing) {
@@ -35,8 +36,9 @@ const MaterialForm = () => {
             substanceType: m.substanceType || 'standard',
             emissionCategory: m.emissionCategory || ''
           });
-        } catch (error) {
-          console.error(error);
+        } catch (err) {
+          setError(t('mat_fetch_error'));
+          console.error(err);
         }
       };
       fetchMaterial();
@@ -66,9 +68,12 @@ const MaterialForm = () => {
         await api.post('/materials', payload);
       }
       navigate('/materials');
-    } catch (error) {
-      alert(t('mat_save_error'));
-      console.error(error);
+    } catch (err) {
+      const d = err.response?.data;
+      const msg = typeof d === 'string' ? d
+        : Object.values(d?.errors ?? {}).flat().join(' ') || d?.title || t('mat_save_error');
+      setError(msg);
+      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -77,6 +82,7 @@ const MaterialForm = () => {
   return (
     <div>
       <h2>{isEditing ? t('mat_edit_title') : t('mat_new_title')}</h2>
+      {error && <div style={{ color: 'red', marginBottom: '8px' }}>{error}</div>}
       <form onSubmit={handleSubmit}>
         <div>
           <label>{t('mat_name_label')}</label>

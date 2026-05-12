@@ -373,7 +373,8 @@ export default function EventWindDispersion({ breakdown, eventData }) {
 
         <div style={{ flex: '1 1 420px', minWidth: 0, overflow: 'hidden' }}>
           <div style={{ height: 400, borderRadius: 8, overflow: 'hidden', border: '1px solid #ddd', marginBottom: '0.75rem', position: 'relative', zIndex: 0 }}>
-            <MapContainer center={mapCenter} zoom={12} style={{ height: '100%' }}>
+            <MapContainer center={mapCenter} zoom={12} style={{ height: '100%' }}
+              maxBounds={[[53.5, 20.0], [57.0, 27.5]]} maxBoundsViscosity={1.0} minZoom={7}>
               <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'

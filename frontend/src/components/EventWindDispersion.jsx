@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useRef, useState } from 'react';
 import { MapContainer, TileLayer, GeoJSON, Polygon, Marker, useMap, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -161,9 +161,23 @@ export default function EventWindDispersion({ breakdown, eventData }) {
   const [error,       setError]       = useState('');
   const [windMsg,     setWindMsg]     = useState('');
 
+  const autoFetchedRef = useRef(false);
+
   useEffect(() => {
     const c = polygonCentroid(eventData?.polygon);
     if (c) setForm(f => ({ ...f, fireLat: c.lat, fireLon: c.lon }));
+
+    if (!autoFetchedRef.current && eventData?.eventDate && c) {
+      autoFetchedRef.current = true;
+      setWindLoading(true);
+      fetchWindFromApi(c.lat, c.lon, eventData.eventDate)
+        .then(({ speed, dir, stabilityClass, date, hour }) => {
+          setForm(f => ({ ...f, windSpeedMs: speed, windDirectionDeg: dir, stabilityClass }));
+          setWindMsg(`✓ ${date} ${hour}:00 UTC — ${speed} m/s, ${dir}°, ${stabilityClass}`);
+        })
+        .catch(err => setWindMsg(`Error: ${err.message}`))
+        .finally(() => setWindLoading(false));
+    }
   }, [eventData]);
 
   const setField = (name, value) => setForm(f => ({ ...f, [name]: value }));

@@ -387,27 +387,3 @@ Kiekvienam įrašui nurodomas **ketvirtis** (pvz., 2024 Q3) ir **koeficiento rei
 Viršutiniame navigacijos meniu dešinėje yra mygtukas **LT / EN**. Paspaudus jį, visa sąsaja persijungia iš lietuvių kalbos į anglų ir atvirkščiai. Pasirinkta kalba išlaikoma per visą sesiją.
 
 ---
-
-## 16. Dažnai užduodami klausimai
-
-**K: Kodėl man neprieinamas mygtukas „Redaguoti" prie įvykio?**  
-A: Įvykių redagavimas galimas tik specialistų rolės naudotojams. Įprastiems naudotojams rodomi tik peržiūros veiksmai.
-
-**K: Kodėl žalos skaičiavimas rodo „nėra objektų"?**  
-A: Prie įvykio nepriskirti aplinkos objektai arba priskirtiems objektams nėra medžiagų. Patikrinkite objekto medžiagų sąrašą puslapyje **Objektai**.
-
-**K: PDF atsisiuntimo mygtukas nerodomas – kodėl?**  
-A: PDF galima atsisiųsti tik tada, kai įvykio statusas nėra „Naujas". Įvykis turi būti peržiūrėtas specialisto (statusas „Laukia peržiūros", „Tikrinamas", „Patvirtintas" arba „Atmestas").
-
-**K: Vėjo sklaidos sekcija nerodoma žalos skaičiavimo puslapyje.**  
-A: Vėjo sklaidos modeliavimas prieinamas tik **gaisrų** tipo įvykiams.
-
-**K: Įvedžiau slaptažodį, bet registracija nepavyksta.**  
-A: Įsitikinkite, kad slaptažodis atitinka visus reikalavimus: bent 8 simboliai, viena didžioji raidė, vienas skaitmuo, vienas specialus simbolis (pvz., `!`, `@`, `#`).
-
-**K: Kaip sistema automatiškai apdoroja naujus įvykius?**  
-A: Sistema kas 5 minutes automatiškai tikrina naujus įvykius. Jei įvykis yra senesnis nei nustatytas delsimo laikas ir jam dar nebuvo atliktas žalos vertinimas, sistema automatiškai inicijuoja skaičiavimą ir pakeičia statusą į „Laukia peržiūros".
-
----
-
-*Dokumentas parengtas ŽVPAIS sistemos versijai, veikiančiai Azure platformoje.*

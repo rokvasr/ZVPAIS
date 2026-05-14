@@ -94,7 +94,7 @@ const MaterialForm = () => {
         </div>
         <div>
           <label>{t('mat_toxicity_label')}</label>
-          <input type="number" step="0.01" name="toxicityFactor" value={formData.toxicityFactor} onChange={handleChange} />
+          <input type="number" step="0.01" min="0" name="toxicityFactor" value={formData.toxicityFactor} onChange={handleChange} />
         </div>
         <div>
           <label>{t('mat_unit_label')}</label>
@@ -102,7 +102,7 @@ const MaterialForm = () => {
         </div>
         <div>
           <label>{t('mat_baserate_label')}</label>
-          <input type="number" step="0.01" name="baseRate" value={formData.baseRate} onChange={handleChange} />
+          <input type="number" step="0.01" min="0" name="baseRate" value={formData.baseRate} onChange={handleChange} />
         </div>
         <div>
           <label>{t('mat_type_label')}</label>

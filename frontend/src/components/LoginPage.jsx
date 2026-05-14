@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
+import api from '../services/api';
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -10,6 +11,13 @@ export default function LoginPage() {
   const [form, setForm] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [registrationOpen, setRegistrationOpen] = useState(true);
+
+  useEffect(() => {
+    api.get('/auth/registration-status')
+      .then(r => setRegistrationOpen(r.data.enabled))
+      .catch(() => {});
+  }, []);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -61,9 +69,11 @@ export default function LoginPage() {
             {loading ? t('login_logging_in') : t('login_btn')}
           </button>
         </form>
-        <p className="auth-link">
-          {t('login_no_account')} <Link to="/register">{t('nav_register')}</Link>
-        </p>
+        {registrationOpen && (
+          <p className="auth-link">
+            {t('login_no_account')} <Link to="/register">{t('nav_register')}</Link>
+          </p>
+        )}
       </div>
     </div>
   );

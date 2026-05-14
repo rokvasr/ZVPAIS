@@ -23,9 +23,19 @@ namespace ŽVPAIS_API.Controllers
             _config = config;
         }
 
+        [HttpGet("registration-status")]
+        public IActionResult RegistrationStatus()
+        {
+            var enabled = _config.GetValue<bool>("RegistrationEnabled", true);
+            return Ok(new { enabled });
+        }
+
         [HttpPost("register")]
         public async Task<ActionResult<AuthResponseDto>> Register(RegisterDto dto)
         {
+            if (!_config.GetValue<bool>("RegistrationEnabled", true))
+                return StatusCode(403, "Registracija šiuo metu uždaryta.");
+
             if (await _context.Users.AnyAsync(u => u.Email == dto.Email))
                 return BadRequest("El. paštas jau naudojamas.");
 

@@ -120,6 +120,8 @@ const ObjectMaterialManager = ({ objectId }) => {
             value={percentage}
             onChange={e => setPercentage(e.target.value)}
             step="any"
+            min="0"
+            max="100"
           />
           <input
             type="number"
@@ -127,6 +129,7 @@ const ObjectMaterialManager = ({ objectId }) => {
             value={mass}
             onChange={e => setMass(e.target.value)}
             step="any"
+            min="0"
           />
           <input
             type="number"
@@ -134,6 +137,7 @@ const ObjectMaterialManager = ({ objectId }) => {
             value={volume}
             onChange={e => setVolume(e.target.value)}
             step="any"
+            min="0"
           />
           <input
             type="number"
@@ -141,6 +145,7 @@ const ObjectMaterialManager = ({ objectId }) => {
             value={recoveredQuantity}
             onChange={e => setRecoveredQuantity(e.target.value)}
             step="any"
+            min="0"
           />
           <button type="submit">{t('save')}</button>
           <button type="button" onClick={() => setShowAddForm(false)}>{t('cancel')}</button>

@@ -138,6 +138,7 @@ namespace ŽVPAIS_API.Controllers
         }
 
         [HttpPost("{id}/materials")]
+        [Authorize(Roles = "Specialist")]
         public async Task<IActionResult> AddMaterialToObject(int id, ObjectMaterialCreateDto dto)
         {
             var obj = await _context.Objects.FindAsync(id);

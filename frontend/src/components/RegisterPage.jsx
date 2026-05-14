@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
+import api from '../services/api';
 
 export default function RegisterPage() {
   const { register } = useAuth();
@@ -16,6 +17,13 @@ export default function RegisterPage() {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [registrationOpen, setRegistrationOpen] = useState(true);
+
+  useEffect(() => {
+    api.get('/auth/registration-status')
+      .then(r => setRegistrationOpen(r.data.enabled))
+      .catch(() => {});
+  }, []);
 
   const handleChange = (e) => {
     const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
@@ -38,6 +46,20 @@ export default function RegisterPage() {
       setLoading(false);
     }
   };
+
+  if (!registrationOpen) {
+    return (
+      <div className="auth-container">
+        <div className="auth-card">
+          <h2>{t('register_title')}</h2>
+          <p style={{ textAlign: 'center', color: '#555' }}>Registracija šiuo metu uždaryta.</p>
+          <p className="auth-link" style={{ textAlign: 'center' }}>
+            <Link to="/login">{t('nav_login')}</Link>
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="auth-container">

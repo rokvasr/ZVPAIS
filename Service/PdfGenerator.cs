@@ -177,7 +177,7 @@ namespace ŽVPAIS_API.Services
                                 .FontSize(9).FontColor(Colors.Grey.Medium);
 
                             col.Item().PaddingTop(4)
-                                .Text("Gauso sklaidos modelis. Pavaizduotas didžiausios emisijos junginio sklaidos laukas įvykio metu.")
+                                .Text("Vėjo sklaidos modelis. Pavaizduotas didžiausios emisijos junginio sklaidos laukas įvykio metu.")
                                 .FontSize(9).FontColor(Colors.Grey.Medium);
 
                             col.Item().PaddingTop(10)

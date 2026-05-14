@@ -96,11 +96,16 @@ namespace ŽVPAIS_API.Controllers
 
         private string GenerateToken(User user, string role)
         {
+            // The signing key is loaded from config (set via Azure App Settings in production).
+            // HMAC-SHA256 is a symmetric algorithm — the same key signs and verifies tokens.
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var expires = DateTime.UtcNow.AddHours(
                 _config.GetValue<int>("Jwt:ExpiresInHours", 24));
 
+            // Claims are the payload embedded inside the JWT.
+            // Sub = user ID, Role = "User" or "Specialist" (used by [Authorize(Roles=...)]),
+            // Jti = unique token ID (allows future token revocation if a blocklist is added).
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.IdUser.ToString()),
@@ -116,12 +121,19 @@ namespace ŽVPAIS_API.Controllers
                 expires: expires,
                 signingCredentials: creds);
 
+            // WriteToken serialises the token as a base64url-encoded string: header.payload.signature
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         private static string HashPassword(string password)
         {
+            // Generate a cryptographically random 16-byte salt.
+            // A unique salt per user prevents rainbow-table and pre-computation attacks.
             var salt = RandomNumberGenerator.GetBytes(16);
+
+            // PBKDF2 (Password-Based Key Derivation Function 2) with SHA-256:
+            // 100 000 iterations make brute-force attacks computationally expensive.
+            // Output is 32 bytes (256 bits). The result is stored as "base64(salt):base64(hash)".
             var hash = Rfc2898DeriveBytes.Pbkdf2(
                 password, salt, 100_000, HashAlgorithmName.SHA256, 32);
             return $"{Convert.ToBase64String(salt)}:{Convert.ToBase64String(hash)}";
@@ -129,12 +141,19 @@ namespace ŽVPAIS_API.Controllers
 
         private static bool VerifyPassword(string password, string stored)
         {
+            // Stored format: "base64(salt):base64(hash)" — split on the colon separator.
             var parts = stored.Split(':');
             if (parts.Length != 2) return false;
             var salt = Convert.FromBase64String(parts[0]);
             var expected = Convert.FromBase64String(parts[1]);
+
+            // Re-derive the hash using the stored salt and the candidate password.
             var actual = Rfc2898DeriveBytes.Pbkdf2(
                 password, salt, 100_000, HashAlgorithmName.SHA256, 32);
+
+            // FixedTimeEquals compares the two byte arrays in constant time.
+            // A normal == comparison short-circuits on the first mismatch, which leaks timing
+            // information that an attacker can use to guess passwords byte by byte.
             return CryptographicOperations.FixedTimeEquals(actual, expected);
         }
     }

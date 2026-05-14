@@ -34,6 +34,11 @@ function polygonCentroid(polygonJson) {
   } catch { return null; }
 }
 
+// Converts a plume grid point (downwind metres, crosswind metres from fire) to [lat, lon].
+// The wind direction convention is "wind FROM X degrees" (meteorological), so the plume
+// travels in the opposite direction: windFromDeg + 180° gives the downwind bearing.
+// The crosswind axis is 90° clockwise from downwind (windFromDeg + 270°).
+// 111 111 m ≈ 1 degree of latitude; longitude degrees are shorter by cos(lat).
 function offsetToLatLon(fireLat, fireLon, downwindM, crosswindM, windFromDeg) {
   const downwindRad = ((windFromDeg + 180) % 360) * Math.PI / 180;
   const crosswindRad = ((windFromDeg + 270) % 360) * Math.PI / 180;
@@ -43,9 +48,15 @@ function offsetToLatLon(fireLat, fireLon, downwindM, crosswindM, windFromDeg) {
   return [lat, lon];
 }
 
+// Andrew's monotone chain algorithm — computes the convex hull of a set of [lat, lon] points.
+// Used to draw a single filled polygon per concentration band instead of individual dots.
+// Steps: sort points left-to-right, build a lower hull (left→right), build an upper hull
+// (right→left), then join them. The cross-product test discards non-left-turning points,
+// ensuring only the outermost boundary remains.
 function convexHull(points) {
   if (points.length < 3) return points;
   const sorted = [...points].sort((a, b) => a[0] !== b[0] ? a[0] - b[0] : a[1] - b[1]);
+  // cross > 0: left turn (keep); cross <= 0: right turn or collinear (discard)
   const cross = (O, A, B) => (A[0] - O[0]) * (B[1] - O[1]) - (A[1] - O[1]) * (B[0] - O[0]);
   const lower = [];
   for (const p of sorted) {
@@ -58,6 +69,7 @@ function convexHull(points) {
     while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], p) <= 0) upper.pop();
     upper.push(p);
   }
+  // Remove the last point of each half (duplicates the first point of the other)
   lower.pop(); upper.pop();
   return lower.concat(upper);
 }
@@ -77,6 +89,18 @@ function FitPolygon({ polygon }) {
   return null;
 }
 
+// Derives the Pasquill-Gifford atmospheric stability class (A–F) from Open-Meteo weather data.
+// Based on the standard lookup table (Pasquill 1961, Gifford 1961):
+//   A = very unstable (strong sun, low wind) — widest dispersion
+//   D = neutral (overcast or moderate wind) — middle ground
+//   F = moderately stable (clear night, low wind) — narrow, concentrated plume
+//
+// Daytime logic: solar insolation (shortwave radiation W/m²) determines how strongly
+// the surface heats the air, which drives convective mixing.
+//   > 500 W/m² = strong insolation, > 250 W/m² = moderate, otherwise slight.
+//
+// Nighttime logic: cloud cover acts as a "blanket" retaining heat; low cloud + low wind
+// produces the most stable (F) conditions. Wind >= 5 m/s always gives neutral (D).
 function deriveStabilityClass(windSpeed, shortwaveRad, cloudCoverPct, isDay) {
   if (isDay) {
     const ins = shortwaveRad > 500 ? 'strong' : shortwaveRad > 250 ? 'moderate' : 'slight';
@@ -86,6 +110,7 @@ function deriveStabilityClass(windSpeed, shortwaveRad, cloudCoverPct, isDay) {
     if (windSpeed < 6) return ins === 'strong' ? 'C' : 'D';
     return ins === 'strong' ? 'C' : 'D';
   } else {
+    // Nighttime: no solar heating, stability determined by wind and cloud cover
     if (windSpeed >= 5) return 'D';
     if (cloudCoverPct > 50) return windSpeed < 2 ? 'E' : 'D';
     return windSpeed < 2 ? 'F' : 'E';

@@ -144,6 +144,8 @@ export const T = {
   obj_mat_confirm_remove:  { lt: 'Pašalinti šią medžiagą?',        en: 'Remove this material?' },
   obj_mat_add_error:       { lt: 'Klaida pridedant medžiagą.',      en: 'Error adding material.' },
   obj_mat_remove_error:    { lt: 'Klaida šalinant medžiagą',       en: 'Error removing material.' },
+  obj_mat_readonly_note:   { lt: 'Tik specialistai gali tvarkyti objekto medžiagas.', en: 'Only specialists can manage object materials.' },
+  err_403:                 { lt: 'Prieiga uždrausta. Šį veiksmą gali atlikti tik specialistas.', en: 'Access denied. Only specialists can perform this action.' },
 
   // Materials list
   mat_list_title:       { lt: 'Medžiagų sąrašas',              en: 'Materials List' },

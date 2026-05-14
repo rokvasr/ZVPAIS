@@ -53,10 +53,14 @@ const ObjectForm = () => {
         setSavedId(newId);
       }
     } catch (err) {
-      const d = err.response?.data;
-      const msg = typeof d === 'string' ? d
-        : Object.values(d?.errors ?? {}).flat().join(' ') || d?.title || t('obj_save_error');
-      setError(msg);
+      if (err.response?.status === 403) {
+        setError(t('err_403'));
+      } else {
+        const d = err.response?.data;
+        const msg = typeof d === 'string' ? d
+          : Object.values(d?.errors ?? {}).flat().join(' ') || d?.title || t('obj_save_error');
+        setError(msg);
+      }
       console.error(err);
     } finally {
       setLoading(false);

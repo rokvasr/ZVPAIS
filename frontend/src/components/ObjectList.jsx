@@ -31,7 +31,11 @@ const ObjectList = () => {
       await api.delete(`/environmentobjects/${id}`);
       setObjects(objects.filter(obj => obj.idObject !== id));
     } catch (error) {
-      alert(t('obj_delete_error'));
+      if (error.response?.status === 403) {
+        alert(t('err_403'));
+      } else {
+        alert(t('obj_delete_error'));
+      }
       console.error(error);
     }
   };

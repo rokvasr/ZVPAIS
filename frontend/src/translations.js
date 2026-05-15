@@ -104,6 +104,7 @@ export const T = {
   event_loading_map:   { lt: 'Kraunama žemėlapį...',                         en: 'Loading map...' },
   event_area_marked:   { lt: 'Teritorija pažymėta.',                         en: 'Area marked.' },
   event_no_polygon:    { lt: 'Prašome pažymėti paveiktą teritoriją žemėlapyje.', en: 'Please mark the affected area on the map.' },
+  event_no_objects:    { lt: 'Prašome pridėti bent vieną aplinkos objektą.', en: 'Please add at least one environment object.' },
   event_fetch_error:   { lt: 'Nepavyko gauti įvykio duomenų.',               en: 'Failed to load event data.' },
   event_save_error:    { lt: 'Klaida išsaugant įvykį.',                      en: 'Error saving event.' },
 

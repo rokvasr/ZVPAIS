@@ -75,6 +75,10 @@ const EventForm = () => {
       alert(t('event_no_polygon'));
       return;
     }
+    if (selectedEventObjects.length === 0) {
+      alert(t('event_no_objects'));
+      return;
+    }
 
     try {
       setLoading(true);

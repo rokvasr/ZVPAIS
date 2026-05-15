@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -123,6 +125,73 @@ namespace ŽVPAIS_API.Controllers
 
             // WriteToken serialises the token as a base64url-encoded string: header.payload.signature
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordDto dto)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
+
+            // Always return 200 — do not reveal whether the email is registered
+            if (user == null)
+                return Ok();
+
+            var tempPassword = GenerateTempPassword();
+            user.Password = HashPassword(tempPassword);
+            await _context.SaveChangesAsync();
+
+            var smtpHost = _config["Smtp:Host"]!;
+            var smtpUser = _config["Smtp:User"]!;
+            var smtpPass = _config["Smtp:Password"]!;
+
+#pragma warning disable CS0618
+            using var client = new SmtpClient(smtpHost, 587)
+            {
+                Credentials = new NetworkCredential(smtpUser, smtpPass),
+                EnableSsl = true
+            };
+#pragma warning restore CS0618
+
+            var mail = new MailMessage
+            {
+                From = new MailAddress(smtpUser, "ZVPAIS sistema"),
+                Subject = "Laikinas slaptazodis / Temporary password",
+                Body = $"Jusu laikinas slaptazodis: {tempPassword}\n\nPrisijunge prie sistemos rekomenduojame ji pakeisti.",
+                IsBodyHtml = false
+            };
+            mail.To.Add(user.Email);
+
+            await client.SendMailAsync(mail);
+
+            return Ok();
+        }
+
+        private static string GenerateTempPassword()
+        {
+            // Build a password that always satisfies NFR5: 8+ chars, uppercase, digit, special char
+            const string lower = "abcdefghijkmnpqrstuvwxyz";
+            const string upper = "ABCDEFGHJKLMNPQRSTUVWXYZ";
+            const string digits = "23456789";
+            const string special = "!@#$%";
+            const string all = lower + upper + digits + special;
+
+            var bytes = RandomNumberGenerator.GetBytes(12);
+            var chars = new char[12];
+            chars[0] = upper[bytes[0] % upper.Length];
+            chars[1] = digits[bytes[1] % digits.Length];
+            chars[2] = special[bytes[2] % special.Length];
+            chars[3] = lower[bytes[3] % lower.Length];
+            for (int i = 4; i < 12; i++)
+                chars[i] = all[bytes[i] % all.Length];
+
+            // Fisher-Yates shuffle
+            var rng = RandomNumberGenerator.GetBytes(12);
+            for (int i = 11; i > 0; i--)
+            {
+                int j = rng[i] % (i + 1);
+                (chars[i], chars[j]) = (chars[j], chars[i]);
+            }
+            return new string(chars);
         }
 
         private static string HashPassword(string password)

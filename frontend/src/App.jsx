@@ -17,6 +17,7 @@ import ReportList from './components/ReportList';
 import ReportForm from './components/ReportForm';
 import IndexingCoefficientManager from './components/IndexingCoefficientManager';
 import PollutionSeverity from './components/PollutionSeverity';
+import ForgotPasswordPage from './components/ForgotPasswordPage';
 import './App.css';
 
 function NavBar() {
@@ -72,6 +73,7 @@ function App() {
               <Routes>
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
+                <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
                 <Route path="/" element={
                   <ProtectedRoute>

@@ -54,5 +54,6 @@ namespace ŽVPAIS_API.Controllers
                 FieldOfExpertise = user.Specialist?.FieldOfExpertise
             });
         }
+
     }
 }

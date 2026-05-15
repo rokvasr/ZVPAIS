@@ -43,6 +43,12 @@ namespace ŽVPAIS_API
         public string? FieldOfExpertise { get; set; }
     }
 
+    public class ForgotPasswordDto
+    {
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+    }
 
     // DTO medžiagos priskyrimui prie įvykio
     public class IncidentMaterialDto

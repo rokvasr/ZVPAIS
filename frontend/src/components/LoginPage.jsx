@@ -69,6 +69,7 @@ export default function LoginPage() {
             {loading ? t('login_logging_in') : t('login_btn')}
           </button>
         </form>
+        <p className="auth-link"><Link to="/forgot-password">{t('login_forgot')}</Link></p>
         {registrationOpen && (
           <p className="auth-link">
             {t('login_no_account')} <Link to="/register">{t('nav_register')}</Link>

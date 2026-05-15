@@ -45,6 +45,15 @@ export const T = {
   login_logging_in:  { lt: 'Jungiamasi...',          en: 'Logging in...' },
   login_no_account:  { lt: 'Neturite paskyros?',     en: "Don't have an account?" },
   login_error:       { lt: 'Prisijungimo klaida.',   en: 'Login error.' },
+  login_forgot:      { lt: 'Pamiršote slaptažodį?', en: 'Forgot password?' },
+
+  forgot_title:      { lt: 'Slaptažodžio priminimas',                                                                          en: 'Password Reminder' },
+  forgot_desc:       { lt: 'Įveskite savo el. paštą. Jei paskyra egzistuoja, išsiųsime laikiną slaptažodį.',                   en: 'Enter your email. If the account exists, we will send a temporary password.' },
+  forgot_submit_btn: { lt: 'Siųsti',                                                                                            en: 'Send' },
+  forgot_sending:    { lt: 'Siunčiama...',                                                                                     en: 'Sending...' },
+  forgot_sent:       { lt: 'Jei toks el. paštas registruotas, laiškas su laikiniu slaptažodžiu išsiųstas.',                    en: 'If that email is registered, a temporary password has been sent.' },
+  forgot_back_login: { lt: '← Grįžti į prisijungimą',                                                                         en: '← Back to login' },
+  forgot_error:      { lt: 'Klaida siunčiant. Bandykite dar kartą.',                                                           en: 'Send error. Please try again.' },
 
   register_title:          { lt: 'Registracija',                  en: 'Register' },
   register_as_specialist:  { lt: 'Registruotis kaip specialistas', en: 'Register as specialist' },

@@ -8,7 +8,7 @@ namespace ŽVPAIS_API.Services
 {
     public static class PdfGenerator
     {
-        public static byte[] Generate(Event ev, DamageEvaluation? report, EventDamageBreakdownDto breakdown, byte[]? mapImageBytes, byte[]? dispersionImageBytes = null)
+        public static byte[] Generate(Event ev, DamageEvaluation? report, EventDamageBreakdownDto breakdown, byte[]? mapImageBytes, byte[]? dispersionImageBytes = null, double? windSpeedMs = null, double? windDirectionDeg = null, string? stabilityClass = null)
         {
             return Document.Create(container =>
             {
@@ -175,6 +175,13 @@ namespace ŽVPAIS_API.Services
                             col.Item()
                                 .Text($"Įvykis #{ev.IdEvent} · {ev.EventDate.ToLocalTime():yyyy-MM-dd} · {(string.IsNullOrEmpty(ev.Location) ? "" : ev.Location)}")
                                 .FontSize(9).FontColor(Colors.Grey.Medium);
+
+                            if (windSpeedMs.HasValue && windDirectionDeg.HasValue && !string.IsNullOrEmpty(stabilityClass))
+                            {
+                                col.Item().PaddingTop(2)
+                                    .Text($"Vėjo greitis: {windSpeedMs:F1} m/s · Kryptis: {windDirectionDeg:F0}° · Stabilumo klasė: {stabilityClass}")
+                                    .FontSize(9).FontColor(Colors.Grey.Medium);
+                            }
 
                             col.Item().PaddingTop(4)
                                 .Text("Vėjo sklaidos modelis. Pavaizduotas didžiausios emisijos junginio sklaidos laukas įvykio metu.")

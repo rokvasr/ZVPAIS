@@ -251,6 +251,9 @@ namespace ŽVPAIS_API
     {
         public string? MapImageBase64 { get; set; }
         public string? DispersionImageBase64 { get; set; }
+        public double? DispersionWindSpeedMs { get; set; }
+        public double? DispersionWindDirectionDeg { get; set; }
+        public string? DispersionStabilityClass { get; set; }
     }
 
     // --- Wind dispersion DTOs ---

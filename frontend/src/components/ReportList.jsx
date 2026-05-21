@@ -89,7 +89,8 @@ async function fetchWindFromApi(lat, lon, eventDate) {
   const res = await fetch(url);
   if (!res.ok) throw new Error(`Open-Meteo ${res.status}`);
   const data = await res.json();
-  const hour       = dt.getUTCHours();
+  // If the event has no stored time (midnight UTC), default to noon to avoid nighttime stability class.
+  const hour       = dt.getUTCHours() === 0 ? 12 : dt.getUTCHours();
   const speed      = data.hourly?.windspeed_10m?.[hour];
   const dir        = data.hourly?.winddirection_10m?.[hour];
   const radiation  = data.hourly?.shortwave_radiation?.[hour] ?? 0;
@@ -204,10 +205,10 @@ const ReportList = () => {
     }
   };
 
-  const sendPdf = async (eventId, mapImageBase64, dispersionImageBase64) => {
+  const sendPdf = async (eventId, mapImageBase64, dispersionImageBase64, dispersionMeta) => {
     const res = await api.post(
       `/reports/event/${eventId}/pdf`,
-      { mapImageBase64, dispersionImageBase64 },
+      { mapImageBase64, dispersionImageBase64, ...dispersionMeta },
       { responseType: 'blob' }
     );
     const url = window.URL.createObjectURL(new Blob([res.data], { type: 'application/pdf' }));
@@ -248,7 +249,14 @@ const ReportList = () => {
             .sort((a, b) => b.emissionRateGs - a.emissionRateGs)[0];
           if (best) {
             dispersionCapturedRef.current = false;
-            setDispersionJob({ eventId: pdfJob.eventId, polygonImage, dispersion, selectedCompound: best, polygon: pdfJob.polygon });
+            setDispersionJob({
+              eventId: pdfJob.eventId, polygonImage, dispersion, selectedCompound: best, polygon: pdfJob.polygon,
+              windMeta: {
+                dispersionWindSpeedMs:      wind.speed,
+                dispersionWindDirectionDeg: wind.dir,
+                dispersionStabilityClass:   wind.stabilityClass,
+              },
+            });
             return; // step 2 will send the PDF
           }
         }
@@ -269,7 +277,7 @@ const ReportList = () => {
     dispersionCapturedRef.current = true;
 
     const dispersionImage = map ? await captureMap(map) : null;
-    try { await sendPdf(dispersionJob.eventId, dispersionJob.polygonImage, dispersionImage); }
+    try { await sendPdf(dispersionJob.eventId, dispersionJob.polygonImage, dispersionImage, dispersionJob.windMeta); }
     catch { alert(t('report_pdf_error')); }
     finally { setDispersionJob(null); setPdfJob(null); setDownloadingId(null); }
   };

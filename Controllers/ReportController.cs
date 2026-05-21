@@ -24,10 +24,18 @@ namespace ŽVPAIS_API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<ReportResponseDto>>> GetAll()
         {
+            // One row per event — only the most recently created evaluation.
+            var latestIds = await _context.DamageEvaluations
+                .GroupBy(r => r.EventId)
+                .Select(g => g.Max(r => r.IdDamageEvaluation))
+                .ToListAsync();
+
             var reports = await _context.DamageEvaluations
                 .Include(r => r.Event)
+                .Where(r => latestIds.Contains(r.IdDamageEvaluation))
                 .OrderByDescending(r => r.Data)
                 .ToListAsync();
+
             return Ok(reports.Select(MapToDto).ToList());
         }
 
@@ -134,7 +142,8 @@ namespace ŽVPAIS_API.Controllers
                 dispersionImageBytes = Convert.FromBase64String(b64);
             }
 
-            var pdfBytes = PdfGenerator.Generate(ev, report, breakdown, mapImageBytes, dispersionImageBytes);
+            var pdfBytes = PdfGenerator.Generate(ev, report, breakdown, mapImageBytes, dispersionImageBytes,
+                dto?.DispersionWindSpeedMs, dto?.DispersionWindDirectionDeg, dto?.DispersionStabilityClass);
             return File(pdfBytes, "application/pdf", $"ataskaita-ivykis-{eventId}.pdf");
         }
 

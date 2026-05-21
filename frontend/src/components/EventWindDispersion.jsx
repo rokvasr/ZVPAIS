@@ -223,7 +223,8 @@ export default function EventWindDispersion({ breakdown, eventData }) {
       throw new Error(`Open-Meteo error ${res.status}${txt ? ': ' + txt.slice(0, 120) : ''}`);
     }
     const data = await res.json();
-    const hour = dt.getUTCHours();
+    // If the event has no stored time (midnight UTC), default to noon to avoid nighttime stability class.
+    const hour = dt.getUTCHours() === 0 ? 12 : dt.getUTCHours();
     const speed      = data.hourly?.windspeed_10m?.[hour];
     const dir        = data.hourly?.winddirection_10m?.[hour];
     const radiation  = data.hourly?.shortwave_radiation?.[hour] ?? 0;

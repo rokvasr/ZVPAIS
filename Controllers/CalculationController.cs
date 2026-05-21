@@ -34,7 +34,7 @@ namespace ŽVPAIS_API.Controllers
         }
 
         // POST api/calculation/event/{eventId}/recalculate
-        // Runs the formula, persists a new DamageEvaluation record, returns the breakdown.
+        // Runs the formula, updates the existing DamageEvaluation record (or inserts one if absent), returns the breakdown.
         [HttpPost("event/{eventId}/recalculate")]
         [Authorize(Roles = "Specialist")]
         public async Task<ActionResult<EventDamageBreakdownDto>> Recalculate(int eventId)
@@ -44,14 +44,28 @@ namespace ŽVPAIS_API.Controllers
 
             var breakdown = await _calculationService.CalculateBreakdownForEvent(eventId);
 
-            _context.DamageEvaluations.Add(new DamageEvaluation
+            var existing = await _context.DamageEvaluations
+                .Where(d => d.EventId == eventId)
+                .OrderByDescending(d => d.CreatedAt)
+                .FirstOrDefaultAsync();
+
+            if (existing != null)
             {
-                EventId = eventId,
-                Data = DateTime.UtcNow,
-                ZalosDydis = (double)breakdown.TotalDamage,
-                PiniginisDydis = (double)breakdown.TotalDamage,
-                Notes = string.Empty
-            });
+                existing.Data = DateTime.UtcNow;
+                existing.ZalosDydis = (double)breakdown.TotalDamage;
+                existing.PiniginisDydis = (double)breakdown.TotalDamage;
+            }
+            else
+            {
+                _context.DamageEvaluations.Add(new DamageEvaluation
+                {
+                    EventId = eventId,
+                    Data = DateTime.UtcNow,
+                    ZalosDydis = (double)breakdown.TotalDamage,
+                    PiniginisDydis = (double)breakdown.TotalDamage,
+                    Notes = string.Empty
+                });
+            }
             await _context.SaveChangesAsync();
 
             return Ok(breakdown);

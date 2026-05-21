@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import api from '../services/api';
 import { useLanguage } from '../context/LanguageContext';
@@ -17,6 +17,7 @@ const ReportForm = () => {
     piniginisDydis: '',
     notes: ''
   });
+  const datePickerRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [error, setError] = useState('');
@@ -135,17 +136,31 @@ const ReportForm = () => {
 
         <div style={{ marginTop: '12px' }}>
           <label>{t('report_assess_label')}</label>
-          <input
-            type="text"
-            name="data"
-            value={formData.data}
-            onChange={handleChange}
-            placeholder="YYYY-MM-DD"
-            pattern="\d{4}-\d{2}-\d{2}"
-            title="Formatas: YYYY-MM-DD"
-            required
-            style={{ marginLeft: '8px', width: '130px' }}
-          />
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', marginLeft: '8px' }}>
+            <input
+              type="text"
+              name="data"
+              value={formData.data}
+              onChange={handleChange}
+              placeholder="YYYY-MM-DD"
+              pattern="\d{4}-\d{2}-\d{2}"
+              title="Formatas: YYYY-MM-DD"
+              required
+              style={{ width: '120px' }}
+            />
+            <input
+              ref={datePickerRef}
+              type="date"
+              value={formData.data || ''}
+              onChange={e => setFormData(prev => ({ ...prev, data: e.target.value }))}
+              tabIndex={-1}
+              style={{ position: 'absolute', opacity: 0, pointerEvents: 'none', width: 0, height: 0 }}
+            />
+            <button type="button" onClick={() => datePickerRef.current?.showPicker()}
+              style={{ cursor: 'pointer', padding: '2px 6px', fontSize: '1rem', lineHeight: 1 }}>
+              📅
+            </button>
+          </div>
         </div>
 
         <div style={{ marginTop: '12px' }}>

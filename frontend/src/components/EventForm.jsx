@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import api from '../services/api';
 import PolygonPicker from './PolygonPicker';
@@ -21,6 +21,7 @@ const EventForm = () => {
     polygon: null,
     status: 'naujas'
   });
+  const datePickerRef = useRef(null);
   const [selectedEventObjects, setSelectedEventObjects] = useState([]);
   const [loading, setLoading] = useState(false);
   const [dataLoaded, setDataLoaded] = useState(!id);
@@ -127,16 +128,31 @@ const EventForm = () => {
 
         <div>
           <label>{t('event_date_label')}</label>
-          <input
-            type="text"
-            name="eventDate"
-            value={formData.eventDate}
-            onChange={handleChange}
-            placeholder="YYYY-MM-DD"
-            pattern="\d{4}-\d{2}-\d{2}"
-            title="Formatas: YYYY-MM-DD"
-            required
-          />
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+            <input
+              type="text"
+              name="eventDate"
+              value={formData.eventDate}
+              onChange={handleChange}
+              placeholder="YYYY-MM-DD"
+              pattern="\d{4}-\d{2}-\d{2}"
+              title="Formatas: YYYY-MM-DD"
+              required
+              style={{ width: '120px' }}
+            />
+            <input
+              ref={datePickerRef}
+              type="date"
+              value={formData.eventDate || ''}
+              onChange={e => setFormData(prev => ({ ...prev, eventDate: e.target.value }))}
+              tabIndex={-1}
+              style={{ position: 'absolute', opacity: 0, pointerEvents: 'none', width: 0, height: 0 }}
+            />
+            <button type="button" onClick={() => datePickerRef.current?.showPicker()}
+              style={{ cursor: 'pointer', padding: '2px 6px', fontSize: '1rem', lineHeight: 1 }}>
+              📅
+            </button>
+          </div>
         </div>
 
         <div>

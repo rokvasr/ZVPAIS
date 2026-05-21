@@ -136,12 +136,15 @@ const ReportForm = () => {
         <div style={{ marginTop: '12px' }}>
           <label>{t('report_assess_label')}</label>
           <input
-            type="date"
+            type="text"
             name="data"
             value={formData.data}
             onChange={handleChange}
+            placeholder="YYYY-MM-DD"
+            pattern="\d{4}-\d{2}-\d{2}"
+            title="Formatas: YYYY-MM-DD"
             required
-            style={{ marginLeft: '8px' }}
+            style={{ marginLeft: '8px', width: '130px' }}
           />
         </div>
 

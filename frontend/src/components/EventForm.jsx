@@ -127,7 +127,16 @@ const EventForm = () => {
 
         <div>
           <label>{t('event_date_label')}</label>
-          <input type="date" name="eventDate" value={formData.eventDate} onChange={handleChange} required />
+          <input
+            type="text"
+            name="eventDate"
+            value={formData.eventDate}
+            onChange={handleChange}
+            placeholder="YYYY-MM-DD"
+            pattern="\d{4}-\d{2}-\d{2}"
+            title="Formatas: YYYY-MM-DD"
+            required
+          />
         </div>
 
         <div>

@@ -42,7 +42,7 @@ const PolygonPicker = ({ onPolygonChange, initialPolygon }) => {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', height: '500px', maxWidth: '500px', marginBottom: '20px' }}>
+    <div style={{ height: '450px', width: '100%', marginBottom: '8px' }}>
       <MapContainer center={[55.0, 24.0]} zoom={7} style={{ height: '100%', width: '100%' }}
         maxBounds={[[53.5, 20.0], [57.0, 27.5]]} maxBoundsViscosity={1.0} minZoom={7}>
         <TileLayer

@@ -44,6 +44,7 @@ const EventManagement = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [filterType, setFilterType] = useState('');
   const [filterStatus, setFilterStatus] = useState('');
+  const [page, setPage] = useState(1);
   const [rejectNotes, setRejectNotes] = useState({});
 
   const statusLabels = () => ({
@@ -74,8 +75,15 @@ const EventManagement = () => {
     if (!window.confirm(t('event_delete_confirm'))) return;
     try {
       await api.delete(`/events/${id}`);
-      setEvents(events.filter(e => e.idEvent !== id));
+      const updated = events.filter(e => e.idEvent !== id);
+      setEvents(updated);
       if (selectedEvent?.idEvent === id) setSelectedEvent(null);
+      const updatedFiltered = updated.filter(e =>
+        (!filterType || e.eventType === filterType) &&
+        (!filterStatus || e.status === filterStatus)
+      );
+      const newTotalPages = Math.ceil(updatedFiltered.length / PAGE_SIZE);
+      if (page > newTotalPages) setPage(Math.max(1, newTotalPages));
     } catch {
       alert(t('event_delete_error'));
     }
@@ -120,6 +128,10 @@ const EventManagement = () => {
     (!filterStatus || e.status === filterStatus)
   );
 
+  const PAGE_SIZE = 20;
+  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+  const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+
   const geoJsonData = {
     type: 'FeatureCollection',
     features: filtered
@@ -158,7 +170,7 @@ const EventManagement = () => {
               <span style={{ background: getColor(ev.eventType), color: '#fff', padding: '2px 6px', borderRadius: '3px', fontSize: '0.82em' }}>{ev.eventType}</span>
               <span>{new Date(ev.eventDate).toLocaleDateString('lt-LT')}</span>
               {ev.location && <span style={{ color: '#555' }}>{ev.location}</span>}
-              <Link to={`/events/${ev.idEvent}/calculation`} style={{ marginLeft: 'auto' }}>{t('event_view_calc')}</Link>
+              <Link to={`/events/${ev.idEvent}/calculation`} style={{ ...btn, marginLeft: 'auto' }}>{t('event_view_calc')}</Link>
               <button onClick={() => handleApprove(ev.idEvent)} style={{ background: '#2e7d32', color: '#fff', border: 'none', padding: '4px 10px', borderRadius: '3px', cursor: 'pointer' }}>
                 {t('event_approve')}
               </button>
@@ -177,19 +189,16 @@ const EventManagement = () => {
         </div>
       )}
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-        <h2 style={{ margin: 0 }}>{t('events_title')}</h2>
-        <Link to="/events/new">{t('events_new')}</Link>
-      </div>
+      <h2 style={{ marginBottom: '12px' }}>{t('events_title')}</h2>
 
       <div style={{ display: 'flex', gap: '12px', marginBottom: '12px' }}>
-        <select value={filterType} onChange={e => setFilterType(e.target.value)}>
+        <select value={filterType} onChange={e => { setFilterType(e.target.value); setPage(1); }}>
           <option value="">{t('events_filter_all_types')}</option>
           <option value="gaisras">{t('event_type_fire')}</option>
           <option value="medžiagų išsiliejimas">{t('event_type_spill')}</option>
           <option value="stichija">{t('event_type_disaster')}</option>
         </select>
-        <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)}>
+        <select value={filterStatus} onChange={e => { setFilterStatus(e.target.value); setPage(1); }}>
           <option value="">{t('events_filter_all_statuses')}</option>
           <option value="naujas">{t('status_new')}</option>
           <option value="laukia peržiūros">{t('status_awaiting')}</option>
@@ -204,19 +213,18 @@ const EventManagement = () => {
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.9em' }}>
             <thead>
               <tr style={{ background: '#f5f5f5' }}>
-                <th style={th}>ID</th>
                 <th style={th}>{t('type_col')}</th>
                 <th style={th}>{t('date_col')}</th>
                 <th style={th}>{t('loc_col')}</th>
                 <th style={th}>{t('status_col')}</th>
-                <th style={th}>{t('actions')}</th>
+                <th style={{ ...th, minWidth: '220px' }}>{t('actions')}</th>
               </tr>
             </thead>
             <tbody>
               {filtered.length === 0 && (
-                <tr><td colSpan={6} style={{ padding: '12px', textAlign: 'center', color: '#888' }}>{t('events_none_found')}</td></tr>
+                <tr><td colSpan={5} style={{ padding: '12px', textAlign: 'center', color: '#888' }}>{t('events_none_found')}</td></tr>
               )}
-              {filtered.map(event => (
+              {paginated.map(event => (
                 <tr
                   key={event.idEvent}
                   onClick={() => setSelectedEvent(event)}
@@ -226,31 +234,46 @@ const EventManagement = () => {
                     borderBottom: '1px solid #eee'
                   }}
                 >
-                  <td style={td}>{event.idEvent}</td>
-                  <td style={td}>
-                    <span style={{ background: getColor(event.eventType), color: '#fff', padding: '2px 6px', borderRadius: '3px', fontSize: '0.85em' }}>
+                  <td style={{ ...td, whiteSpace: 'nowrap' }}>
+                    <span style={{ background: getColor(event.eventType), color: '#fff', padding: '2px 6px', borderRadius: '3px', fontSize: '0.85em', whiteSpace: 'nowrap' }}>
                       {event.eventType}
                     </span>
                   </td>
                   <td style={td}>{new Date(event.eventDate).toLocaleDateString('lt-LT')}</td>
                   <td style={td}>{event.location || '—'}</td>
                   <td style={td}><StatusBadge status={event.status} /></td>
-                  <td style={td} onClick={e => e.stopPropagation()}>
-                    <Link to={`/events/${event.idEvent}/calculation`} style={{ marginRight: '6px' }}>{t('event_damage_link')}</Link>
-                    {isSpecialist && (
-                      <>
-                        <Link to={`/events/edit/${event.idEvent}`} style={{ marginRight: '6px' }}>{t('edit')}</Link>
-                        <button onClick={() => handleDelete(event.idEvent)} style={{ fontSize: '0.85em' }}>{t('delete')}</button>
-                      </>
-                    )}
+                  <td style={{ ...td, whiteSpace: 'nowrap' }} onClick={e => e.stopPropagation()}>
+                    <div style={{ display: 'flex', gap: '4px' }}>
+                      <Link to={`/events/${event.idEvent}/calculation`} style={btn}>{t('event_damage_link')}</Link>
+                      {isSpecialist && (
+                        <>
+                          <Link to={`/events/edit/${event.idEvent}`} style={btn}>{t('edit')}</Link>
+                          <button onClick={() => handleDelete(event.idEvent)} style={btnDanger}>{t('delete')}</button>
+                        </>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          {totalPages > 1 && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '12px' }}>
+              <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1} style={btn}>
+                &lsaquo; Atgal
+              </button>
+              <span style={{ fontSize: '0.9em' }}>{page} / {totalPages}</span>
+              <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages} style={btn}>
+                Toliau &rsaquo;
+              </button>
+            </div>
+          )}
         </div>
 
-        <div style={{ width: '420px', flexShrink: 0 }}>
+        <div style={{ flex: '1', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ marginBottom: '6px' }}>
+            <Link to="/events/new" style={btn}>{t('events_new')}</Link>
+          </div>
           <MapContainer
             center={[55.0, 24.0]}
             zoom={7}
@@ -286,5 +309,7 @@ const EventManagement = () => {
 
 const th = { padding: '7px 10px', textAlign: 'left', borderBottom: '2px solid #ddd', whiteSpace: 'nowrap' };
 const td = { padding: '7px 10px' };
+const btn = { display: 'inline-block', padding: '3px 10px', borderRadius: '4px', border: '1px solid #bbb', background: '#f0f0f0', color: '#333', cursor: 'pointer', fontSize: '0.83em', textDecoration: 'none', lineHeight: '1.6', fontFamily: 'inherit' };
+const btnDanger = { ...btn, background: '#dc2626', color: '#fff', border: '1px solid #b91c1c' };
 
 export default EventManagement;

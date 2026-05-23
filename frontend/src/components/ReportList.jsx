@@ -148,6 +148,8 @@ function DispersionFitAndCapture({ dispersion, selectedCompound, onCapture }) {
   return null;
 }
 
+const PAGE_SIZE = 10;
+
 const ReportList = () => {
   const { isSpecialist } = useAuth();
   const { t } = useLanguage();
@@ -157,6 +159,7 @@ const ReportList = () => {
   const [downloadingId, setDownloadingId] = useState(null);
   const [pdfJob, setPdfJob]         = useState(null);
   const [dispersionJob, setDispersionJob] = useState(null);
+  const [page, setPage] = useState(1);
 
   // Guards to prevent duplicate captures when re-renders occur mid-flow
   const polygonCapturedRef    = useRef(false);
@@ -180,7 +183,10 @@ const ReportList = () => {
     if (!window.confirm(t('report_delete_confirm'))) return;
     try {
       await api.delete(`/reports/${id}`);
-      setReports(reports.filter(r => r.idDamageEvaluation !== id));
+      const updated = reports.filter(r => r.idDamageEvaluation !== id);
+      setReports(updated);
+      const totalPages = Math.ceil(updated.length / PAGE_SIZE);
+      if (page > totalPages) setPage(Math.max(1, totalPages));
     } catch (err) {
       alert(t('report_delete_error'));
       console.error(err);
@@ -282,21 +288,37 @@ const ReportList = () => {
     finally { setDispersionJob(null); setPdfJob(null); setDownloadingId(null); }
   };
 
+  const btn = { display: 'inline-block', padding: '3px 10px', borderRadius: '4px', border: '1px solid #bbb', background: '#f0f0f0', color: '#333', cursor: 'pointer', fontSize: '0.83em', textDecoration: 'none', lineHeight: '1.6', fontFamily: 'inherit' };
+  const btnDanger = { ...btn, background: '#dc2626', color: '#fff', border: '1px solid #b91c1c' };
+
   if (loading) return <div>{t('loading')}</div>;
   if (error)   return <div style={{ color: 'red' }}>{error}</div>;
+
+  const totalPages = Math.ceil(reports.length / PAGE_SIZE);
+  const paginated = reports.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   return (
     <div>
       <h2>{t('reports_title')}</h2>
-      {isSpecialist && <Link to="/reports/new">{t('reports_new_btn')}</Link>}
+      {isSpecialist && <Link to="/reports/new" style={btn}>{t('reports_new_btn')}</Link>}
       {reports.length === 0 ? (
         <p style={{ marginTop: '16px' }}>{t('reports_none')}</p>
       ) : (
-        <div style={{ overflowX: 'auto', marginTop: '20px' }}>
-          <table border="1" cellPadding="8" style={{ width: '100%', borderCollapse: 'collapse', minWidth: '900px' }}>
+        <div style={{ marginTop: '20px' }}>
+          <table border="1" cellPadding="6" style={{ width: '100%', borderCollapse: 'collapse', tableLayout: 'fixed', fontSize: '0.88em' }}>
+            <colgroup>
+              <col style={{ width: '11%' }} />
+              <col style={{ width: '10%' }} />
+              <col style={{ width: '12%' }} />
+              <col style={{ width: '10%' }} />
+              <col style={{ width: '10%' }} />
+              <col style={{ width: '8%' }} />
+              <col style={{ width: '8%' }} />
+              <col style={{ width: '11%' }} />
+              <col style={{ width: '20%' }} />
+            </colgroup>
             <thead>
               <tr>
-                <th>ID</th>
                 <th>{t('report_event_type')}</th>
                 <th>{t('report_event_date')}</th>
                 <th>{t('loc_col')}</th>
@@ -309,46 +331,51 @@ const ReportList = () => {
               </tr>
             </thead>
             <tbody>
-              {reports.map(r => {
+              {paginated.map(r => {
                 const calcsDone   = DONE_STATUSES.includes(r.eventStatus);
                 const isDownloading = downloadingId === r.idDamageEvaluation;
                 return (
                   <tr key={r.idDamageEvaluation}>
-                    <td>{r.idDamageEvaluation}</td>
-                    <td>{r.eventType}</td>
+                    <td style={{ wordBreak: 'break-word' }}>{r.eventType}</td>
                     <td>{r.eventDate ? new Date(r.eventDate).toLocaleDateString('lt-LT') : '—'}</td>
-                    <td>{r.eventLocation || '—'}</td>
-                    <td>{r.eventStatus || '—'}</td>
+                    <td style={{ wordBreak: 'break-word' }}>{r.eventLocation || '—'}</td>
+                    <td style={{ wordBreak: 'break-word' }}>{r.eventStatus || '—'}</td>
                     <td>{new Date(r.data).toLocaleDateString('lt-LT')}</td>
                     <td>{r.zalosDydis      != null ? r.zalosDydis.toFixed(2)      : '—'}</td>
                     <td>{r.piniginisDydis  != null ? r.piniginisDydis.toFixed(2)  : '—'}</td>
-                    <td style={{ maxWidth: '200px', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>{r.notes || '—'}</td>
+                    <td style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>{r.notes || '—'}</td>
                     <td>
-                      <Link to={`/events/${r.eventId}/calculation`}>{t('report_calc_link')}</Link>
-                      {calcsDone && (
-                        <>
-                          {' | '}
-                          <button onClick={() => handleDownloadPdf(r)} disabled={!!downloadingId} style={{ marginLeft: '2px' }}>
+                      <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
+                        <Link to={`/events/${r.eventId}/calculation`} style={btn}>{t('report_calc_link')}</Link>
+                        {calcsDone && (
+                          <button onClick={() => handleDownloadPdf(r)} disabled={!!downloadingId} style={btn}>
                             {isDownloading ? t('report_generating') : 'PDF'}
                           </button>
-                        </>
-                      )}
-                      {isSpecialist && (
-                        <>
-                          {' | '}
-                          <Link to={`/reports/edit/${r.idDamageEvaluation}`}>{t('edit')}</Link>
-                          {' '}
-                          <button onClick={() => handleDelete(r.idDamageEvaluation)} style={{ marginLeft: '4px' }}>
-                            {t('delete')}
-                          </button>
-                        </>
-                      )}
+                        )}
+                        {isSpecialist && (
+                          <>
+                            <Link to={`/reports/edit/${r.idDamageEvaluation}`} style={btn}>{t('edit')}</Link>
+                            <button onClick={() => handleDelete(r.idDamageEvaluation)} style={btnDanger}>{t('delete')}</button>
+                          </>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 );
               })}
             </tbody>
           </table>
+          {totalPages > 1 && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '12px' }}>
+              <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1} style={btn}>
+                &lsaquo; Atgal
+              </button>
+              <span style={{ fontSize: '0.9em' }}>{page} / {totalPages}</span>
+              <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages} style={btn}>
+                Toliau &rsaquo;
+              </button>
+            </div>
+          )}
         </div>
       )}
 

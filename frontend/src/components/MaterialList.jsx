@@ -4,11 +4,14 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 
+const PAGE_SIZE = 20;
+
 const MaterialList = () => {
   const { isSpecialist } = useAuth();
   const { t } = useLanguage();
   const [materials, setMaterials] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     fetchMaterials();
@@ -29,7 +32,10 @@ const MaterialList = () => {
     if (!window.confirm(t('mat_confirm_delete'))) return;
     try {
       await api.delete(`/materials/${id}`);
-      setMaterials(materials.filter(m => m.idMaterial !== id));
+      const updated = materials.filter(m => m.idMaterial !== id);
+      setMaterials(updated);
+      const totalPages = Math.ceil(updated.length / PAGE_SIZE);
+      if (page > totalPages) setPage(Math.max(1, totalPages));
     } catch (error) {
       alert(t('mat_delete_error'));
     }
@@ -56,16 +62,21 @@ const MaterialList = () => {
     liquid_organic: t('mat_liquid_organic'),
   }[c] || '—');
 
+  const btn = { display: 'inline-block', padding: '3px 10px', borderRadius: '4px', border: '1px solid #bbb', background: '#f0f0f0', color: '#333', cursor: 'pointer', fontSize: '0.83em', textDecoration: 'none', lineHeight: '1.6', fontFamily: 'inherit' };
+  const btnDanger = { ...btn, background: '#dc2626', color: '#fff', border: '1px solid #b91c1c' };
+
   if (loading) return <div>{t('loading')}</div>;
+
+  const totalPages = Math.ceil(materials.length / PAGE_SIZE);
+  const paginated = materials.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   return (
     <div>
       <h2>{t('mat_list_title')}</h2>
-      {isSpecialist && <Link to="/materials/new">{t('mat_new_btn')}</Link>}
-      <table border="1" cellPadding="8" style={{ marginTop: '20px' }}>
+      {isSpecialist && <Link to="/materials/new" style={btn}>{t('mat_new_btn')}</Link>}
+      <table border="1" cellPadding="8" style={{ marginTop: '20px', width: '100%', borderCollapse: 'collapse' }}>
         <thead>
           <tr>
-            <th>ID</th>
             <th>{t('name_col')}</th>
             <th>{t('mat_type_col')}</th>
             <th>{t('mat_emission_col')}</th>
@@ -75,9 +86,8 @@ const MaterialList = () => {
           </tr>
         </thead>
         <tbody>
-          {materials.map(m => (
+          {paginated.map(m => (
             <tr key={m.idMaterial}>
-              <td>{m.idMaterial}</td>
               <td>{m.name}</td>
               <td>{substanceLabel(m.substanceType)}</td>
               <td>{categoryLabel(m.emissionCategory)}</td>
@@ -85,16 +95,27 @@ const MaterialList = () => {
               <td>{m.unit}</td>
               {isSpecialist && (
                 <td>
-                  <Link to={`/materials/edit/${m.idMaterial}`}>{t('edit')}</Link>
-                  <button onClick={() => handleDelete(m.idMaterial)} style={{ marginLeft: '8px' }}>
-                    {t('delete')}
-                  </button>
+                  <div style={{ display: 'flex', gap: '4px' }}>
+                    <Link to={`/materials/edit/${m.idMaterial}`} style={btn}>{t('edit')}</Link>
+                    <button onClick={() => handleDelete(m.idMaterial)} style={btnDanger}>{t('delete')}</button>
+                  </div>
                 </td>
               )}
             </tr>
           ))}
         </tbody>
       </table>
+      {totalPages > 1 && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '12px' }}>
+          <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1} style={btn}>
+            &lsaquo; Atgal
+          </button>
+          <span style={{ fontSize: '0.9em' }}>{page} / {totalPages}</span>
+          <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages} style={btn}>
+            Toliau &rsaquo;
+          </button>
+        </div>
+      )}
     </div>
   );
 };

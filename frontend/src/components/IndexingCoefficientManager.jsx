@@ -83,6 +83,9 @@ const IndexingCoefficientManager = () => {
     }
   };
 
+  const btn = { display: 'inline-block', padding: '3px 10px', borderRadius: '4px', border: '1px solid #bbb', background: '#f0f0f0', color: '#333', cursor: 'pointer', fontSize: '0.83em', textDecoration: 'none', lineHeight: '1.6', fontFamily: 'inherit' };
+  const btnDanger = { ...btn, background: '#dc2626', color: '#fff', border: '1px solid #b91c1c' };
+
   if (loading) return <div>{t('loading')}</div>;
 
   return (
@@ -158,8 +161,10 @@ const IndexingCoefficientManager = () => {
                 <td><strong>{Number(c.coefficient).toFixed(4)}</strong></td>
                 <td>{new Date(c.createdAt).toLocaleDateString('lt-LT')}</td>
                 <td>
-                  <button onClick={() => startEdit(c)} style={{ marginRight: '6px' }}>{t('edit')}</button>
-                  <button onClick={() => handleDelete(c.idIndexingCoefficient)}>{t('delete')}</button>
+                  <div style={{ display: 'flex', gap: '4px' }}>
+                    <button onClick={() => startEdit(c)} style={btn}>{t('edit')}</button>
+                    <button onClick={() => handleDelete(c.idIndexingCoefficient)} style={btnDanger}>{t('delete')}</button>
+                  </div>
                 </td>
               </tr>
             ))}

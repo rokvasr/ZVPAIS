@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import api from '../services/api';
 import PolygonPicker from './PolygonPicker';
@@ -110,68 +110,82 @@ const EventForm = () => {
     }
   };
 
+  const fieldStyle = { display: 'flex', flexDirection: 'column', gap: '4px', marginBottom: '12px' };
+  const inputStyle = { padding: '6px 8px', borderRadius: '4px', border: '1px solid #ccc', fontSize: '0.95rem' };
+
   if (fetchError) return <div style={{ color: 'red' }}>{fetchError}</div>;
 
   return (
-    <div>
+    <div style={{ maxWidth: '1100px' }}>
       <h2>{isEditing ? t('event_edit_title') : t('event_new_title')}</h2>
       {submitError && <div style={{ color: 'red', marginBottom: '8px' }}>{submitError}</div>}
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>{t('event_type_label')}</label>
-          <select name="eventType" value={formData.eventType} onChange={handleChange} required>
-            <option value="gaisras">{t('event_type_fire')}</option>
-            <option value="medžiagų išsiliejimas">{t('event_type_spill')}</option>
-            <option value="stichija">{t('event_type_disaster')}</option>
-          </select>
-        </div>
 
-        <div>
-          <label>{t('event_date_label')}</label>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-            <input
-              type="text"
-              name="eventDate"
-              value={formData.eventDate}
-              onChange={handleChange}
-              placeholder="YYYY-MM-DD"
-              pattern="\d{4}-\d{2}-\d{2}"
-              title="Formatas: YYYY-MM-DD"
-              required
-              style={{ width: '120px' }}
-            />
-            <input
-              ref={datePickerRef}
-              type="date"
-              value={formData.eventDate || ''}
-              onChange={e => setFormData(prev => ({ ...prev, eventDate: e.target.value }))}
-              tabIndex={-1}
-              style={{ position: 'absolute', opacity: 0, pointerEvents: 'none', width: 0, height: 0 }}
-            />
-            <button type="button" onClick={() => datePickerRef.current?.showPicker()}
-              style={{ cursor: 'pointer', padding: '2px 6px', fontSize: '1rem', lineHeight: 1 }}>
-              📅
-            </button>
+        <div style={{ display: 'flex', gap: '28px', alignItems: 'flex-start', marginBottom: '20px' }}>
+
+          {/* Left column: form inputs */}
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={fieldStyle}>
+              <label>{t('event_type_label')}</label>
+              <select name="eventType" value={formData.eventType} onChange={handleChange} required style={inputStyle}>
+                <option value="gaisras">{t('event_type_fire')}</option>
+                <option value="medžiagų išsiliejimas">{t('event_type_spill')}</option>
+                <option value="stichija">{t('event_type_disaster')}</option>
+              </select>
+            </div>
+
+            <div style={fieldStyle}>
+              <label>{t('event_date_label')}</label>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                <input
+                  type="text"
+                  name="eventDate"
+                  value={formData.eventDate}
+                  onChange={handleChange}
+                  placeholder="YYYY-MM-DD"
+                  pattern="\d{4}-\d{2}-\d{2}"
+                  title="Formatas: YYYY-MM-DD"
+                  required
+                  style={{ ...inputStyle, width: '120px' }}
+                />
+                <input
+                  ref={datePickerRef}
+                  type="date"
+                  value={formData.eventDate || ''}
+                  onChange={e => setFormData(prev => ({ ...prev, eventDate: e.target.value }))}
+                  tabIndex={-1}
+                  style={{ position: 'absolute', opacity: 0, pointerEvents: 'none', width: 0, height: 0 }}
+                />
+                <button type="button" onClick={() => datePickerRef.current?.showPicker()}
+                  style={{ cursor: 'pointer', padding: '2px 6px', fontSize: '1rem', lineHeight: 1 }}>
+                  📅
+                </button>
+              </div>
+            </div>
+
+            <div style={fieldStyle}>
+              <label>{t('event_desc_label')}</label>
+              <textarea name="description" value={formData.description} onChange={handleChange} rows="4"
+                style={{ ...inputStyle, resize: 'vertical' }} />
+            </div>
+
+            <div style={fieldStyle}>
+              <label>{t('event_loc_label')}</label>
+              <input type="text" name="location" value={formData.location} onChange={handleChange} style={inputStyle} />
+            </div>
           </div>
-        </div>
 
-        <div>
-          <label>{t('event_desc_label')}</label>
-          <textarea name="description" value={formData.description} onChange={handleChange} rows="3" />
-        </div>
-
-        <div>
-          <label>{t('event_loc_label')}</label>
-          <input type="text" name="location" value={formData.location} onChange={handleChange} />
-        </div>
-
-        <div>
-          <label>{t('event_mark_area')}</label>
-          {dataLoaded
-            ? <PolygonPicker onPolygonChange={handlePolygonChange} initialPolygon={formData.polygon} />
-            : <div>{t('event_loading_map')}</div>
-          }
-          {formData.polygon && <div>{t('event_area_marked')}</div>}
+          {/* Right column: map */}
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <label style={{ display: 'block', marginBottom: '4px' }}>{t('event_mark_area')}</label>
+            {dataLoaded
+              ? <PolygonPicker onPolygonChange={handlePolygonChange} initialPolygon={formData.polygon} />
+              : <div>{t('event_loading_map')}</div>
+            }
+            {formData.polygon && (
+              <div style={{ marginTop: '4px', color: '#2e7d32', fontSize: '0.9em' }}>{t('event_area_marked')}</div>
+            )}
+          </div>
         </div>
 
         <ObjectSelector
@@ -180,10 +194,12 @@ const EventForm = () => {
           specialistMode={isEditing || isSpecialist}
         />
 
-        <button type="submit" disabled={loading}>
-          {loading ? t('saving') : (isEditing ? t('update') : t('create'))}
-        </button>
-        <button type="button" onClick={() => navigate('/events')}>{t('cancel')}</button>
+        <div style={{ marginTop: '16px', display: 'flex', gap: '8px' }}>
+          <button type="submit" disabled={loading}>
+            {loading ? t('saving') : (isEditing ? t('update') : t('create'))}
+          </button>
+          <button type="button" onClick={() => navigate('/events')}>{t('cancel')}</button>
+        </div>
       </form>
     </div>
   );

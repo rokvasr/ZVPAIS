@@ -61,7 +61,6 @@ export default function PollutionSeverity() {
           <thead>
             <tr style={{ background: '#f0f0f0' }}>
               <th style={th}>#</th>
-              <th style={th}>{t('poll_event_col')}</th>
               <th style={th}>{t('type_col')}</th>
               <th style={th}>{t('date_col')}</th>
               <th style={th}>{t('loc_col')}</th>
@@ -80,7 +79,6 @@ export default function PollutionSeverity() {
                     style={{ cursor: 'pointer', background: isOpen ? '#eff6ff' : i % 2 === 0 ? '#fff' : '#fafafa', borderBottom: '1px solid #e5e7eb' }}
                   >
                     <td style={{ ...td, color: '#6b7280', width: 30 }}>{i + 1}</td>
-                    <td style={td}>#{ev.idEvent}</td>
                     <td style={td}>{ev.eventType}</td>
                     <td style={td}>{ev.eventDate ? new Date(ev.eventDate).toLocaleDateString('lt-LT') : '-'}</td>
                     <td style={td}>{ev.location ?? '-'}</td>
@@ -93,14 +91,15 @@ export default function PollutionSeverity() {
                       </div>
                     </td>
                     <td style={{ ...td, textAlign: 'center' }}>
-                      <Link to={`/events/${ev.idEvent}/calculation`} onClick={e => e.stopPropagation()}
-                        style={{ fontSize: '0.78rem', color: '#2563eb' }}>{t('poll_calc_link')}</Link>
+                      <Link to={`/events/${ev.idEvent}/calculation`} onClick={e => e.stopPropagation()} style={btn}>
+                        {t('poll_calc_link')}
+                      </Link>
                     </td>
                   </tr>
 
                   {isOpen && (
                     <tr>
-                      <td colSpan={7} style={{ padding: '12px 16px', background: '#f8fafc', borderBottom: '2px solid #bfdbfe' }}>
+                      <td colSpan={6} style={{ padding: '12px 16px', background: '#f8fafc', borderBottom: '2px solid #bfdbfe' }}>
                         {detailLoading ? (
                           <p style={{ margin: 0, color: '#6b7280' }}>{t('loading')}</p>
                         ) : detail ? (
@@ -156,6 +155,7 @@ export default function PollutionSeverity() {
   );
 }
 
+const btn = { display: 'inline-block', padding: '3px 10px', borderRadius: '4px', border: '1px solid #bbb', background: '#f0f0f0', color: '#333', cursor: 'pointer', fontSize: '0.83em', textDecoration: 'none', lineHeight: '1.6', fontFamily: 'inherit' };
 const th  = { padding: '6px 10px', textAlign: 'left', fontWeight: 600, borderBottom: '2px solid #e5e7eb' };
 const td  = { padding: '7px 10px' };
 const sth = { padding: '4px 8px', fontWeight: 600 };

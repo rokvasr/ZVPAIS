@@ -15,7 +15,6 @@ const ObjectForm = () => {
   const [totalMass, setTotalMass] = useState('');
   const [totalVolume, setTotalVolume] = useState('');
   const [loading, setLoading] = useState(false);
-  const [savedId, setSavedId] = useState(isEditing ? parseInt(id) : null);
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -46,12 +45,10 @@ const ObjectForm = () => {
       };
       if (isEditing) {
         await api.put(`/environmentobjects/${id}`, payload);
-        setSavedId(parseInt(id));
       } else {
-        const res = await api.post('/environmentobjects', payload);
-        const newId = res.data.idObject;
-        setSavedId(newId);
+        await api.post('/environmentobjects', payload);
       }
+      navigate('/objects');
     } catch (err) {
       if (err.response?.status === 403) {
         setError(t('err_403'));
@@ -121,15 +118,15 @@ const ObjectForm = () => {
             {loading ? t('saving') : (isEditing ? t('update') : t('obj_create_btn'))}
           </button>
           <button type="button" onClick={() => navigate('/objects')} style={{ marginLeft: '8px' }}>
-            {savedId ? t('obj_back_to_list') : t('cancel')}
+            {t('cancel')}
           </button>
         </div>
       </form>
 
-      {savedId && (
+      {isEditing && (
         <div style={{ marginTop: '30px', borderTop: '1px solid #ccc', paddingTop: '20px' }}>
           <h3>{t('obj_materials_section')}</h3>
-          <ObjectMaterialManager objectId={savedId} />
+          <ObjectMaterialManager objectId={parseInt(id, 10)} />
         </div>
       )}
     </div>

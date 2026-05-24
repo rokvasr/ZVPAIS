@@ -130,6 +130,8 @@ namespace ŽVPAIS_API.Services
                 Description = @event.Description,
                 Location = @event.Location,
                 Polygon = _geoJsonWriter.Write(@event.Coordinates),
+                CentroidLat = @event.Coordinates?.Centroid?.Y,
+                CentroidLon = @event.Coordinates?.Centroid?.X,
                 Status = @event.Status,
                 CreatedAt = @event.CreatedAt,
                 UpdatedAt = @event.UpdatedAt,

@@ -26,18 +26,6 @@ const CONC_BANDS = [
   { min: 10000, max: Infinity, color: '#dc2626' },
 ];
 
-function polygonCentroid(polygonJson) {
-  try {
-    const geo = typeof polygonJson === 'string' ? JSON.parse(polygonJson) : polygonJson;
-    const coords = geo.type === 'Feature' ? geo.geometry?.coordinates?.[0]
-                 : geo.type === 'Polygon' ? geo.coordinates?.[0] : null;
-    if (!coords?.length) return null;
-    return {
-      lat: coords.reduce((s, c) => s + c[1], 0) / coords.length,
-      lon: coords.reduce((s, c) => s + c[0], 0) / coords.length,
-    };
-  } catch { return null; }
-}
 
 function offsetToLatLon(fireLat, fireLon, downwindM, crosswindM, windFromDeg) {
   const downwindRad  = ((windFromDeg + 180) % 360) * Math.PI / 180;
@@ -202,6 +190,8 @@ const ReportList = () => {
       setPdfJob({
         eventId:     report.eventId,
         polygon:     eventRes.data.polygon || null,
+        centroidLat: eventRes.data.centroidLat ?? null,
+        centroidLon: eventRes.data.centroidLon ?? null,
         isFireEvent: report.eventType === 'gaisras',
         eventDate:   report.eventDate,
       });
@@ -236,17 +226,17 @@ const ReportList = () => {
 
     if (pdfJob.isFireEvent) {
       try {
-        const centroid = polygonCentroid(pdfJob.polygon);
-        if (centroid) {
-          const wind = await fetchWindFromApi(centroid.lat, centroid.lon, pdfJob.eventDate);
+        const { centroidLat, centroidLon } = pdfJob;
+        if (centroidLat && centroidLon) {
+          const wind = await fetchWindFromApi(centroidLat, centroidLon, pdfJob.eventDate);
           const res  = await api.post(`/wind-dispersion/calculate-from-event/${pdfJob.eventId}`, {
             fireDurationHours: 1,
             windSpeedMs:       wind.speed,
             windDirectionDeg:  wind.dir,
             stabilityClass:    wind.stabilityClass,
             sourceHeightM:     10,
-            fireLat:           centroid.lat,
-            fireLon:           centroid.lon,
+            fireLat:           centroidLat,
+            fireLon:           centroidLon,
           });
           const dispersion = res.data?.dispersion;
           // Pick the compound with the highest emission rate for the map snapshot

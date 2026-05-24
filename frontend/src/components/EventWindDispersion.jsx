@@ -21,19 +21,6 @@ const CONC_BANDS = [
   { min: 10000, max: Infinity, color: '#dc2626', label: '>= 10 000' },
 ];
 
-function polygonCentroid(polygonJson) {
-  try {
-    const geo = typeof polygonJson === 'string' ? JSON.parse(polygonJson) : polygonJson;
-    const coords = geo.type === 'Feature' ? geo.geometry?.coordinates?.[0]
-                 : geo.type === 'Polygon' ? geo.coordinates?.[0] : null;
-    if (!coords?.length) return null;
-    return {
-      lat: Math.round(coords.reduce((s, c) => s + c[1], 0) / coords.length * 10000) / 10000,
-      lon: Math.round(coords.reduce((s, c) => s + c[0], 0) / coords.length * 10000) / 10000,
-    };
-  } catch { return null; }
-}
-
 // Converts a plume grid point (downwind metres, crosswind metres from fire) to [lat, lon].
 // The wind direction convention is "wind FROM X degrees" (meteorological), so the plume
 // travels in the opposite direction: windFromDeg + 180° gives the downwind bearing.
@@ -151,7 +138,6 @@ function StabilityHint({ cls, windSpeed }) {
 
 export default function EventWindDispersion({ breakdown, eventData }) {
   const { t } = useLanguage();
-  const centroid = polygonCentroid(eventData?.polygon);
 
   const STABILITY_CLASSES = [
     { value: 'A', label: t('stab_A') },
@@ -175,8 +161,8 @@ export default function EventWindDispersion({ breakdown, eventData }) {
     windDirectionDeg: 270,
     stabilityClass: 'D',
     sourceHeightM: 10,
-    fireLat: centroid?.lat ?? 54.6872,
-    fireLon: centroid?.lon ?? 25.2797,
+    fireLat: eventData?.centroidLat ?? 54.6872,
+    fireLon: eventData?.centroidLon ?? 25.2797,
   });
   const [picking,     setPicking]     = useState(false);
   const [result,      setResult]      = useState(null);
@@ -189,13 +175,14 @@ export default function EventWindDispersion({ breakdown, eventData }) {
   const autoFetchedRef = useRef(false);
 
   useEffect(() => {
-    const c = polygonCentroid(eventData?.polygon);
-    if (c) setForm(f => ({ ...f, fireLat: c.lat, fireLon: c.lon }));
+    const lat = eventData?.centroidLat;
+    const lon = eventData?.centroidLon;
+    if (lat && lon) setForm(f => ({ ...f, fireLat: lat, fireLon: lon }));
 
-    if (!autoFetchedRef.current && eventData?.eventDate && c) {
+    if (!autoFetchedRef.current && eventData?.eventDate && lat && lon) {
       autoFetchedRef.current = true;
       setWindLoading(true);
-      fetchWindFromApi(c.lat, c.lon, eventData.eventDate)
+      fetchWindFromApi(lat, lon, eventData.eventDate)
         .then(({ speed, dir, stabilityClass, date, hour }) => {
           setForm(f => ({ ...f, windSpeedMs: speed, windDirectionDeg: dir, stabilityClass }));
           setWindMsg(`✓ ${date} ${hour}:00 UTC — ${speed} m/s, ${dir}°, ${stabilityClass}`);

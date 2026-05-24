@@ -101,6 +101,8 @@ namespace ŽVPAIS_API
         public string Description { get; set; }
         public string Location { get; set; }
         public string Polygon { get; set; }
+        public double? CentroidLat { get; set; }
+        public double? CentroidLon { get; set; }
         public string Status { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset? UpdatedAt { get; set; }

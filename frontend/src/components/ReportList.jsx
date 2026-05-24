@@ -358,11 +358,11 @@ const ReportList = () => {
           {totalPages > 1 && (
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '12px' }}>
               <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1} style={btn}>
-                &lsaquo; Atgal
+                &lsaquo; {t('page_prev')}
               </button>
               <span style={{ fontSize: '0.9em' }}>{page} / {totalPages}</span>
               <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages} style={btn}>
-                Toliau &rsaquo;
+                {t('page_next')} &rsaquo;
               </button>
             </div>
           )}

@@ -334,6 +334,10 @@ export const T = {
   wind_no_materials:      { lt: '⚠ Įvykio objektuose nerasta medžiagų su masėmis.', en: '⚠ No materials with quantities found in event objects.' },
   wind_no_emis_detail:    { lt: 'Emisijų nerasta. Patikrinkite, ar įvykio objektų medžiagoms priskirta emisijų kategorija (Medžiagos → redaguoti → Emisijų kategorija).', en: 'No emissions found. Check that emission categories are assigned to event object materials (Materials → edit → Emission category).' },
 
+  // Pagination
+  page_prev: { lt: 'Atgal', en: 'Back' },
+  page_next: { lt: 'Toliau', en: 'Next' },
+
   // Stability class labels
   stab_A:      { lt: 'A – labai nestabili',                               en: 'A – very unstable' },
   stab_B:      { lt: 'B – nestabili',                                     en: 'B – unstable' },

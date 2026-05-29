@@ -52,7 +52,7 @@ export default function RegisterPage() {
       <div className="auth-container">
         <div className="auth-card">
           <h2>{t('register_title')}</h2>
-          <p style={{ textAlign: 'center', color: '#555' }}>Registracija šiuo metu uždaryta.</p>
+          <p style={{ textAlign: 'center', color: '#555' }}>{t('register_closed')}</p>
           <p className="auth-link" style={{ textAlign: 'center' }}>
             <Link to="/login">{t('nav_login')}</Link>
           </p>

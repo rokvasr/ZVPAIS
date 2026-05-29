@@ -18,6 +18,7 @@ export default function PollutionSeverity() {
   const [detail, setDetail]     = useState(null);
   const [detailLoading, setDetailLoading] = useState(false);
   const { t } = useLanguage();
+  const eventTypeLabel = type => ({ gaisras: t('event_type_fire'), 'medžiagų išsiliejimas': t('event_type_spill'), stichija: t('event_type_disaster') }[type] ?? type);
 
   const componentLabel = (type) => (
     { water: t('calc_comp_water'), soil: t('calc_comp_soil'), air: t('calc_comp_air') }[type] || type || '-'
@@ -79,7 +80,7 @@ export default function PollutionSeverity() {
                     style={{ cursor: 'pointer', background: isOpen ? '#eff6ff' : i % 2 === 0 ? '#fff' : '#fafafa', borderBottom: '1px solid #e5e7eb' }}
                   >
                     <td style={{ ...td, color: '#6b7280', width: 30 }}>{i + 1}</td>
-                    <td style={td}>{ev.eventType}</td>
+                    <td style={td}>{eventTypeLabel(ev.eventType)}</td>
                     <td style={td}>{ev.eventDate ? new Date(ev.eventDate).toLocaleDateString('lt-LT') : '-'}</td>
                     <td style={td}>{ev.location ?? '-'}</td>
                     <td style={{ ...td, textAlign: 'right' }}>
@@ -110,7 +111,7 @@ export default function PollutionSeverity() {
                                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
                                   <strong style={{ fontSize: '0.83rem' }}>{obj.objectName}</strong>
                                   <span style={{ fontSize: '0.8rem', color: '#6b7280' }}>
-                                    {componentLabel(obj.componentType)} | K_kat: {obj.kKat ?? '-'} | {t('poll_index_col')}: <strong>{fmt(obj.objectSeverity)}</strong>
+                                    {componentLabel(obj.componentType)}{obj.componentType !== 'air' && ` | K_kat: ${obj.kKat ?? '-'}`} | {t('poll_index_col')}: <strong>{fmt(obj.objectSeverity)}</strong>
                                   </span>
                                 </div>
                                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.78rem' }}>
@@ -127,7 +128,7 @@ export default function PollutionSeverity() {
                                       <tr key={m.materialId} style={{ borderBottom: '1px solid #f1f5f9' }}>
                                         <td style={std}>{m.materialName}</td>
                                         <td style={{ ...std, textAlign: 'right' }}>{m.qN.toFixed(4)}</td>
-                                        <td style={{ ...std, textAlign: 'right' }}>{Number(m.kKat).toFixed(1)}</td>
+                                        <td style={{ ...std, textAlign: 'right' }}>{obj.componentType === 'air' ? '—' : Number(m.kKat).toFixed(1)}</td>
                                         <td style={{ ...std, textAlign: 'right', fontWeight: 600 }}>{fmt(m.severityContribution)}</td>
                                       </tr>
                                     ))}

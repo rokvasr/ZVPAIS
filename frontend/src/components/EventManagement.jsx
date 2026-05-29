@@ -37,6 +37,7 @@ function MapFlyTo({ selectedEvent }) {
 const EventManagement = () => {
   const { isSpecialist } = useAuth();
   const { t } = useLanguage();
+  const eventTypeLabel = type => ({ gaisras: t('event_type_fire'), 'medžiagų išsiliejimas': t('event_type_spill'), stichija: t('event_type_disaster') }[type] ?? type);
   const navigate = useNavigate();
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -128,7 +129,7 @@ const EventManagement = () => {
     (!filterStatus || e.status === filterStatus)
   );
 
-  const PAGE_SIZE = 20;
+  const PAGE_SIZE = 9;
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
   const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
@@ -167,7 +168,7 @@ const EventManagement = () => {
           {pending.map(ev => (
             <div key={ev.idEvent} style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px', flexWrap: 'wrap', borderBottom: '1px solid #ffe0cc', paddingBottom: '8px' }}>
               <span style={{ minWidth: '24px', fontWeight: 'bold' }}>#{ev.idEvent}</span>
-              <span style={{ background: getColor(ev.eventType), color: '#fff', padding: '2px 6px', borderRadius: '3px', fontSize: '0.82em' }}>{ev.eventType}</span>
+              <span style={{ background: getColor(ev.eventType), color: '#fff', padding: '2px 6px', borderRadius: '3px', fontSize: '0.82em' }}>{eventTypeLabel(ev.eventType)}</span>
               <span>{new Date(ev.eventDate).toLocaleDateString('lt-LT')}</span>
               {ev.location && <span style={{ color: '#555' }}>{ev.location}</span>}
               <Link to={`/events/${ev.idEvent}/calculation`} style={{ ...btn, marginLeft: 'auto' }}>{t('event_view_calc')}</Link>
@@ -236,7 +237,7 @@ const EventManagement = () => {
                 >
                   <td style={{ ...td, whiteSpace: 'nowrap' }}>
                     <span style={{ background: getColor(event.eventType), color: '#fff', padding: '2px 6px', borderRadius: '3px', fontSize: '0.85em', whiteSpace: 'nowrap' }}>
-                      {event.eventType}
+                      {eventTypeLabel(event.eventType)}
                     </span>
                   </td>
                   <td style={td}>{new Date(event.eventDate).toLocaleDateString('lt-LT')}</td>
@@ -295,7 +296,7 @@ const EventManagement = () => {
 
           {selectedEvent && (
             <div style={{ marginTop: '8px', padding: '10px', background: '#f9f9f9', border: '1px solid #ddd', borderRadius: '4px', fontSize: '0.9em' }}>
-              <strong>{selectedEvent.eventType}</strong> · {new Date(selectedEvent.eventDate).toLocaleDateString('lt-LT')}<br />
+              <strong>{eventTypeLabel(selectedEvent.eventType)}</strong> · {new Date(selectedEvent.eventDate).toLocaleDateString('lt-LT')}<br />
               <StatusBadge status={selectedEvent.status} /><br />
               {selectedEvent.location && <span>{selectedEvent.location}<br /></span>}
               {selectedEvent.description && <span style={{ color: '#555' }}>{selectedEvent.description}</span>}

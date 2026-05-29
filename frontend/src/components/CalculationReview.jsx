@@ -125,7 +125,7 @@ const CalculationReview = () => {
     <div style={{ maxWidth: '900px' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '16px' }}>
         <Link to="/events">{t('calc_back')}</Link>
-        <h2 style={{ margin: 0 }}>Žalos skaičiavimas — Įvykis #{breakdown.eventId}</h2>
+        <h2 style={{ margin: 0 }}>{t('calc_title')}{breakdown.eventId}</h2>
       </div>
 
       <div style={{ marginBottom: '12px', color: '#555' }}>
@@ -140,7 +140,7 @@ const CalculationReview = () => {
             <h3 style={{ margin: '0 0 8px' }}>
               {obj.objectName}
               {obj.componentType && <span style={{ fontSize: '0.8em', marginLeft: '8px', color: '#666' }}>({componentLabel(obj.componentType)})</span>}
-              {obj.kKat && <span style={{ fontSize: '0.8em', marginLeft: '8px', color: '#666' }}>K_kat: {obj.kKat}</span>}
+              {obj.kKat && obj.componentType !== 'air' && <span style={{ fontSize: '0.8em', marginLeft: '8px', color: '#666' }}>K_kat: {obj.kKat}</span>}
             </h3>
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.9em' }}>
               <thead>
@@ -163,7 +163,7 @@ const CalculationReview = () => {
                     <td style={td}>{Number(m.tn).toFixed(2)}</td>
                     <td style={td}>{Number(m.in).toFixed(4)}</td>
                     <td style={td}>{Number(m.qn).toFixed(4)}</td>
-                    <td style={td}>{Number(m.kKat).toFixed(2)}</td>
+                    <td style={td}>{obj.componentType === 'air' ? '—' : Number(m.kKat).toFixed(2)}</td>
                     <td style={td}>{Number(m.pollutionSize).toFixed(2)}</td>
                     <td style={{ ...td, fontWeight: 'bold' }}>{Number(m.zn).toFixed(2)}</td>
                   </tr>
@@ -226,7 +226,7 @@ const CalculationReview = () => {
         )}
       </div>
 
-      {['gaisras', 'gaisas'].includes(eventData?.eventType) && (
+      {eventData?.eventType === 'gaisras' && (
         <div style={{ marginTop: '28px', borderTop: '2px solid #e5e7eb', paddingTop: '16px' }}>
           <button
             onClick={() => setShowDispersion(v => !v)}

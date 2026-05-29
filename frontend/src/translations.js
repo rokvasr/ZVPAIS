@@ -56,6 +56,7 @@ export const T = {
   forgot_error:      { lt: 'Klaida siunčiant. Bandykite dar kartą.',                                                           en: 'Send error. Please try again.' },
 
   register_title:          { lt: 'Registracija',                  en: 'Register' },
+  register_closed:         { lt: 'Registracija šiuo metu uždaryta.', en: 'Registration is currently closed.' },
   register_as_specialist:  { lt: 'Registruotis kaip specialistas', en: 'Register as specialist' },
   register_name:           { lt: 'Vardas *',                      en: 'Name *' },
   register_field:          { lt: 'Specializacija',                en: 'Field of expertise' },
@@ -206,6 +207,7 @@ export const T = {
   report_assess_date:   { lt: 'Vertinimo data',                     en: 'Assessment date' },
   report_damage_col:    { lt: 'Žalos dydis (EUR)',                  en: 'Damage amount (EUR)' },
   report_monetary_col:  { lt: 'Piniginis dydis (EUR)',              en: 'Monetary amount (EUR)' },
+  notes_col:            { lt: 'Pastabos',                           en: 'Notes' },
   report_calc_link:     { lt: 'Skaičiavimas',                       en: 'Calculation' },
   report_generating:    { lt: 'Generuojama...',                     en: 'Generating...' },
   report_delete_confirm:{ lt: 'Ar tikrai norite ištrinti šią ataskaitą?', en: 'Are you sure you want to delete this report?' },
@@ -253,6 +255,7 @@ export const T = {
   map_fetch_error:  { lt: 'Nepavyko gauti įvykių sąrašo.',  en: 'Failed to load events.' },
 
   // Calculation review
+  calc_title:            { lt: 'Žalos skaičiavimas — Įvykis #',                     en: 'Damage calculation — Event #' },
   calc_back:             { lt: '← Grįžti',                                          en: '← Back' },
   calc_in_label:         { lt: 'Indeksavimo koeficientas (I_n):',                   en: 'Indexing coefficient (I_n):' },
   calc_no_objects:       { lt: 'Šiam įvykiui nėra objektų su medžiagomis ir tarifais.', en: 'No objects with materials and rates for this event.' },
@@ -315,6 +318,7 @@ export const T = {
   wind_no_emissions:   { lt: 'Emisijų nerasta.',                                  en: 'No emissions found.' },
 
   // EventWindDispersion-specific
+  wind_date_label:        { lt: 'Data',                        en: 'Date' },
   wind_data_section:      { lt: 'Vėjo duomenys',               en: 'Wind data' },
   wind_fetch_btn:         { lt: 'Gauti',                        en: 'Fetch' },
   wind_fetch_calc_btn:    { lt: 'Gauti ir skaičiuoti',          en: 'Fetch & calculate' },
@@ -324,6 +328,7 @@ export const T = {
   wind_materials_banner:  { lt: 'Medžiagos iš įvykio objektų', en: 'Materials from event objects' },
   wind_pick_map_btn:      { lt: '📍 Žemėlapyje',              en: '📍 On map' },
   wind_picking_btn:       { lt: 'Spustelėkite…',              en: 'Click…' },
+  wind_fetch_error:       { lt: 'Klaida gaunant duomenis',      en: 'Error fetching data' },
   wind_no_event_date:     { lt: 'Nėra įvykio datos.',          en: 'No event date.' },
   wind_no_event_data:     { lt: 'Nėra įvykio duomenų.',        en: 'No event data.' },
   wind_calc_error:        { lt: 'Klaida skaičiuojant.',        en: 'Calculation error.' },

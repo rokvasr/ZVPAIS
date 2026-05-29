@@ -7,6 +7,7 @@ const ReportForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { t } = useLanguage();
+  const eventTypeLabel = type => ({ gaisras: t('event_type_fire'), 'medžiagų išsiliejimas': t('event_type_spill'), stichija: t('event_type_disaster') }[type] ?? type);
   const isEditing = !!id;
 
   const [events, setEvents] = useState([]);
@@ -123,7 +124,7 @@ const ReportForm = () => {
             <option value="">{t('report_event_select')}</option>
             {events.map(ev => (
               <option key={ev.idEvent} value={ev.idEvent}>
-                [{ev.idEvent}] {ev.eventType} — {new Date(ev.eventDate).toLocaleDateString('lt-LT')} {ev.location ? `(${ev.location})` : ''}
+                [{ev.idEvent}] {eventTypeLabel(ev.eventType)} — {new Date(ev.eventDate).toLocaleDateString('lt-LT')} {ev.location ? `(${ev.location})` : ''}
               </option>
             ))}
           </select>

@@ -104,14 +104,7 @@ function deriveStabilityClass(windSpeed, shortwaveRad, cloudCoverPct, isDay) {
   }
 }
 
-function suggestClass(windSpeed) {
-  if (windSpeed >= 6) return 'D';
-  if (windSpeed >= 3) return 'C';
-  if (windSpeed >= 2) return 'B';
-  return 'A';
-}
-
-function StabilityHint({ cls, windSpeed }) {
+function StabilityHint({ cls }) {
   const { t } = useLanguage();
   const descriptions = {
     A: { text: t('stab_desc_A'), color: '#dc2626' },
@@ -122,16 +115,9 @@ function StabilityHint({ cls, windSpeed }) {
     F: { text: t('stab_desc_F'), color: '#7c3aed' },
   };
   const info = descriptions[cls?.toUpperCase()] ?? descriptions.D;
-  const suggested = suggestClass(windSpeed);
-  const mismatch = suggested !== cls?.toUpperCase();
   return (
     <div style={{ fontSize: '0.73rem', marginTop: 4, padding: '4px 6px', background: '#f8fafc', border: `1px solid ${info.color}30`, borderLeft: `3px solid ${info.color}`, borderRadius: 4, color: '#444' }}>
       <span>{info.text}</span>
-      {mismatch && (
-        <span style={{ display: 'block', marginTop: 2, color: '#b45309' }}>
-          ⚠ {t('stab_recommended')} <strong>{suggested}</strong>
-        </span>
-      )}
     </div>
   );
 }
@@ -164,6 +150,9 @@ export default function EventWindDispersion({ breakdown, eventData }) {
     fireLat: eventData?.centroidLat ?? 54.6872,
     fireLon: eventData?.centroidLon ?? 25.2797,
   });
+  const [windDate,    setWindDate]    = useState(
+    eventData?.eventDate ? new Date(eventData.eventDate).toISOString().split('T')[0] : ''
+  );
   const [picking,     setPicking]     = useState(false);
   const [result,      setResult]      = useState(null);
   const [selectedId,  setSelectedId]  = useState(null);
@@ -181,13 +170,14 @@ export default function EventWindDispersion({ breakdown, eventData }) {
 
     if (!autoFetchedRef.current && eventData?.eventDate && lat && lon) {
       autoFetchedRef.current = true;
+      setWindDate(prev => prev || new Date(eventData.eventDate).toISOString().split('T')[0]);
       setWindLoading(true);
       fetchWindFromApi(lat, lon, eventData.eventDate)
         .then(({ speed, dir, stabilityClass, date, hour }) => {
           setForm(f => ({ ...f, windSpeedMs: speed, windDirectionDeg: dir, stabilityClass }));
           setWindMsg(`✓ ${date} ${hour}:00 UTC — ${speed} m/s, ${dir}°, ${stabilityClass}`);
         })
-        .catch(err => setWindMsg(`Error: ${err.message}`))
+        .catch(err => setWindMsg(`${t('wind_fetch_error')}: ${err.message}`))
         .finally(() => setWindLoading(false));
     }
   }, [eventData]);
@@ -225,11 +215,11 @@ export default function EventWindDispersion({ breakdown, eventData }) {
   const fetchWindData = async () => {
     setWindLoading(true); setWindMsg('');
     try {
-      const { speed, dir, stabilityClass, date, hour } = await fetchWindFromApi(form.fireLat, form.fireLon, eventData?.eventDate);
+      const { speed, dir, stabilityClass, date, hour } = await fetchWindFromApi(form.fireLat, form.fireLon, windDate);
       setForm(f => ({ ...f, windSpeedMs: speed, windDirectionDeg: dir, stabilityClass }));
       setWindMsg(`✓ ${date} ${hour}:00 UTC — ${speed} m/s, ${dir}°, ${stabilityClass}`);
     } catch (err) {
-      setWindMsg(`Error: ${err.message}`);
+      setWindMsg(`${t('wind_fetch_error')}: ${err.message}`);
     } finally { setWindLoading(false); }
   };
 
@@ -260,14 +250,14 @@ export default function EventWindDispersion({ breakdown, eventData }) {
   const fetchAndCalculate = async () => {
     setWindLoading(true); setWindMsg(''); setError(''); setResult(null);
     try {
-      const { speed, dir, stabilityClass, date, hour } = await fetchWindFromApi(form.fireLat, form.fireLon, eventData?.eventDate);
+      const { speed, dir, stabilityClass, date, hour } = await fetchWindFromApi(form.fireLat, form.fireLon, windDate);
       const newForm = { ...form, windSpeedMs: speed, windDirectionDeg: dir, stabilityClass };
       setForm(newForm);
       setWindMsg(`✓ ${date} ${hour}:00 UTC — ${speed} m/s, ${dir}°, ${stabilityClass}`);
       setWindLoading(false);
       await runCalculation(newForm);
     } catch (err) {
-      setWindMsg(`Error: ${err.message}`);
+      setWindMsg(`${t('wind_fetch_error')}: ${err.message}`);
       setWindLoading(false);
     }
   };
@@ -331,6 +321,11 @@ export default function EventWindDispersion({ breakdown, eventData }) {
                   </button>
                 </div>
               </div>
+              <div style={{ marginTop: '0.4rem' }}>
+                <label style={{ fontSize: '0.8rem' }}>{t('wind_date_label')}</label>
+                <input type="date" value={windDate} onChange={e => setWindDate(e.target.value)}
+                  style={{ width: '100%', fontSize: '0.8rem' }} />
+              </div>
               {windMsg && <div style={{ fontSize: '0.75rem', color: windMsg.startsWith('✓') ? '#166534' : '#b45309' }}>{windMsg}</div>}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.4rem', marginTop: '0.4rem' }}>
                 <div>
@@ -359,7 +354,7 @@ export default function EventWindDispersion({ breakdown, eventData }) {
             <select name="stabilityClass" value={form.stabilityClass} onChange={handleChange}>
               {STABILITY_CLASSES.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
             </select>
-            <StabilityHint cls={form.stabilityClass} windSpeed={form.windSpeedMs} />
+            <StabilityHint cls={form.stabilityClass} />
 
             <div style={{ marginTop: '0.5rem', background: '#f5f5f5', borderRadius: 6, padding: '0.5rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>

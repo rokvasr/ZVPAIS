@@ -92,18 +92,20 @@ const ObjectSelector = ({ selectedEventObjects, onEventObjectsChange, specialist
                       <option value="air">{t('obj_comp_air')}</option>
                     </select>
                   </label>
-                  <label style={{ fontSize: '0.82rem', display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                    K_kat
-                    <input
-                      type="number"
-                      step="0.1"
-                      min="1"
-                      value={entry.kKat}
-                      onChange={e => handleFieldChange(obj.idObject, 'kKat', e.target.value)}
-                      placeholder="pvz. 1.0"
-                      style={{ padding: '3px 4px', borderRadius: '4px', border: '1px solid #ccc', fontSize: '0.85rem', width: '100%' }}
-                    />
-                  </label>
+                  {entry.componentType !== 'air' && (
+                    <label style={{ fontSize: '0.82rem', display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                      K_kat
+                      <input
+                        type="number"
+                        step="0.1"
+                        min="1"
+                        value={entry.kKat}
+                        onChange={e => handleFieldChange(obj.idObject, 'kKat', e.target.value)}
+                        placeholder="pvz. 1.0"
+                        style={{ padding: '3px 4px', borderRadius: '4px', border: '1px solid #ccc', fontSize: '0.85rem', width: '100%' }}
+                      />
+                    </label>
+                  )}
                 </div>
               )}
             </div>

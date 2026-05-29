@@ -141,6 +141,8 @@ const PAGE_SIZE = 10;
 const ReportList = () => {
   const { isSpecialist } = useAuth();
   const { t } = useLanguage();
+  const eventTypeLabel = type => ({ gaisras: t('event_type_fire'), 'medžiagų išsiliejimas': t('event_type_spill'), stichija: t('event_type_disaster') }[type] ?? type);
+  const statusLabel = s => ({ naujas: t('status_new'), 'laukia peržiūros': t('status_awaiting'), tikrinamas: t('status_reviewing'), patvirtintas: t('status_approved'), atmestas: t('status_rejected') }[s] ?? s);
   const [reports, setReports]       = useState([]);
   const [loading, setLoading]       = useState(true);
   const [error, setError]           = useState('');
@@ -316,7 +318,7 @@ const ReportList = () => {
                 <th>{t('report_assess_date')}</th>
                 <th>{t('report_damage_col')}</th>
                 <th>{t('report_monetary_col')}</th>
-                <th>{t('notes_col') ?? 'Pastabos'}</th>
+                <th>{t('notes_col')}</th>
                 <th>{t('actions')}</th>
               </tr>
             </thead>
@@ -326,10 +328,10 @@ const ReportList = () => {
                 const isDownloading = downloadingId === r.idDamageEvaluation;
                 return (
                   <tr key={r.idDamageEvaluation}>
-                    <td style={{ wordBreak: 'break-word' }}>{r.eventType}</td>
+                    <td style={{ wordBreak: 'break-word' }}>{eventTypeLabel(r.eventType)}</td>
                     <td>{r.eventDate ? new Date(r.eventDate).toLocaleDateString('lt-LT') : '—'}</td>
                     <td style={{ wordBreak: 'break-word' }}>{r.eventLocation || '—'}</td>
-                    <td style={{ wordBreak: 'break-word' }}>{r.eventStatus || '—'}</td>
+                    <td style={{ wordBreak: 'break-word' }}>{r.eventStatus ? statusLabel(r.eventStatus) : '—'}</td>
                     <td>{new Date(r.data).toLocaleDateString('lt-LT')}</td>
                     <td>{r.zalosDydis      != null ? r.zalosDydis.toFixed(2)      : '—'}</td>
                     <td>{r.piniginisDydis  != null ? r.piniginisDydis.toFixed(2)  : '—'}</td>
@@ -339,7 +341,7 @@ const ReportList = () => {
                         <Link to={`/events/${r.eventId}/calculation`} style={btn}>{t('report_calc_link')}</Link>
                         {calcsDone && (
                           <button onClick={() => handleDownloadPdf(r)} disabled={!!downloadingId} style={btn}>
-                            {isDownloading ? t('report_generating') : 'PDF'}
+                            {isDownloading ? t('report_generating') : t('calc_download_pdf')}
                           </button>
                         )}
                         {isSpecialist && (

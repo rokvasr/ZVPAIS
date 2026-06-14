@@ -1,6 +1,6 @@
 # ŽVPAIS – Naudotojo dokumentacija
 
-**Žalos ir Verslo Poveikio Aplinkos Informacinė Sistema**
+**Žmogaus Veiklos Poveikio Aplinkai Informacinė Sistema**
 
 ---
 

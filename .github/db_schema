@@ -1,0 +1,474 @@
+PGDMP  $                    ~            zpvisDB    17.9    18.1 ~    ê           0    0    ENCODING    ENCODING        SET client_encoding = 'UTF8';
+                           false            ë           0    0 
+   STDSTRINGS 
+   STDSTRINGS     (   SET standard_conforming_strings = 'on';
+                           false            ì           0    0 
+   SEARCHPATH 
+   SEARCHPATH     8   SELECT pg_catalog.set_config('search_path', '', false);
+                           false            í           1262    28585     zpvisDB    DATABASE     t   CREATE DATABASE "zpvisDB" WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'en_US.utf8';
+    DROP DATABASE "zpvisDB";
+                  
+   zpvisadmin    false                        2615    2200    public    SCHEMA     2   -- *not* creating schema, since initdb creates it
+ 2   -- *not* dropping schema, since initdb creates it
+                     azure_pg_admin    false                        3079    31114     postgis 	   EXTENSION     ;   CREATE EXTENSION IF NOT EXISTS postgis WITH SCHEMA public;
+    DROP EXTENSION postgis;
+                        false    6            î           0    0    EXTENSION postgis     COMMENT     ^   COMMENT ON EXTENSION postgis IS 'PostGIS geometry and geography spatial types and functions';
+                             false    2            ï           0    0 4   FUNCTION pg_replication_origin_advance(text, pg_lsn)    ACL     `   GRANT ALL ON FUNCTION pg_catalog.pg_replication_origin_advance(text, pg_lsn) TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    496            ð           0    0 +   FUNCTION pg_replication_origin_create(text)    ACL     W   GRANT ALL ON FUNCTION pg_catalog.pg_replication_origin_create(text) TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    271            ñ           0    0 )   FUNCTION pg_replication_origin_drop(text)    ACL     U   GRANT ALL ON FUNCTION pg_catalog.pg_replication_origin_drop(text) TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    754            ò           0    0 (   FUNCTION pg_replication_origin_oid(text)    ACL     T   GRANT ALL ON FUNCTION pg_catalog.pg_replication_origin_oid(text) TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    590            ó           0    0 6   FUNCTION pg_replication_origin_progress(text, boolean)    ACL     b   GRANT ALL ON FUNCTION pg_catalog.pg_replication_origin_progress(text, boolean) TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    671            ô           0    0 1   FUNCTION pg_replication_origin_session_is_setup()    ACL     ]   GRANT ALL ON FUNCTION pg_catalog.pg_replication_origin_session_is_setup() TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    559            õ           0    0 8   FUNCTION pg_replication_origin_session_progress(boolean)    ACL     d   GRANT ALL ON FUNCTION pg_catalog.pg_replication_origin_session_progress(boolean) TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    565            ö           0    0 .   FUNCTION pg_replication_origin_session_reset()    ACL     Z   GRANT ALL ON FUNCTION pg_catalog.pg_replication_origin_session_reset() TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    378            ÷           0    0 2   FUNCTION pg_replication_origin_session_setup(text)    ACL     ^   GRANT ALL ON FUNCTION pg_catalog.pg_replication_origin_session_setup(text) TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    851            ø           0    0 +   FUNCTION pg_replication_origin_xact_reset()    ACL     W   GRANT ALL ON FUNCTION pg_catalog.pg_replication_origin_xact_reset() TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    697            ù           0    0 K   FUNCTION pg_replication_origin_xact_setup(pg_lsn, timestamp with time zone)    ACL     w   GRANT ALL ON FUNCTION pg_catalog.pg_replication_origin_xact_setup(pg_lsn, timestamp with time zone) TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    388            ú           0    0    FUNCTION pg_show_replication_origin_status(OUT local_id oid, OUT external_id text, OUT remote_lsn pg_lsn, OUT local_lsn pg_lsn)    ACL     «   GRANT ALL ON FUNCTION pg_catalog.pg_show_replication_origin_status(OUT local_id oid, OUT external_id text, OUT remote_lsn pg_lsn, OUT local_lsn pg_lsn) TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    381            û           0    0    FUNCTION pg_stat_reset()    ACL     D   GRANT ALL ON FUNCTION pg_catalog.pg_stat_reset() TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    343            ü           0    0 *   FUNCTION pg_stat_reset_shared(target text)    ACL     V   GRANT ALL ON FUNCTION pg_catalog.pg_stat_reset_shared(target text) TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    300            ý           0    0 4   FUNCTION pg_stat_reset_single_function_counters(oid)    ACL     `   GRANT ALL ON FUNCTION pg_catalog.pg_stat_reset_single_function_counters(oid) TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    340            þ           0    0 1   FUNCTION pg_stat_reset_single_table_counters(oid)    ACL     ]   GRANT ALL ON FUNCTION pg_catalog.pg_stat_reset_single_table_counters(oid) TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    727            ÿ           0    0    COLUMN pg_config.name    ACL     D   GRANT SELECT(name) ON TABLE pg_catalog.pg_config TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    99                        0    0    COLUMN pg_config.setting    ACL     G   GRANT SELECT(setting) ON TABLE pg_catalog.pg_config TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    99                       0    0 $   COLUMN pg_hba_file_rules.line_number    ACL     S   GRANT SELECT(line_number) ON TABLE pg_catalog.pg_hba_file_rules TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    95                       0    0    COLUMN pg_hba_file_rules.type    ACL     L   GRANT SELECT(type) ON TABLE pg_catalog.pg_hba_file_rules TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    95                       0    0 !   COLUMN pg_hba_file_rules.database    ACL     P   GRANT SELECT(database) ON TABLE pg_catalog.pg_hba_file_rules TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    95                       0    0 "   COLUMN pg_hba_file_rules.user_name    ACL     Q   GRANT SELECT(user_name) ON TABLE pg_catalog.pg_hba_file_rules TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    95                       0    0     COLUMN pg_hba_file_rules.address    ACL     O   GRANT SELECT(address) ON TABLE pg_catalog.pg_hba_file_rules TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    95                       0    0     COLUMN pg_hba_file_rules.netmask    ACL     O   GRANT SELECT(netmask) ON TABLE pg_catalog.pg_hba_file_rules TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    95                        0    0 $   COLUMN pg_hba_file_rules.auth_method    ACL     S   GRANT SELECT(auth_method) ON TABLE pg_catalog.pg_hba_file_rules TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    95                       0    0     COLUMN pg_hba_file_rules.options    ACL     O   GRANT SELECT(options) ON TABLE pg_catalog.pg_hba_file_rules TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    95            	           0    0    COLUMN pg_hba_file_rules.error    ACL     M   GRANT SELECT(error) ON TABLE pg_catalog.pg_hba_file_rules TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    95            
+           0    0 ,   COLUMN pg_replication_origin_status.local_id    ACL     [   GRANT SELECT(local_id) ON TABLE pg_catalog.pg_replication_origin_status TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    146            
+           0    0 /   COLUMN pg_replication_origin_status.external_id    ACL     ^   GRANT SELECT(external_id) ON TABLE pg_catalog.pg_replication_origin_status TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    146                       0    0 .   COLUMN pg_replication_origin_status.remote_lsn    ACL     ]   GRANT SELECT(remote_lsn) ON TABLE pg_catalog.pg_replication_origin_status TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    146            
+           0    0 -   COLUMN pg_replication_origin_status.local_lsn    ACL     \   GRANT SELECT(local_lsn) ON TABLE pg_catalog.pg_replication_origin_status TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    146                       0    0     COLUMN pg_shmem_allocations.name    ACL     O   GRANT SELECT(name) ON TABLE pg_catalog.pg_shmem_allocations TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    100                       0    0    COLUMN pg_shmem_allocations.off    ACL     N   GRANT SELECT(off) ON TABLE pg_catalog.pg_shmem_allocations TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    100                       0    0     COLUMN pg_shmem_allocations.size    ACL     O   GRANT SELECT(size) ON TABLE pg_catalog.pg_shmem_allocations TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    100                       0    0 *   COLUMN pg_shmem_allocations.allocated_size    ACL     Y   GRANT SELECT(allocated_size) ON TABLE pg_catalog.pg_shmem_allocations TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    100                       0    0    COLUMN pg_statistic.starelid    ACL     K   GRANT SELECT(starelid) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40                       0    0    COLUMN pg_statistic.staattnum    ACL     L   GRANT SELECT(staattnum) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40                       0    0    COLUMN pg_statistic.stainherit    ACL     M   GRANT SELECT(stainherit) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40                       0    0    COLUMN pg_statistic.stanullfrac    ACL     N   GRANT SELECT(stanullfrac) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40                       0    0    COLUMN pg_statistic.stawidth    ACL     K   GRANT SELECT(stawidth) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40                       0    0    COLUMN pg_statistic.stadistinct    ACL     N   GRANT SELECT(stadistinct) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40                       0    0    COLUMN pg_statistic.stakind1    ACL     K   GRANT SELECT(stakind1) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40                       0    0    COLUMN pg_statistic.stakind2    ACL     K   GRANT SELECT(stakind2) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40                       0    0    COLUMN pg_statistic.stakind3    ACL     K   GRANT SELECT(stakind3) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40                       0    0    COLUMN pg_statistic.stakind4    ACL     K   GRANT SELECT(stakind4) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40                       0    0    COLUMN pg_statistic.stakind5    ACL     K   GRANT SELECT(stakind5) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40                       0    0    COLUMN pg_statistic.staop1    ACL     I   GRANT SELECT(staop1) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40                       0    0    COLUMN pg_statistic.staop2    ACL     I   GRANT SELECT(staop2) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40                       0    0    COLUMN pg_statistic.staop3    ACL     I   GRANT SELECT(staop3) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40                        0    0    COLUMN pg_statistic.staop4    ACL     I   GRANT SELECT(staop4) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40            !           0    0    COLUMN pg_statistic.staop5    ACL     I   GRANT SELECT(staop5) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40            "           0    0    COLUMN pg_statistic.stacoll1    ACL     K   GRANT SELECT(stacoll1) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40            #           0    0    COLUMN pg_statistic.stacoll2    ACL     K   GRANT SELECT(stacoll2) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40            $           0    0    COLUMN pg_statistic.stacoll3    ACL     K   GRANT SELECT(stacoll3) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40            %           0    0    COLUMN pg_statistic.stacoll4    ACL     K   GRANT SELECT(stacoll4) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40            &           0    0    COLUMN pg_statistic.stacoll5    ACL     K   GRANT SELECT(stacoll5) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40            '           0    0    COLUMN pg_statistic.stanumbers1    ACL     N   GRANT SELECT(stanumbers1) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40            (           0    0    COLUMN pg_statistic.stanumbers2    ACL     N   GRANT SELECT(stanumbers2) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40            )           0    0    COLUMN pg_statistic.stanumbers3    ACL     N   GRANT SELECT(stanumbers3) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40            *           0    0    COLUMN pg_statistic.stanumbers4    ACL     N   GRANT SELECT(stanumbers4) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40            +           0    0    COLUMN pg_statistic.stanumbers5    ACL     N   GRANT SELECT(stanumbers5) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40            ,           0    0    COLUMN pg_statistic.stavalues1    ACL     M   GRANT SELECT(stavalues1) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40            -           0    0    COLUMN pg_statistic.stavalues2    ACL     M   GRANT SELECT(stavalues2) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40            .           0    0    COLUMN pg_statistic.stavalues3    ACL     M   GRANT SELECT(stavalues3) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40            /           0    0    COLUMN pg_statistic.stavalues4    ACL     M   GRANT SELECT(stavalues4) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40            0           0    0    COLUMN pg_statistic.stavalues5    ACL     M   GRANT SELECT(stavalues5) ON TABLE pg_catalog.pg_statistic TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    40            1           0    0    COLUMN pg_subscription.oid    ACL     I   GRANT SELECT(oid) ON TABLE pg_catalog.pg_subscription TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    65            2           0    0    COLUMN pg_subscription.subdbid    ACL     M   GRANT SELECT(subdbid) ON TABLE pg_catalog.pg_subscription TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    65            3           0    0    COLUMN pg_subscription.subname    ACL     M   GRANT SELECT(subname) ON TABLE pg_catalog.pg_subscription TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    65            4           0    0    COLUMN pg_subscription.subowner    ACL     N   GRANT SELECT(subowner) ON TABLE pg_catalog.pg_subscription TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    65            5           0    0 !   COLUMN pg_subscription.subenabled    ACL     P   GRANT SELECT(subenabled) ON TABLE pg_catalog.pg_subscription TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    65            6           0    0 "   COLUMN pg_subscription.subconninfo    ACL     Q   GRANT SELECT(subconninfo) ON TABLE pg_catalog.pg_subscription TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    65            7           0    0 "   COLUMN pg_subscription.subslotname    ACL     Q   GRANT SELECT(subslotname) ON TABLE pg_catalog.pg_subscription TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    65            8           0    0 $   COLUMN pg_subscription.subsynccommit    ACL     S   GRANT SELECT(subsynccommit) ON TABLE pg_catalog.pg_subscription TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    65            9           0    0 &   COLUMN pg_subscription.subpublications    ACL     U   GRANT SELECT(subpublications) ON TABLE pg_catalog.pg_subscription TO azure_pg_admin;
+       
+   pg_catalog                azuresu    false    65            Ú            1259    30974    __EFMigrationsHistory    TABLE     ˜   CREATE TABLE public."__EFMigrationsHistory" (
+    "MigrationId" character varying(150) NOT NULL,
+    "ProductVersion" character varying(32) NOT NULL
+);
+ +   DROP TABLE public."__EFMigrationsHistory";
+       public         heap r    
+   zpvisadmin    false    6            Û            1259    30977    damage_evaluations    TABLE     +  CREATE TABLE public.damage_evaluations (
+    id_damage_evaluation integer NOT NULL,
+    data timestamp with time zone NOT NULL,
+    zalos_dydis double precision,
+    piniginis_dydis double precision,
+    fk_event integer NOT NULL,
+    notes text,
+    created_at timestamp with time zone NOT NULL
+);
+ &   DROP TABLE public.damage_evaluations;
+       public         heap r    
+   zpvisadmin    false    6            Ü            1259    30994 +   damage_evaluations_id_damage_evaluation_seq    SEQUENCE        ALTER TABLE public.damage_evaluations ALTER COLUMN id_damage_evaluation ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.damage_evaluations_id_damage_evaluation_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+            public            
+   zpvisadmin    false    6    219            Ý            1259    30995    emission_compounds    TABLE     ¥   CREATE TABLE public.emission_compounds (
+    id integer NOT NULL,
+    name character varying(500) NOT NULL,
+    base_rate double precision,
+    ef jsonb NOT NULL
+);
+ &   DROP TABLE public.emission_compounds;
+       public         heap r    
+   zpvisadmin    false    6            Þ            1259    31000    emission_compounds_id_seq    SEQUENCE     ã   ALTER TABLE public.emission_compounds ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.emission_compounds_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+            public            
+   zpvisadmin    false    221    6            ß            1259    31001 
+   event_objects    TABLE     È   CREATE TABLE public.event_objects (
+    event_id integer NOT NULL,
+    object_id integer NOT NULL,
+    id_event_object integer NOT NULL,
+    component_type character varying(50),
+    k_kat numeric
+);
+ !   DROP TABLE public.event_objects;
+       public         heap r    
+   zpvisadmin    false    6            à            1259    31006 !   event_objects_id_event_object_seq    SEQUENCE     ó   ALTER TABLE public.event_objects ALTER COLUMN id_event_object ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.event_objects_id_event_object_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+            public            
+   zpvisadmin    false    223    6            á            1259    31007    events    TABLE     h  CREATE TABLE public.events (
+    id_event integer NOT NULL,
+    event_type text NOT NULL,
+    event_date timestamp with time zone NOT NULL,
+    description text NOT NULL,
+    location text NOT NULL,
+    status text NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone,
+    coordinates public.geometry NOT NULL
+);
+    DROP TABLE public.events;
+       public         heap r    
+   zpvisadmin    false    2    2    6    2    6    6    2    6    2    6    2    6    2    6    2    6    6            â            1259    31012    events_id_event_seq    SEQUENCE     ×   ALTER TABLE public.events ALTER COLUMN id_event ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.events_id_event_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+            public            
+   zpvisadmin    false    6    225            ã            1259    31013    indexing_coefficients    TABLE     é   CREATE TABLE public.indexing_coefficients (
+    id_indexing_coefficient integer NOT NULL,
+    year integer NOT NULL,
+    quarter integer NOT NULL,
+    coefficient numeric NOT NULL,
+    created_at timestamp with time zone NOT NULL
+);
+ )   DROP TABLE public.indexing_coefficients;
+       public         heap r    
+   zpvisadmin    false    6            ä            1259    31018 1   indexing_coefficients_id_indexing_coefficient_seq    SEQUENCE       ALTER TABLE public.indexing_coefficients ALTER COLUMN id_indexing_coefficient ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.indexing_coefficients_id_indexing_coefficient_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+            public            
+   zpvisadmin    false    6    227            å            1259    31019 	   materials    TABLE     ˆ  CREATE TABLE public.materials (
+    id_material integer NOT NULL,
+    name character varying(255) NOT NULL,
+    description text NOT NULL,
+    toxicity_factor double precision,
+    unit character varying(50) NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    base_rate numeric DEFAULT 0.0,
+    substance_type character varying(50),
+    emission_category character varying(50)
+);
+    DROP TABLE public.materials;
+       public         heap r    
+   zpvisadmin    false    6            æ            1259    31025    materials_id_material_seq    SEQUENCE     ã   ALTER TABLE public.materials ALTER COLUMN id_material ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.materials_id_material_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+            public            
+   zpvisadmin    false    6    229            ç            1259    31026    object_materials    TABLE        CREATE TABLE public.object_materials (
+    object_id integer NOT NULL,
+    material_id integer NOT NULL,
+    percentage double precision,
+    mass double precision,
+    volume double precision,
+    id_object_material integer DEFAULT 0 NOT NULL,
+    recovered_quantity double precision
+);
+ $   DROP TABLE public.object_materials;
+       public         heap r    
+   zpvisadmin    false    6            è            1259    31030     objects    TABLE     ÿ   CREATE TABLE public.objects (
+    id_object integer NOT NULL,
+    name character varying(255) NOT NULL,
+    description text NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    total_mass double precision,
+    total_volume double precision
+);
+    DROP TABLE public.objects;
+       public         heap r    
+   zpvisadmin    false    6            é            1259    31035    objects_id_object_seq    SEQUENCE     Û   ALTER TABLE public.objects ALTER COLUMN id_object ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.objects_id_object_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+            public            
+   zpvisadmin    false    6    232            :           0    0    TABLE spatial_ref_sys    ACL     O   GRANT ALL ON TABLE public.spatial_ref_sys TO azure_pg_admin WITH GRANT OPTION;
+          public                azuresu    false    240            ê            1259    31036 
+   specialists    TABLE     ¤   CREATE TABLE public.specialists (
+    id_user integer NOT NULL,
+    name character varying(255) NOT NULL,
+    field_of_expertise character varying(255) NOT NULL
+);
+    DROP TABLE public.specialists;
+       public         heap r    
+   zpvisadmin    false    6            ë            1259    31041    users    TABLE     Ç   CREATE TABLE public.users (
+    id_user integer NOT NULL,
+    email character varying(255) NOT NULL,
+    password character varying(255) NOT NULL,
+    created_at timestamp with time zone NOT NULL
+);
+    DROP TABLE public.users;
+       public         heap r    
+   zpvisadmin    false    6            ì            1259    31046    users_id_user_seq    SEQUENCE     Ó   ALTER TABLE public.users ALTER COLUMN id_user ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.users_id_user_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+            public            
+   zpvisadmin    false    235    6            í            1259    31047 
+   waste_types    TABLE     d  CREATE TABLE public.waste_types (
+    id integer NOT NULL,
+    ewc_code character varying(20) NOT NULL,
+    description text NOT NULL,
+    is_hazardous boolean NOT NULL,
+    is_combustible boolean NOT NULL,
+    total_mass_tonnes double precision NOT NULL,
+    morphology jsonb NOT NULL,
+    morph_sum double precision NOT NULL,
+    flags jsonb NOT NULL
+);
+    DROP TABLE public.waste_types;
+       public         heap r    
+   zpvisadmin    false    6            î            1259    31052    waste_types_id_seq    SEQUENCE     Õ   ALTER TABLE public.waste_types ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.waste_types_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+            public            
+   zpvisadmin    false    237    6            /           2606    31054 .   __EFMigrationsHistory PK___EFMigrationsHistory 
+   CONSTRAINT     {   ALTER TABLE ONLY public."__EFMigrationsHistory"
+    ADD CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY ("MigrationId");
+ \   ALTER TABLE ONLY public."__EFMigrationsHistory" DROP CONSTRAINT "PK___EFMigrationsHistory";
+       public              
+   zpvisadmin    false    218            2           2606    31056 (   damage_evaluations PK_damage_evaluations 
+   CONSTRAINT     z   ALTER TABLE ONLY public.damage_evaluations
+    ADD CONSTRAINT "PK_damage_evaluations" PRIMARY KEY (id_damage_evaluation);
+ T   ALTER TABLE ONLY public.damage_evaluations DROP CONSTRAINT "PK_damage_evaluations";
+       public              
+   zpvisadmin    false    219            4           2606    31058 (   emission_compounds PK_emission_compounds 
+   CONSTRAINT     h   ALTER TABLE ONLY public.emission_compounds
+    ADD CONSTRAINT "PK_emission_compounds" PRIMARY KEY (id);
+ T   ALTER TABLE ONLY public.emission_compounds DROP CONSTRAINT "PK_emission_compounds";
+       public              
+   zpvisadmin    false    221            8           2606    31060    event_objects PK_event_objects 
+   CONSTRAINT     k   ALTER TABLE ONLY public.event_objects
+    ADD CONSTRAINT "PK_event_objects" PRIMARY KEY (id_event_object);
+ J   ALTER TABLE ONLY public.event_objects DROP CONSTRAINT "PK_event_objects";
+       public              
+   zpvisadmin    false    223            :           2606    31062    events PK_events 
+   CONSTRAINT     V   ALTER TABLE ONLY public.events
+    ADD CONSTRAINT "PK_events" PRIMARY KEY (id_event);
+ <   ALTER TABLE ONLY public.events DROP CONSTRAINT "PK_events";
+       public              
+   zpvisadmin    false    225            <           2606    31064 .   indexing_coefficients PK_indexing_coefficients 
+   CONSTRAINT     ƒ   ALTER TABLE ONLY public.indexing_coefficients
+    ADD CONSTRAINT "PK_indexing_coefficients" PRIMARY KEY (id_indexing_coefficient);
+ Z   ALTER TABLE ONLY public.indexing_coefficients DROP CONSTRAINT "PK_indexing_coefficients";
+       public              
+   zpvisadmin    false    227            >           2606    31066    materials PK_materials 
+   CONSTRAINT     _   ALTER TABLE ONLY public.materials
+    ADD CONSTRAINT "PK_materials" PRIMARY KEY (id_material);
+ B   ALTER TABLE ONLY public.materials DROP CONSTRAINT "PK_materials";
+       public              
+   zpvisadmin    false    229            A           2606    31068 $   object_materials PK_object_materials 
+   CONSTRAINT     x   ALTER TABLE ONLY public.object_materials
+    ADD CONSTRAINT "PK_object_materials" PRIMARY KEY (object_id, material_id);
+ P   ALTER TABLE ONLY public.object_materials DROP CONSTRAINT "PK_object_materials";
+       public              
+   zpvisadmin    false    231    231            C           2606    31070    objects PK_objects 
+   CONSTRAINT     Y   ALTER TABLE ONLY public.objects
+    ADD CONSTRAINT "PK_objects" PRIMARY KEY (id_object);
+ >   ALTER TABLE ONLY public.objects DROP CONSTRAINT "PK_objects";
+       public              
+   zpvisadmin    false    232            E           2606    31072    specialists PK_specialists 
+   CONSTRAINT     _   ALTER TABLE ONLY public.specialists
+    ADD CONSTRAINT "PK_specialists" PRIMARY KEY (id_user);
+ F   ALTER TABLE ONLY public.specialists DROP CONSTRAINT "PK_specialists";
+       public              
+   zpvisadmin    false    234            G           2606    31074    users PK_users 
+   CONSTRAINT     S   ALTER TABLE ONLY public.users
+    ADD CONSTRAINT "PK_users" PRIMARY KEY (id_user);
+ :   ALTER TABLE ONLY public.users DROP CONSTRAINT "PK_users";
+       public              
+   zpvisadmin    false    235            I           2606    31076    waste_types PK_waste_types 
+   CONSTRAINT     Z   ALTER TABLE ONLY public.waste_types
+    ADD CONSTRAINT "PK_waste_types" PRIMARY KEY (id);
+ F   ALTER TABLE ONLY public.waste_types DROP CONSTRAINT "PK_waste_types";
+       public              
+   zpvisadmin    false    237            0           1259    31077    IX_damage_evaluations_fk_event    INDEX     c   CREATE INDEX "IX_damage_evaluations_fk_event" ON public.damage_evaluations USING btree (fk_event);
+ 4   DROP INDEX public."IX_damage_evaluations_fk_event";
+       public              
+   zpvisadmin    false    219            5           1259    31078    IX_event_objects_event_id    INDEX     Y   CREATE INDEX "IX_event_objects_event_id" ON public.event_objects USING btree (event_id);
+ /   DROP INDEX public."IX_event_objects_event_id";
+       public              
+   zpvisadmin    false    223            6           1259    31079    IX_event_objects_object_id    INDEX     [   CREATE INDEX "IX_event_objects_object_id" ON public.event_objects USING btree (object_id);
+ 0   DROP INDEX public."IX_event_objects_object_id";
+       public              
+   zpvisadmin    false    223            ?           1259    31080    IX_object_materials_material_id    INDEX     e   CREATE INDEX "IX_object_materials_material_id" ON public.object_materials USING btree (material_id);
+ 5   DROP INDEX public."IX_object_materials_material_id";
+       public              
+   zpvisadmin    false    231            L           2606    31081 8   damage_evaluations FK_damage_evaluations_events_fk_event 
+   FK CONSTRAINT     ³   ALTER TABLE ONLY public.damage_evaluations
+    ADD CONSTRAINT "FK_damage_evaluations_events_fk_event" FOREIGN KEY (fk_event) REFERENCES public.events(id_event) ON DELETE CASCADE;
+ d   ALTER TABLE ONLY public.damage_evaluations DROP CONSTRAINT "FK_damage_evaluations_events_fk_event";
+       public            
+   zpvisadmin    false    225    4922    219            M           2606    31086 .   event_objects FK_event_objects_events_event_id 
+   FK CONSTRAINT     ©   ALTER TABLE ONLY public.event_objects
+    ADD CONSTRAINT "FK_event_objects_events_event_id" FOREIGN KEY (event_id) REFERENCES public.events(id_event) ON DELETE CASCADE;
+ Z   ALTER TABLE ONLY public.event_objects DROP CONSTRAINT "FK_event_objects_events_event_id";
+       public            
+   zpvisadmin    false    223    4922    225            N           2606    31091 0   event_objects FK_event_objects_objects_object_id 
+   FK CONSTRAINT     ®   ALTER TABLE ONLY public.event_objects
+    ADD CONSTRAINT "FK_event_objects_objects_object_id" FOREIGN KEY (object_id) REFERENCES public.objects(id_object) ON DELETE CASCADE;
+ \   ALTER TABLE ONLY public.event_objects DROP CONSTRAINT "FK_event_objects_objects_object_id";
+       public            
+   zpvisadmin    false    4931    232    223            O           2606    31096 :   object_materials FK_object_materials_materials_material_id 
+   FK CONSTRAINT     ¾   ALTER TABLE ONLY public.object_materials
+    ADD CONSTRAINT "FK_object_materials_materials_material_id" FOREIGN KEY (material_id) REFERENCES public.materials(id_material) ON DELETE CASCADE;
+ f   ALTER TABLE ONLY public.object_materials DROP CONSTRAINT "FK_object_materials_materials_material_id";
+       public            
+   zpvisadmin    false    231    229    4926            P           2606    31101 6   object_materials FK_object_materials_objects_object_id 
+   FK CONSTRAINT     ´   ALTER TABLE ONLY public.object_materials
+    ADD CONSTRAINT "FK_object_materials_objects_object_id" FOREIGN KEY (object_id) REFERENCES public.objects(id_object) ON DELETE CASCADE;
+ b   ALTER TABLE ONLY public.object_materials DROP CONSTRAINT "FK_object_materials_objects_object_id";
+       public            
+   zpvisadmin    false    232    231    4931            Q           2606    31106 (   specialists FK_specialists_users_id_user 
+   FK CONSTRAINT         ALTER TABLE ONLY public.specialists
+    ADD CONSTRAINT "FK_specialists_users_id_user" FOREIGN KEY (id_user) REFERENCES public.users(id_user) ON DELETE CASCADE;
+ T   ALTER TABLE ONLY public.specialists DROP CONSTRAINT "FK_specialists_users_id_user";
+       public            
+   zpvisadmin    false    235    234    4935           

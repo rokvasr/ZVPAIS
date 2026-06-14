@@ -1,0 +1,641 @@
+--
+-- PostgreSQL database dump
+--
+
+\restrict FMi9CvrbU8vi07fb0z5SD0nbSvszVacidaYSwkfNaHZBaLw4jhAAdXJK0S5sDCL
+
+-- Dumped from database version 17.9
+-- Dumped by pg_dump version 18.1
+
+-- Started on 2026-06-14 17:01:12
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 5096 (class 0 OID 30974)
+-- Dependencies: 218
+-- Data for Name: __EFMigrationsHistory; Type: TABLE DATA; Schema: public; Owner: zpvisadmin
+--
+
+COPY public."__EFMigrationsHistory" ("MigrationId", "ProductVersion") FROM stdin;
+20260309072010_ChangeToDateTimeOffset	8.0.24
+20260309072815_ChangeEventTypeToText	8.0.24
+20260310115303_ChangeCoordinatesToPolygon	8.0.24
+20260310115818_InitialCreate	8.0.24
+20260322142046_AddEventObjectTable	8.0.24
+20260322151951_AddObjectMaterial	8.0.24
+20260322152918_AddObjectMaterialsNavigation	8.0.24
+20260323082012_AddDamageCalculationFields	8.0.24
+20260323083219_MakeNotesNullable	8.0.24
+20260323085221_AddTotalMassAndVolumeToObject	8.0.24
+20260323085952_AddSensitivityFactorToEvent	8.0.24
+20260405194339_RemoveUnusedTables	8.0.24
+20260414120000_FixMaterialColumns	8.0.24
+20260417122824_AddFormulaFields	8.0.24
+20260418080916_MoveComponentTypeKKatToEventObject	8.0.24
+20260418083445_RemoveCalculationMethod	8.0.24
+20260418090048_SeedMaterials	8.0.24
+20260419130004_AddTotalMassVolumeToObject	8.0.24
+20260419183350_AddCascadeDeleteOnEvent	8.0.24
+20260420113109_AddWasteTypesAndCompounds	8.0.24
+20260422214233_AddEmissionCategoryToMaterial	8.0.24
+20260422215819_SeedCombustibleMaterials	8.0.24
+20260423135218_ResetSequences	8.0.24
+20260423135552_AddMissingEFCategories	8.0.24
+20260423135745_AssignCombustibleMaterials	8.0.24
+20260512120000_SeedMissingMaterialsAndObjects	8.0.24
+\.
+
+
+--
+-- TOC entry 5097 (class 0 OID 30977)
+-- Dependencies: 219
+-- Data for Name: damage_evaluations; Type: TABLE DATA; Schema: public; Owner: zpvisadmin
+--
+
+COPY public.damage_evaluations (id_damage_evaluation, data, zalos_dydis, piniginis_dydis, fk_event, notes, created_at) FROM stdin;
+26	2026-05-12 20:39:20.59749+00	129591.01318184486	129591.01318184486	86	Automatiškai sugeneruota ataskaita. I_n = 1.02.	2026-05-12 20:39:20.597793+00
+27	2026-05-12 20:40:20.996082+00	1509.6	1509.6	87	Automatiškai sugeneruota ataskaita. I_n = 1.02.	2026-05-12 20:40:20.996095+00
+28	2026-05-12 20:45:11.272455+00	2034.84798	2034.84798	88	Automatiškai sugeneruota ataskaita. I_n = 1.02.	2026-05-12 20:45:11.280994+00
+29	2026-05-12 20:49:41.81199+00	1966554.84798	1966554.84798	89	Automatiškai sugeneruota ataskaita. I_n = 1.02.	2026-05-12 20:49:41.812012+00
+30	2026-05-14 19:40:54.76446+00	0	0	113	Automatiškai sugeneruota ataskaita. I_n = 1.02.	2026-05-14 19:40:54.766008+00
+31	2026-05-21 00:00:00+00	1355.274	1355.274	88	\N	2026-05-21 09:15:54.620018+00
+32	2026-05-21 00:00:00+00	1045818601.59	1045818601.59	85	\N	2026-05-21 09:21:21.027204+00
+33	2026-05-21 10:37:14.633084+00	262.344	262.344	114	Automatiškai sugeneruota ataskaita. I_n = 1.02.	2026-05-21 10:37:14.633511+00
+34	2026-05-21 10:48:51.450106+00	1070339442.492	1070339442.492	115	Automatiškai sugeneruota ataskaita. I_n = 1.02.	2026-05-21 10:48:51.450664+00
+36	2026-05-21 00:00:00+00	47938809.762	47938809.762	115	\N	2026-05-21 11:26:54.876032+00
+38	2026-05-27 09:44:46.45691+00	1997.03988	1997.03988	118	Automatiškai sugeneruota ataskaita. I_n = 1.2.	2026-05-27 09:44:46.465789+00
+39	2026-05-29 16:47:32.380271+00	606548.4	606548.4	119	Automatiškai sugeneruota ataskaita. I_n = 1.2.	2026-05-29 16:47:32.388214+00
+40	2026-06-03 00:00:00+00	56398599.72	56398599.72	115	\N	2026-06-03 10:36:18.335464+00
+41	2026-05-13 00:00:00+00	308.64	308.64	114	\N	2026-06-03 10:36:30.197134+00
+42	2026-06-03 14:08:50.956745+00	1997.03988	1997.03988	120	Automatiškai sugeneruota ataskaita. I_n = 1.2.	2026-06-03 14:08:50.958694+00
+43	2026-06-03 00:00:00+00	308.64	308.64	114	\N	2026-06-03 14:12:19.732086+00
+44	2026-06-04 08:09:54.737327+00	0	0	121	Automatiškai sugeneruota ataskaita. I_n = 2.302.	2026-06-04 08:09:54.737353+00
+\.
+
+
+--
+-- TOC entry 5099 (class 0 OID 30995)
+-- Dependencies: 221
+-- Data for Name: emission_compounds; Type: TABLE DATA; Schema: public; Owner: zpvisadmin
+--
+
+COPY public.emission_compounds (id, name, base_rate, ef) FROM stdin;
+1	spent activated carbon	28	{"paper": 78.5, "resins": 20, "plastics": 57.985611510791365, "polymers": 100}
+2	organic halogenated solvents, washing liquids and mother liquors	767	{"paper": 9.083333333333334, "resins": 2.4, "plastics": 1.4028776978417268, "polymers": 7}
+3	other organic solvents, washing liquids and mother liquors	405	{"paper": 351.8, "resins": 2.27, "polymers": 140}
+4	Ethenyl cyclohexene	240	{"resins": 129, "plastics": 1.705, "polymers": 100}
+5	wastes from additives containing hazardous substances	16508	{"paper": 8.316666666666666, "plastics": 0.010071942446043166}
+6	other filter cakes and spent absorbents	16508	{"paper": 129}
+7	Non-volatile PAH	1286	{"polymers": 0.00307}
+9	Toluene	315396	{"polymers": 0.00146}
+10	Ethyl benzene	28	{"polymers": 0.00715}
+11	Kitos popieriaus ir kartono atliekos	1286	{"plastics": 0.01105, "polymers": 0.00031}
+12	Xylenes	1286	{"polymers": 0.011800000000000001}
+13	Nonane	1286	{"polymers": 0.00034}
+14	1,2,4 - trimethylbenzene	1286	{"polymers": 0.0010400000000000001}
+15	Karboniliniai junginiai / Carbonyl	315396	{"polymers": 0.00237}
+18	Acrolein	28	{"polymers": 0.007679999999999999}
+19	Crotonaldehyde	28	{"polymers": 0.00735}
+20	Benzaldehyde	1995772	{"polymers": 0.00735}
+21	Methylisobutylketone	1286	{"polymers": 0.04496}
+22	laboratory chemicals, consisting of or containing hazardous substances, including mixtures of laboratory chemicals	\N	{"resins": 1.764}
+23	maišytos maisto žaliavų ir produktų atliekos	28	{"resins": 0.013}
+24	Benzo(b)thiophene	315396	{"polymers": 0.1381}
+25	TCDF	28	{"resins": 0.042, "polymers": 0.13897}
+26	1-Hexane	28	{"polymers": 0.0674}
+27	Benzo(G,H,I)perylene	28	{"polymers": 0.07307999999999999}
+28	Stibis / Antimony	28	{"polymers": 0.08911}
+29	Magnis / Magnesium	28	{"polymers": 0.04212}
+30	Natris / Sodium	28	{"polymers": 2.3095700000000003}
+31	Generated pollutants,	28	{"polymers": 0.03344}
+32	Butadiene	28	{"resins": 0.098}
+33	Nehalogeninti naudoti tirpikliai	16508	{"resins": 1.249, "polymers": 1.9299300000000001}
+34	Rūgščių atliekos	1286	{"resins": 0.071, "polymers": 1.39504}
+35	Šarmų atliekos	1286	{"resins": 0.01}
+36	Alifatiniai junginiai	1286	{"polymers": 0.22422999999999998}
+37	Agrocheminių medžiagų atliekos	1286	{"resins": 0.0317, "polymers": 0.9409099999999999}
+38	Kalcis / Calcium	1286	{"resins": 0.022, "polymers": 0.22379}
+39	1-Methylfluorene	16508	{"resins": 0.01271, "polymers": 0.01271}
+40	HpCDD	16508	{"polymers": 0.32965}
+41	HxCDF	16508	{"polymers": 0.50934}
+42	Benzo(e)pyrene	1286	{"polymers": 0.03077}
+43	Benzo(k)fluoranthene	1286	{"polymers": 0.027600000000000003}
+44	Retene	16508	{"polymers": 0.19634000000000001}
+45	Aliuminis / Aluminium	16508	{"polymers": 0.02199}
+46	Baris / Barium	16508	{"polymers": 0.23459}
+47	Geležis / Iron	16508	{"polymers": 0.45931}
+48	Švinas / Lead	16508	{"polymers": 0.25982}
+49	Nikelis / Nickel	16508	{"polymers": 0.47274}
+50	Selenas/ Selenium	16508	{"polymers": 0.28378}
+51	Titanas / Titanium	16508	{"polymers": 0.06705}
+52	Vanadis / Vanadium	16508	{"polymers": 0.39377999999999996}
+53	Susidarę teršalai /	16508	{"polymers": 1.38503}
+54	Cinkas / Zinc	16508	{"polymers": 0.28668}
+55	Dibenz(a,h)anthracene	1286	{"polymers": 0.03014}
+56	Aromatiniai junginiai	16508	{"polymers": 0.05891}
+57	1,1’ Biphenyl, methyl	16508	{"polymers": 0.7049}
+58	1h Fluorene	16508	{"polymers": 0.45659}
+59	Heterocikliniai	1286	{"polymers": 0.21513}
+60	Benzodiazine	16508	{"resins": 0.041, "polymers": 0.6499199999999999}
+61	Benzofuran	1286	{"polymers": 0.12172}
+62	Benzsisothiazole	1286	{"polymers": 0.3348}
+63	Cyclopentadiene	28	{"resins": 0.096}
+64	Kitos medienos atliekos	16508	{"resins": 0.322}
+65	175-560	16508	{"resins": 0.082}
+66	5,2-13	16508	{"resins": 0.006}
+67	144-160	1286	{"resins": 0.104, "polymers": 0.32205}
+68	843-1136 (CO2); 88 (CH3SH)	1286	{"resins": 0.017}
+69	Dihydroindene	28	{"resins": 0.077}
+70	LOJ / VOC	1286	{"resins": 0.013}
+71	Dimethyl naphthalene	28	{"resins": 0.039}
+72	discarded inorganic chemicals consisting of or containing hazardous substances	315396	{"paper": 88}
+73	Ethenyl dimethyl benzene	16508	{"resins": 0.014}
+74	Smulkios mišrios cheminės atliekos	\N	{"resins": 0.189, "plastics": 0.0022}
+75	other waste from mechanical waste treatment after the treatment of waste batteries and accumulators	\N	{"plastics": 0.0009}
+77	Antracene	1286	{"polymers": 0.29919999999999997}
+78	Metalai /Metals	1286	{"resins": 0.01, "polymers": 2.3855999999999997}
+79	Metilmerkaptanas CH3SH	16508	{"resins": 0.0024, "polymers": 0.18949000000000002}
+80	Phenanthrene	16508	{"polymers": 0.31507999999999997}
+85	Wood	315396	{"resins": 0.004}
+86	Paper	315396	{"resins": 0.005, "polymers": 0.10371}
+87	Textiles	315396	{"resins": 0.009, "polymers": 0.09483}
+88	Arsenas / Arsenic	315396	{"resins": 0.007, "polymers": 0.18309999999999998}
+90	PVC	315396	{"resins": 0.005, "polymers": 0.1738}
+91	Varis / Cooper	315396	{"resins": 0.00361, "polymers": 0.16084}
+93	2,5-Dimethylbenzaldehyde	315396	{"polymers": 0.0545}
+94	Benzo(b)fluoranthene	1286	{"polymers": 0.15528}
+95	Silicis / Silicon	315396	{"polymers": 0.01075}
+96	1-Methyl naphthalene	1286	{"polymers": 0.0268}
+97	Biphenyl	1286	{"polymers": 0.31626}
+98	Pyrene	315396	{"polymers": 0.01743}
+99	Benzo(a,b)fluorine	315396	{"polymers": 0.040600000000000004}
+100	Benzo(a)anthracene	315396	{"polymers": 0.91491}
+101	Chrysene	315396	{"polymers": 0.05037}
+103	Indeno(1,2,3-cd)pyrene	315396	{"polymers": 0.01052}
+104	Benzothiophene	315396	{"polymers": 0.02111}
+105	Kiti rūšiavimo likučiai	315396	{"resins": 0.0000004280000000000001, "textile": 0.00000010000000000000001, "plastics": 0.00000008, "polymers": 0.00000010000000000000001}
+106	Polyuretane	\N	{"resins": 0.0000000707}
+107	Polyethylene	\N	{"resins": 0.000000134}
+81	CO	315396	{"oil": 35.0, "wood": 60.0, "carbon": 30.0, "resins": 0.0228, "rubber": 30.0, "polymers": 0.25273, "halogenated": 20.0, "liquid_fuel": 40.0, "liquid_organic": 20.0}
+82	NOx	315396	{"oil": 6.0, "wood": 2.5, "carbon": 2.0, "resins": 0.015, "rubber": 3.0, "polymers": 0.2656, "halogenated": 2.0, "liquid_fuel": 6.0, "liquid_organic": 3.0}
+84	HCl	315396	{"oil": 0.05, "wood": 0.02, "carbon": 0.01, "resins": 0.0147, "rubber": 0.1, "polymers": 0.15349000000000002, "halogenated": 150.0, "liquid_fuel": 0.01, "liquid_organic": 0.05}
+83	HCN	315396	{"oil": 0.1, "wood": 0.1, "carbon": 0.05, "resins": 0.02, "rubber": 0.2, "polymers": 0.46335000000000004, "halogenated": 0.05, "liquid_fuel": 0.1, "liquid_organic": 0.1}
+8	Benzene	1286	{"oil": 0.5, "wood": 0.3, "carbon": 0.05, "rubber": 1.0, "polymers": 0.00294, "halogenated": 0.2, "liquid_fuel": 0.8, "liquid_organic": 1.0}
+16	Formaldehyde	315396	{"oil": 0.3, "wood": 1.5, "carbon": 0.1, "rubber": 0.5, "polymers": 0.0002, "halogenated": 0.2, "liquid_fuel": 0.3, "liquid_organic": 0.5}
+17	Acetaldehyde	28	{"oil": 0.1, "wood": 0.5, "rubber": 0.2, "polymers": 0.041, "liquid_fuel": 0.1, "liquid_organic": 0.2}
+76	PAA / PAH	1286	{"oil": 0.5, "wood": 0.3, "carbon": 0.1, "resins": 1.623, "rubber": 1.0, "polymers": 0.49085, "halogenated": 0.3, "liquid_fuel": 0.5, "liquid_organic": 0.4}
+89	PCDD/F	315396	{"oil": 0.001, "wood": 0.001, "resins": 0.007, "rubber": 0.003, "polymers": 0.2818, "halogenated": 1.0, "liquid_fuel": 0.001, "liquid_organic": 0.001}
+92	Naphthalene	315396	{"oil": 0.2, "wood": 0.1, "resins": 0.005, "rubber": 0.3, "polymers": 0.08638, "liquid_fuel": 0.2, "liquid_organic": 0.1}
+102	Benzo(a)pyrene	315396	{"oil": 0.08, "wood": 0.05, "rubber": 0.15, "polymers": 0.15166, "liquid_fuel": 0.06, "liquid_organic": 0.04}
+\.
+
+
+--
+-- TOC entry 5101 (class 0 OID 31001)
+-- Dependencies: 223
+-- Data for Name: event_objects; Type: TABLE DATA; Schema: public; Owner: zpvisadmin
+--
+
+COPY public.event_objects (event_id, object_id, id_event_object, component_type, k_kat) FROM stdin;
+88	5	37	air	1.5
+86	3	39	water	2
+89	5	40	air	1.5
+89	1	41	air	\N
+85	10	43	water	1
+87	11	61	air	\N
+119	2	64	air	1
+113	9	66	air	1
+114	13	68	air	\N
+115	11	69	air	1.5
+115	6	70	\N	\N
+115	2	71	air	1.5
+115	14	72	air	1.6
+121	9	75	\N	\N
+121	26	76	\N	\N
+\.
+
+
+--
+-- TOC entry 5103 (class 0 OID 31007)
+-- Dependencies: 225
+-- Data for Name: events; Type: TABLE DATA; Schema: public; Owner: zpvisadmin
+--
+
+COPY public.events (id_event, event_type, event_date, description, location, status, created_at, updated_at, coordinates) FROM stdin;
+89	gaisras	2026-02-10 00:00:00+00	Mažeikių šilumos katilinė užsiliepsnojo, ugnis išsiplėtė	Mažeikių šilumos tinklai	patvirtintas	2026-05-12 20:48:41.722731+00	2026-05-12 20:50:17.975107+00	0103000020E61000000100000018000000D9B11188D74D3640F793313ECC284C406616A1D80A4E364055A2EC2DE5284C403BFE0B04014E364048C0E8F2E6284C40DB19A6B6D44D3640289D4830D5284C40B439CE6DC24D3640204432E4D8284C409CDD5A26C34D3640B9162D40DB284C40963D096CCE4D36406E32AA0CE3284C409CDD5A26C34D3640FC56EBC4E5284C408DF161F6B24D3640768BC058DF284C4063416150A64D3640C16F438CD7284C406B494739984D36404A0B9755D8284C4044696FF0854D3640D6AA5D13D2284C404031B2648E4D364012DDB3AED1284C4015191D90844D3640AA2A3410CB284C404EB51666A14D3640BADC60A8C3284C4062D9CC21A94D3640EEB5A0F7C6284C405EA10F96B14D3640EEB5A0F7C6284C40A27DACE0B74D36405DC136E2C9284C4076FD82DDB04D3640BB61DBA2CC284C40CD9541B5C14D3640894160E5D0284C40E0B9F770C94D36404D0F0A4AD1284C40CAC51858C74D3640FC1C1F2DCE284C40AF997CB3CD4D364015ADDC0BCC284C40D9B11188D74D3640F793313ECC284C40
+88	gaisras	2026-03-06 00:00:00+00	Alaus darykla užsidegė	Volfas Engelman Alaus darykla	patvirtintas	2026-05-12 20:44:10.733905+00	2026-05-12 20:45:21.331683+00	0103000020E610000001000000110000007AC8940F41ED3740B03C484F91714B40DB148F8B6AED37408D7DC9C683714B40EF38454772ED37408EB1135E82714B40C520B07268ED3740BF9D44847F714B403FC91D3691ED3740DE1E84807C714B407495EEAEB3ED3740B9C3263273714B4068791EDC9DED37403E213B6F63714B40EC681CEA77ED37400FB4024356714B40CAC0012D5DED37404C1AA37554714B4077F86BB246ED374036AB3E575B714B402060ADDA35ED3740DD5F3DEE5B714B400EA48B4D2BED3740C7BC8E3864714B403CF4DDAD2CED374008C9022670714B402E7079AC19ED37402CF015DD7A714B40D39FFD4811ED3740FA9B508880714B40EFCB99ED0AED37407098689082714B407AC8940F41ED3740B03C484F91714B40
+86	medžiagų išsiliejimas	2026-05-01 00:00:00+00	Nuotekų valymo įrenginių vidiniai vamzdžiai trūko, išsiliejimas sutelktas komplekso viduje.	Kauno nuotekų valykla	patvirtintas	2026-05-12 20:38:18.784064+00	2026-05-12 20:45:57.998916+00	0103000020E610000001000000050000006E52D158FBD73740957F2DAF5C734B401A8A3BDEE4D73740965CC5E237734B400AA359D93ED83740D3F6AFAC34734B40297B4B395FD837405C1D007157734B406E52D158FBD73740957F2DAF5C734B40
+120	gaisras	2026-06-02 00:00:00+00	Deginamos padangos J.Basanavičiaus parke	J.Basanavičiaus parkas, Kaunas	patvirtintas	2026-06-03 14:08:47.44632+00	2026-06-03 14:11:14.610684+00	0103000020E610000001000000060000006902452C62F837404D31074147714B40323B8BDEA9F8374069E21DE049714B406EA7AD11C1F8374063D4B5F63E714B4060234910AEF83740EE3F321D3A714B40020F0C207CF837400B2593533B714B406902452C62F837404D31074147714B40
+85	medžiagų išsiliejimas	2026-05-04 00:00:00+00	Išsiliejo į Neries upę sandeliuojamos trąšos ir pesticidai	agrichema	patvirtintas	2026-05-12 20:10:22.644495+00	2026-05-21 08:32:14.9854+00	0103000020E610000001000000050000009BE3DC26DC1739409F1F46088F564B40067FBF982D19394020D1048A58564B4098F738D3841939400C04013274564B40882CD2C43B183940F6251B0FB6564B409BE3DC26DC1739409F1F46088F564B40
+119	gaisras	2026-03-12 00:00:00+00	Kruonio HAE podstancija užsidegė.	Kruonio HAE	patvirtintas	2026-05-29 16:47:29.340343+00	2026-05-29 17:29:09.232413+00	0103000020E61000000100000010000000DDD26A48DC3F3840E3C798BB96664B40944F8F6D19403840C9C9C4AD82664B409AEFE0270E403840AD18AE0E80664B406667D13B15403840DE3829CC7B664B407A8B87F71C403840A2D288997D664B40BDFF8F1326403840C153C8957A664B40B1BFEC9E3C4038402460747973664B4009C03FA54A403840D68EE21C75664B40EE93A30051403840CB48BDA772664B4019AC38D55A403840B875374F75664B402A00C63368403840D5264EEE77664B40E014562AA84038409641B5C189664B40AA4885B1854038401EFAEE5696664B406AA4A5F276403840C616821C94664B40E6AF90B932403840910F7A36AB664B40DDD26A48DC3F3840E3C798BB96664B40
+121	gaisras	2026-06-03 00:00:00+00	Padangų krūva		patvirtintas	2026-06-04 08:09:53.421951+00	2026-06-04 08:10:53.46306+00	0103000020E61000000100000005000000D6A71C93C54D38407383A10E2B9A4B401C60E63BF84D38408E588B4F019A4B40EEE9EA8EC54E38404EEE77280A9A4B40F5F1D077B74E384060CD0182399A4B40D6A71C93C54D38407383A10E2B9A4B40
+113	gaisras	2026-04-09 00:00:00+00	Sodyba Noriškių miške	Noriškių miškas, Raguvėlė	patvirtintas	2026-05-14 19:39:54.244897+00	2026-05-29 17:32:36.695952+00	0103000020E6100000010000000C000000E3A59BC420AC38407F4DD6A887D24B40997E8978EBA83840DD408177F2D14B4035CF11F92EA93840BC3C9D2B4AD14B406D7022FAB5A938405FD3838252D04B40390D51853FAF38401C9AB2D30FD04B40BCCE86FC33B33840CA4E3FA88BD04B4085CC9541B5B5384072C119FCFDD04B403D44A33B88B5384021AF0793E2D14B4053CBD6FA22B53840D7DEA7AAD0D24B401ADEACC1FBB2384006D50627A2D34B4002B859BC58B0384014EB54F99ED34B40E3A59BC420AC38407F4DD6A887D24B40
+114	gaisras	2026-05-04 00:00:00+00	Užsidegė pradinis medienos apdirbimo cechas	DS smith Packaging	patvirtintas	2026-05-21 10:36:11.31285+00	2026-06-03 10:27:02.445188+00	0103000020E6100000010000000B000000C5025FD1AD373940D9B27C5D86534B408D614ED02637394081785DBF60534B403B6EF8DD74373940BC3C9D2B4A534B4075779D0DF9373940F65D11FC6F534B4021AF0793E2373940CF83BBB376534B40363B527DE7373940BCB0355B79534B40E272BC02D13739403CBF28417F534B4011C30E63D2373940EDB94C4D82534B4019CBF44BC437394062821ABE85534B40EEB25F77BA373940CFA0A17F82534B40C5025FD1AD373940D9B27C5D86534B40
+87	gaisras	2026-03-06 00:00:00+00	užsidegė automobilių servisas	Autokausta UAB, Kaunas	patvirtintas	2026-05-12 20:39:17.785861+00	2026-05-25 13:25:49.452347+00	0103000020E6100000010000000500000024B5503239D93740CBBA7F2C44734B404B5B5CE333D93740C901BB9A3C734B406FD39FFD48D93740A65F22DE3A734B403C4B901150D93740CCEEC9C342734B4024B5503239D93740CBBA7F2C44734B40
+115	gaisras	2026-05-05 00:00:00+00	Užsidegė grigeo perdirbimo cechas	Grigeo fabrikas, Vilnius	patvirtintas	2026-05-21 10:48:48.65147+00	2026-06-03 10:28:03.09507+00	0103000020E6100000010000001B000000DF6E490ED815394090F7AA9509574B40E8DEC325C7153940F2ECF2AD0F574B40431EC18D9415394071C79BFC16574B402176A6D0791539401893FE5E0A574B40D4B5F63E5515394068E90AB611574B4056D5CBEF3415394018B0E42A16574B4060ADDA352115394085CE6BEC12574B403B35971B0C153940499C155113574B400FB56D18051539405DC0CB0C1B574B4094A46B26DF1439400FEF39B01C574B406EC493DDCC14394085CE6BEC12574B4075CC79C6BE143940C100C28712574B404C1C7920B21439408E8F16670C574B40FC8BA031931439407CF0DAA50D574B40AA2B9FE579143940F2ECF2AD0F574B40AB93331477143940B69DB64604574B40A14CA3C9C5143940C1C6F5EFFA564B4072FC5069C414394011001C7BF6564B401555BFD2F9143940B8E864A9F5564B403B35971B0C15394099B8551003574B405F454607241539407CD3F4D901574B40F8C5A52A6D1539409B030473F4564B401A6EC0E78715394054A86E2EFE564B404E5E64027E153940B69DB64604574B4046EEE9EA8E15394037E0F3C308574B40BAF605F4C215394040A19E3E02574B40DF6E490ED815394090F7AA9509574B40
+118	gaisras	2026-05-26 00:00:00+00	Kauno pasonei dege padangos	Prie karmelavos misko	patvirtintas	2026-05-27 09:44:44.874778+00	2026-05-27 09:45:32.244611+00	0103000020E61000000100000004000000267156444D1438402B69C537147A4B40D2A8C0C936143840EB8B84B69C794B406405BF0D31163840406A1327F7794B40267156444D1438402B69C537147A4B40
+\.
+
+
+--
+-- TOC entry 5105 (class 0 OID 31013)
+-- Dependencies: 227
+-- Data for Name: indexing_coefficients; Type: TABLE DATA; Schema: public; Owner: zpvisadmin
+--
+
+COPY public.indexing_coefficients (id_indexing_coefficient, year, quarter, coefficient, created_at) FROM stdin;
+4	2026	1	2.302	2026-06-03 13:49:48.801388+00
+\.
+
+
+--
+-- TOC entry 5107 (class 0 OID 31019)
+-- Dependencies: 229
+-- Data for Name: materials; Type: TABLE DATA; Schema: public; Owner: zpvisadmin
+--
+
+COPY public.materials (id_material, name, description, toxicity_factor, unit, created_at, base_rate, substance_type, emission_category) FROM stdin;
+24	Guma / Kaučiukas	Vulkanizuota guma, padangos ir techniniai gaminiai	\N	t	2026-04-24 13:29:15.640881+00	1715.67	standard	rubber
+1	BDS₇ (biocheminis deguonies suvartojimas)	Organinės medžiagos pagal biocheminį deguonies suvartojimas	\N	t	2026-04-19 17:24:22.436542+00	22156	bds7	\N
+2	Suspenduotos medžiagos	Suspenduotos medžiagos vandenyje	\N	t	2026-04-19 17:24:22.436542+00	6719	suspended	\N
+3	Bendras azotas	Azoto junginiai	\N	t	2026-04-19 17:24:22.436542+00	8689	standard	\N
+4	Bendras fosforas	Fosforo junginiai	\N	t	2026-04-19 17:24:22.436542+00	43443	standard	\N
+5	Sulfatai	Sulfatų junginiai	\N	t	2026-04-19 17:24:22.436542+00	35	standard	\N
+6	Chloridai	Chloridų junginiai	\N	t	2026-04-19 17:24:22.436542+00	20	standard	\N
+7	I grupė (vanduo/žemė)	Halogeniniai angliavandeniliai: trichlorbenzolas, heksachlorbenzolas, HCH ir kt.; benzapirenas	\N	t	2026-04-19 17:24:22.436542+00	503967794	standard	\N
+8	II grupė (vanduo/žemė)	Arsenas, kadmis, gyvsidabris, vanadis, chromas VI, formaldehidas, fenolis, pesticidai	\N	t	2026-04-19 17:24:22.436542+00	11479379	standard	\N
+9	III grupė (vanduo/žemė)	Tetrachloretilenas, švinas, nikelis, varis, naftalinas ir kt.	\N	t	2026-04-19 17:24:22.436542+00	374479	standard	\N
+10	IV grupė (vanduo/žemė)	Cinkas, cianidai, nafta ir naftos produktai, acetonas, metanolis, detergentai ir kt.	\N	t	2026-04-19 17:24:22.436542+00	42429	standard	\N
+11	V grupė (vanduo/žemė)	Fluoridai, sulfidai, geležis, aliuminis, furfurolas ir kiti	\N	t	2026-04-19 17:24:22.436542+00	3331	standard	\N
+12	SO₂ (sieros dioksidas)	Sieros dioksidas	\N	t	2026-04-19 17:24:22.436542+00	405	standard	\N
+13	NOₓ (azoto oksidai)	Azoto oksidai	\N	t	2026-04-19 17:24:22.436542+00	767	standard	\N
+14	Vanadžio pentoksidas	Vanadžio pentoksidas (V₂O₅)	\N	t	2026-04-19 17:24:22.436542+00	1995772	standard	\N
+15	Kietosios dalelės	Organinės ir neorganinės kietosios dalelės (išskyrus I grupę oras)	\N	t	2026-04-19 17:24:22.436542+00	240	standard	\N
+16	I grupė (oras)	Labai pavojingi: benzapirenas, berilis, kadmis, gyvsidabris, chromas VI, vinilo chloridas, asbestas ir kt.	\N	t	2026-04-19 17:24:22.436542+00	315396	standard	\N
+17	II grupė (oras)	Pavojingi: benzolas, chloras, formaldehidas, fenolis, arsenas, akrilonitrilas ir kt.	\N	t	2026-04-19 17:24:22.436542+00	16508	standard	\N
+18	III grupė (oras)	Vidutiniškai pavojingi: ksilolas, toluenas, acetatai, cinkas, manganas, stirolas ir kt.	\N	t	2026-04-19 17:24:22.436542+00	1286	standard	\N
+19	IV grupė (oras)	Mažai pavojingi: amoniakas, acetonas, anglies monoksidas, etanolis, kalcio oksidas ir kt.	\N	t	2026-04-19 17:24:22.436542+00	28	standard	\N
+20	PVC (polivinilchloridas)	Polivinilchloridas — plastmas sudedamoji dalis	\N	t	2026-04-24 13:29:15.640881+00	\N	standard	polymers
+21	Polistirenas (PS)	Polistirenas — putplastis ir kietasis	\N	t	2026-04-24 13:29:15.640881+00	\N	standard	polymers
+22	Poliuretanas (PU)	Poliuretano putos — izoliacijos, baldai	\N	t	2026-04-24 13:29:15.640881+00	\N	standard	polymers
+23	Nailonas / Poliamidas (PA)	Poliamidai: nailonas ir kiti sintetiniai polimerai	\N	t	2026-04-24 13:29:15.640881+00	\N	standard	polymers
+25	Polietilenas (PE)	Mažo ir aukšto tankio polietilenas — pakuotė, vamzdžiai	\N	t	2026-04-24 13:29:15.640881+00	\N	standard	plastics
+26	Polipropilenas (PP)	Polipropilenas — tara, automobilių detalės	\N	t	2026-04-24 13:29:15.640881+00	\N	standard	plastics
+27	Mišrūs plastikas	Mišri plastikų frakcija (PE, PP, PS, PET ir kt.)	\N	t	2026-04-24 13:29:15.640881+00	\N	standard	plastics
+28	PET (polietilentereftalatas)	PET — buteliai, pakuotė, sintetiniai pluoštai	\N	t	2026-04-24 13:29:15.640881+00	\N	standard	plastics
+29	Popierius	Popieriaus produktai: lapai, knygos, spaudiniai	\N	t	2026-04-24 13:29:15.640881+00	\N	standard	paper
+30	Kartonas	Gofruotas ir kietas kartonas, pakavimo medžiagos	\N	t	2026-04-24 13:29:15.640881+00	\N	standard	paper
+31	Popierius ir kartonas (mišrus)	Mišri popieriaus ir kartono frakcija	\N	t	2026-04-24 13:29:15.640881+00	\N	standard	paper
+32	Natūrali tekstilė (medvilnė, vilna)	Medvilnė, linas, vilna ir kiti natūralūs pluoštai	\N	t	2026-04-24 13:29:15.640881+00	\N	standard	textile
+33	Sintetinė tekstilė	Sintetiniai audiniai: poliesteris, akrilai, nailonas	\N	t	2026-04-24 13:29:15.640881+00	\N	standard	textile
+34	Drabužiai (mišrūs)	Mišri drabužių ir tekstilės frakcija	\N	t	2026-04-24 13:29:15.640881+00	\N	standard	textile
+35	Mediena / Pjuvenos	Mediena, pjuvenos, skiedros, medienos apdorojimo atliekos	\N	t	2026-04-24 13:29:16.761181+00	\N	standard	wood
+36	Nafta / Mineralinė alyva	Nafta, mineralinės alyvos, tepalai ir kt. naftos produktai	\N	t	2026-04-24 13:29:16.761181+00	\N	standard	oil
+37	Guma (techninis kaučiukas)	Techninis kaučiukas, padangos, gumos gaminiai	\N	t	2026-04-24 13:29:16.761181+00	\N	standard	rubber
+38	Dyzelinas / Benzinas	Dyzelinas, žibalo frakcija, benzinas ir kiti skystieji degalai	\N	t	2026-04-24 13:29:16.761181+00	\N	standard	liquid_fuel
+39	Anglis / Koksas	Akmens anglis, koksas, suodžiai, grafitas	\N	t	2026-04-24 13:29:16.761181+00	\N	standard	carbon
+40	Halogenintieji organiniai jk	Chlorintieji ir fluorintieji organiniai junginiai	\N	t	2026-04-24 13:29:16.761181+00	\N	standard	halogenated
+41	Lakieji organiniai junginiai	Degalai, tirpikliai ir kiti lakieji organiniai junginiai	\N	t	2026-04-24 13:29:16.761181+00	\N	standard	liquid_organic
+54	Fosforo junginiai (P)	Fosfatai ir organinis fosforas. Pagrindinis eutrofikacijos skatintojas.	7	t	2026-05-12 20:06:38.261809+00	\N	standard	\N
+55	Kadmis (Cd)	Kancerogeninis sunkusis metalas. Labai pavojingas vandens ekosistemoms.	50	t	2026-05-12 20:06:38.261809+00	\N	standard	\N
+56	Varis (Cu)	Sunkusis metalas. Toksiškas vandens organizmams net mažomis dozėmis.	12	t	2026-05-12 20:06:38.261809+00	\N	standard	\N
+57	Azoto junginiai (N)	Nitratai, nitritai ir amonis. Sukelia eutrofikaciją vandens telkiniuose.	5	t	2026-05-12 20:06:38.261809+00	\N	standard	\N
+58	Lakieji organiniai junginiai (LOJ)	Tirpikliai, degalų garai ir kt. Troposferinio ozono pirmtakai.	8	t	2026-05-12 20:06:38.261809+00	\N	standard	\N
+59	Švinas (Pb)	Sunkusis metalas. Neurotoksinis, kaupiasi dirvožemyje ir vandenyje.	20	t	2026-05-12 20:06:38.261809+00	\N	standard	\N
+60	Benzinas	Degalai ir lakieji naftos frakcijos. Vandens / dirvožemio tarša.	10	t	2026-05-12 20:06:38.261809+00	\N	standard	\N
+61	Cinkas (Zn)	Sunkusis metalas. Didelėmis koncentracijomis kenksmingas ekosistemoms.	8	t	2026-05-12 20:06:38.261809+00	\N	standard	\N
+62	Chromas (Cr)	Sunkusis metalas. Cr(VI) forma ypač toksiška ir kancerogeninė.	15	t	2026-05-12 20:06:38.261809+00	\N	standard	\N
+63	Naftos produktai	Nafta, dyzelinas, mazutas ir jų mišiniai. Vandens / dirvožemio tarša.	8	t	2026-05-12 20:06:38.261809+00	\N	standard	\N
+64	Gyvsidabris (Hg)	Ypač pavojingas sunkusis metalas. Kaupiasi maisto grandinėje.	100	t	2026-05-12 20:06:38.261809+00	\N	standard	\N
+65	Anglies monoksidas (CO)	Degimo produktas. Kenkia žmogaus sveikatai ir oro kokybei.	3	t	2026-05-12 20:06:38.261809+00	\N	standard	\N
+66	Fenolio dervos	Fenolio-formaldehido dervos — elektros izoliacijos, presavimo masės	\N	t	2026-05-12 20:06:38.261809+00	\N	standard	\N
+67	Alkidinės dervos	Alkidiniai dažai ir lakai — baldai, metalinės konstrukcijos	\N	t	2026-05-12 20:06:38.261809+00	\N	standard	\N
+68	Poliesterio dervos	Nesotintosios poliesterio dervos — stiklo pluoštas, kompozitai	\N	t	2026-05-12 20:06:38.261809+00	\N	standard	\N
+69	Akrilinės dervos	Akriliniai lakai, dažai ir klijų bazės	\N	t	2026-05-12 20:06:38.261809+00	\N	standard	\N
+70	Epoksidinės dervos	Epoksidinės dervos — dažai, klijai, kompozitai	\N	t	2026-05-12 20:06:38.261809+00	\N	standard	\N
+\.
+
+
+--
+-- TOC entry 5109 (class 0 OID 31026)
+-- Dependencies: 231
+-- Data for Name: object_materials; Type: TABLE DATA; Schema: public; Owner: zpvisadmin
+--
+
+COPY public.object_materials (object_id, material_id, percentage, mass, volume, id_object_material, recovered_quantity) FROM stdin;
+3	1	40	2	\N	0	\N
+3	2	30	1.5	\N	0	\N
+3	3	16	0.8	\N	0	\N
+3	4	4	0.2	\N	0	\N
+3	5	10	0.5	\N	0	\N
+4	8	27	4	5	0	\N
+6	8	40	2	3	0	\N
+2	9	5	0.5	1	0	\N
+4	9	53	8	10	0	\N
+6	9	30	1.5	2	0	\N
+1	10	90	45	52	0	\N
+2	10	95	7.5	9	0	\N
+4	10	20	3	5	0	\N
+7	10	93	28	32	0	\N
+1	11	10	5	8	0	\N
+7	11	7	2	3	0	\N
+5	12	40	1.2	\N	0	\N
+5	13	30	0.9	\N	0	\N
+5	15	20	0.6	\N	0	\N
+6	17	16	0.8	\N	0	\N
+6	18	14	0.7	\N	0	\N
+5	19	10	0.3	\N	0	\N
+1	38	\N	40	\N	0	\N
+1	36	\N	8	\N	0	\N
+1	25	\N	0.5	\N	0	\N
+2	36	\N	7	\N	0	\N
+3	26	\N	1	\N	0	\N
+3	25	\N	1.5	\N	0	\N
+4	37	\N	0.2	\N	0	\N
+4	30	\N	1.2	\N	0	\N
+4	26	\N	0.5	\N	0	\N
+4	25	\N	0.8	\N	0	\N
+4	20	\N	0.3	\N	0	\N
+7	36	\N	25	\N	0	\N
+7	25	\N	2	\N	0	\N
+9	35	100	22	53	0	\N
+10	7	\N	2	\N	0	\N
+14	8	\N	2	\N	0	\N
+10	8	\N	1.5	\N	0	\N
+10	16	\N	0.5	\N	0	\N
+13	18	\N	0.2	\N	0	\N
+12	19	\N	0.5	\N	0	\N
+13	35	\N	25	\N	0	\N
+11	36	\N	1.5	\N	0	\N
+11	37	\N	2	\N	0	\N
+11	38	\N	3	\N	0	\N
+12	40	\N	0.6	\N	0	\N
+14	55	\N	0.5	\N	0	\N
+13	58	\N	0.4	\N	0	\N
+12	58	\N	1.8	\N	0	\N
+14	59	\N	8	\N	0	\N
+11	59	\N	0.08	\N	0	\N
+14	61	\N	1.2	\N	0	\N
+11	61	\N	0.15	\N	0	\N
+14	64	\N	0.1	\N	0	\N
+12	67	\N	0.8	\N	0	\N
+12	69	\N	1.2	\N	0	\N
+14	5	4	1	1	0	0
+20	9	15	2	2	0	0
+26	24	100	1	20	0	\N
+\.
+
+
+--
+-- TOC entry 5110 (class 0 OID 31030)
+-- Dependencies: 232
+-- Data for Name: objects; Type: TABLE DATA; Schema: public; Owner: zpvisadmin
+--
+
+COPY public.objects (id_object, name, description, created_at, total_mass, total_volume) FROM stdin;
+1	Naftos produktu saugykla	Požeminiai naftos produktu rezervuarai. Talpyklose laikomas dyzelinas, benzinas ir tepalai.	2026-04-19 18:26:08.712765+00	50	60
+4	Cheminių medžiagų sandėlis	Sandelis su pramoniniais chemikalais: tirpikliais, rūgštimis ir sunkiaisiais metalais.	2026-04-19 18:26:08.712765+00	15	20
+5	Katelinė	Mazutu kurenama katelinė. Gedimo atveju išmetami SO2, NOx ir kietosios dalelės į orą.	2026-04-19 18:26:08.712765+00	11	\N
+6	Galvaninis cechas	Galvaniniu metalu dengiamos dirbtuvės su rugščių ir sunkiųjų metalų vonelėmis.	2026-04-19 18:26:08.712765+00	5	8
+7	Naftos vamzdynas	Požeminis naftos tiekimo vamzdynas. Nutekėjimo atveju naftos produktai patenka į grunta.	2026-04-19 18:26:08.712765+00	30	35
+2	Transformatorinė podstancija	Aukštos įtampos transformatoriai su alyva. Gedimo atveju alyva patenka į gruntą ir gruntinį vandeni.	2026-04-19 18:26:08.712765+00	8	10
+11	Automobiliu servisas	Transporto priemonių techninės priežiūros cechas. Naudotos alyvos, degalai, guma ir sunkieji metalai iš akumuliatorių.	2026-05-12 20:06:38.261809+00	8	12
+13	Medienos apdirbimo cechas	Medienos apdirbimo ir medienos produktų gamybos cechas. Generuoja pjuvenas, dulkes ir tirpiklinius garas.	2026-05-12 20:06:38.261809+00	\N	200
+14	Akumuliatoriu utilizavimo cechas	Senų akumuliatorių ir baterijų perdirbimo cechas. Aukšta sunkiųjų metalų (Pb, Cd, Hg) koncentracija nuotekose ir ore.	2026-05-12 20:06:38.261809+00	20	25
+12	Lakų ir dažų sandėlis	Lakų, dažų ir tirpiklių sandėlis. Gaisro metu išsiskiria lakieji organiniai junginiai ir halogenintieji tirpikliai.	2026-05-12 20:06:38.261809+00	6	10
+10	Pesticidų sandėlis	Agrochemikalų ir pesticidų saugykla. Avariniu atveju labai toksiški junginiai patenka į gruntinį vandenį ir dirvožemį.	2026-05-12 20:06:38.261809+00	12	15
+20	Lėktuvo kuro talpykla	Talpykla laikant lėktuvo kurą (demos)	2026-05-21 11:30:11.518555+00	20	60
+3	Nuoteku valymo irenginiai	Pramoninių nuotekų valymo įrenginiai. Gedimo atveju neišvalytos nuotekos patenka į vandens telkini.	2026-04-19 18:26:08.712765+00	20	500
+9	Namas	gyvenamas namas, šalia namo dega šiukšlės	2026-05-06 17:01:18.062113+00	22	53
+26	Padangų krūvos		2026-06-04 08:10:22.443563+00	1	20
+27	fghjhcxzsdf	sdfghjbvd	2026-06-05 08:32:27.934383+00	6	3
+\.
+
+
+--
+-- TOC entry 4906 (class 0 OID 31433)
+-- Dependencies: 240
+-- Data for Name: spatial_ref_sys; Type: TABLE DATA; Schema: public; Owner: azuresu
+--
+
+COPY public.spatial_ref_sys (srid, auth_name, auth_srid, srtext, proj4text) FROM stdin;
+\.
+
+
+--
+-- TOC entry 5112 (class 0 OID 31036)
+-- Dependencies: 234
+-- Data for Name: specialists; Type: TABLE DATA; Schema: public; Owner: zpvisadmin
+--
+
+COPY public.specialists (id_user, name, field_of_expertise) FROM stdin;
+1	John	Frog
+11	Jonaitis jonas	
+\.
+
+
+--
+-- TOC entry 5113 (class 0 OID 31041)
+-- Dependencies: 235
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: zpvisadmin
+--
+
+COPY public.users (id_user, email, password, created_at) FROM stdin;
+1	specialist@test.lt	svygTxXBGUivvFNgyujonQ==:rVVSVRVkM4t5y048SeGwd2ub3yJMj0Jxa4F52bfVfGk=	2026-04-19 18:07:46.867961+00
+2	test@test.lt	YSpwYMSUk74h3Lk3XZigWQ==:sLR+3fXx0NGKIDZgOOFaRzusb0qD1KOXXe2UHl5wxxQ=	2026-04-20 09:23:15.405164+00
+3	user@tester.lt	wgcuG89dp9LLaPAuTHpjeg==:6z47NA5VnWQEsmmSoNoxMjsmTNhm6lk3YnCOmCELgpw=	2026-05-06 16:30:58.635892+00
+4	gabije9@gmail.com	4CNMBBD46SXaVIuoHPI9uw==:0hpiKuyDWvcFnxiqWV4v00UOCrPc0VgbKaIV5inVVxQ=	2026-05-06 18:28:37.937013+00
+5	user@mail.lt	5/uq6CML3k7wEKBY054WBw==:HdjA5+EvFMPkasUPG8MfNEIq2zC4fYy2Gf+oItoUYwQ=	2026-05-07 10:11:26.015922+00
+6	user@usermail.com	nHx0IBhC4wE+iuIn2DLq3w==:TKuUfpxBiCbeW4ROMHEdTnjvqxS8oqD+6utFpUoH72w=	2026-05-07 14:05:41.890283+00
+7	nfr5_test_99_1778523576227@test.lt	6cJgFTgEWyxbP80wuhqp9g==:2osQn1XQgDPKIUWE73JNBtB9Ed+Rlnpx+WeTdvffrYQ=	2026-05-11 18:19:36.37265+00
+8	nfr5_test_99_1778523643745@test.lt	yevvxqDt1WsdluLcEVL+UA==:UFtFAy5qjlHPrVz8uV7NstrO3xxIfNTNXgwPYBPENxU=	2026-05-11 18:20:43.870175+00
+9	nfr5_test_99_1778526901586@test.lt	PB/QEOw5RdceF4yMI2lcuQ==:5koP43bUIjSMsN7A7tqZrJ7EA9k48mR/qs9uR7+/pGo=	2026-05-11 19:15:03.77316+00
+10	specialist@test2.lt	cigE6dzZ6MUh+ZH8RiKthQ==:pLHLdtt5/XaYIBVO9zameKR81zHag1DQyzMZNeP2vas=	2026-05-14 18:53:15.113622+00
+11	specialist@te3st.lt	oC+khNXrEdMJ3U3J4334Pg==:Qp7u2IM6+ZSbyWpVqKDdeC+HQjrZTMSzpXTjWeIZZa0=	2026-05-14 18:58:04.668327+00
+12	bobb84507@gmail.com	qRXBw9+vtaQq2dIvvrUfwQ==:cwpPajtjsJisPrA7GmMjapABqUqxi+hRM3U7Qan4QTg=	2026-05-21 10:55:03.95737+00
+\.
+
+
+--
+-- TOC entry 5115 (class 0 OID 31047)
+-- Dependencies: 237
+-- Data for Name: waste_types; Type: TABLE DATA; Schema: public; Owner: zpvisadmin
+--
+
+COPY public.waste_types (id, ewc_code, description, is_hazardous, is_combustible, total_mass_tonnes, morphology, morph_sum, flags) FROM stdin;
+1	02 01 08	agrochemijos atliekos, kuriose yra pavojingų cheminių medžiagų	t	t	4.6643	{"paper": 100}	100	{"peleningumas": true, "sausa_liekana": true, "fiksuota_anglis": true, "sunkieji_metalai": true, "sunkieji_metalai2": true}
+2	06 01 06	kitos rūgštys	t	f	0.091	{"oil": 100}	100	{}
+3	06 02 04	natrio hidroksidas ir kalio hidroksidas	t	f	3.653	{"oil": 100}	100	{}
+4	06 03 15	metalų oksidai, kuriuose yra sunkiųjų metalų	t	f	3.675	{"liquid_fuel": 100}	100	{"sunkieji_metalai2": true}
+5	06 04 05	atliekos, kuriose yra kitų sunkiųjų metalų	t	f	5.144	{"wood": 100}	100	{"sunkieji_metalai2": true}
+6	06 13 02	naudotos aktyvintos anglys (išskyrus 06 07 02)	t	t	1.248	{"polymers": 100}	100	{"peleningumas": true, "sausa_liekana": true, "fiksuota_anglis": true, "sunkieji_metalai": true, "sunkieji_metalai2": true}
+7	07 01 03	organiniai halogenintieji tirpikliai, plovimo skysčiai ir motininiai tirpalai	t	t	4.314699999999999	{"other_salts": 100}	100	{"lakioji_dalis": true, "organiniai_jk": true, "sausa_liekana": true}
+8	07 01 04	kiti organiniai tirpikliai, plovimo skysčiai ir motininiai tirpalai	t	t	0.169	{"carbon": 50, "textile": 50}	100	{"lakioji_dalis": true, "organiniai_jk": true, "sausa_liekana": true}
+9	07 02 08	kitos distiliavimo nuosėdos ir reakcijų likučiai	t	t	0.273	{"carbon": 10, "rubber": 10, "textile": 80}	100	{"peleningumas": true, "organiniai_jk": true, "sausa_liekana": true, "fiksuota_anglis": true, "sunkieji_metalai": true}
+10	07 02 14	priedų, kuriuose yra pavojingų cheminių medžiagų, atliekos	t	t	2.203	{"wood": 100}	100	{"peleningumas": true, "organiniai_jk": true, "sausa_liekana": true, "fiksuota_anglis": true, "sunkieji_metalai": true}
+11	07 03 04	kiti organiniai tirpikliai, plovimo skysčiai ir motininiai tirpalai	t	t	0.074	{"textile": 100}	100	{"lakioji_dalis": true, "organiniai_jk": true, "sausa_liekana": true}
+12	07 03 08	kitos distiliavimo nuosėdos ir reakcijų likučiai	t	t	2.3609999999999998	{"carbon": 10, "rubber": 10, "textile": 80}	100	{"peleningumas": true, "organiniai_jk": true, "fiksuota_anglis": true, "sunkieji_metalai": true}
+13	07 05 10	kiti filtrų papločiai ir naudoti absorbentai	t	t	0.104	{"polymers": 25, "liquid_fuel": 25, "liquid_organic": 50}	100	{"peleningumas": true, "fiksuota_anglis": true, "sunkieji_metalai": true}
+14	07 05 13	kietosios atliekos, kuriose yra pavojingų cheminių medžiagų	t	t	0.193	{"wood": 100}	100	{"peleningumas": true, "organiniai_jk": true, "sausa_liekana": true, "fiksuota_anglis": true, "sunkieji_metalai": true}
+15	07 06 01	vandeniniai plovimo skysčiai ir motininiai tirpalai	t	t	0.24	{"carbon": 100}	100	{"lakioji_dalis": true, "sausa_liekana": true}
+16	07 06 04	kiti organiniai tirpikliai, plovimo skysčiai ir motininiai tirpalai	t	t	0.366	{"carbon": 50, "textile": 50}	100	{"lakioji_dalis": true, "organiniai_jk": true, "sausa_liekana": true}
+17	07 07 04	kiti organiniai tirpikliai, plovimo skysčiai ir motininiai tirpalai	t	t	0.94	{"carbon": 50, "textile": 50}	100	{"lakioji_dalis": true, "organiniai_jk": true, "sausa_liekana": true}
+18	08 01 13	dažų ir lako dumblas, kuriame yra organinių tirpiklių ar kitų pavojingų cheminių medžiagų	t	t	0.328	{"oil": 1, "wood": 15, "textile": 80, "liquid_fuel": 1, "liquid_organic": 20}	117	{"peleningumas": true, "lakioji_dalis": true, "organiniai_jk": true, "fiksuota_anglis": true, "sunkieji_metalai": true, "sunkieji_metalai2": true}
+19	08 01 15	vandeninis dumblas, kuriame yra dažų ar lako, kuriuose yra organinių tirpiklių ar kitų pavojingų cheminių medžiagų	t	t	2.351	{"textile": 16, "halogenated": 80, "liquid_organic": 4}	100	{"peleningumas": true, "lakioji_dalis": true, "organiniai_jk": true, "fiksuota_anglis": true, "sunkieji_metalai": true, "sunkieji_metalai2": true}
+20	08 01 17	dažų ar lako šalinimo atliekos, kuriose yra organinių tirpiklių ar kitų pavojingų cheminių medžiagų	t	t	0.012000000000000455	{"oil": 1, "wood": 10, "textile": 80, "liquid_fuel": 1, "liquid_organic": 20}	112	{"peleningumas": true, "lakioji_dalis": true, "organiniai_jk": true, "fiksuota_anglis": true, "sunkieji_metalai": true, "sunkieji_metalai2": true}
+21	08 01 21	dažų ar lako nuėmiklių atliekos	t	t	0.669	{"textile": 80, "liquid_organic": 20}	100	{"peleningumas": true, "lakioji_dalis": true, "organiniai_jk": true, "fiksuota_anglis": true, "sunkieji_metalai": true, "sunkieji_metalai2": true}
+22	08 03 12	dažų atliekos, kuriose yra pavojingų cheminių medžiagų	t	t	0.269	{"liquid_organic": 100}	100	{"peleningumas": true, "lakioji_dalis": true, "organiniai_jk": true, "sausa_liekana": true, "fiksuota_anglis": true, "sunkieji_metalai": true, "sunkieji_metalai2": true}
+23	09 01 02	vandeniniai ofseto plokščių ryškalų tirpalai	t	f	1.671	{"oil": 100}	100	{"lakioji_dalis": true}
+24	09 01 03	ryškalų tirpalai su tirpikliais	t	f	0.685	{"oil": 80, "textile": 20}	100	{"peleningumas": true, "lakioji_dalis": true, "organiniai_jk": true, "sausa_liekana": true, "fiksuota_anglis": true, "sunkieji_metalai": true}
+25	09 01 04	fiksažų tirpalai	t	f	0.337	{"oil": 5, "wood": 95}	100	{"lakioji_dalis": true}
+26	09 01 05	balinimo tirpalai ir balinimo fiksažų tirpalai	t	f	0.023	{"oil": 5, "wood": 95}	100	{"lakioji_dalis": true, "sausa_liekana": true}
+27	09 01 06	fotografijos atliekų apdorojimo jų susidarymo vietoje atliekos, kuriose yra sidabro	t	f	0.58	{"wood": 95, "liquid_fuel": 5}	100	{"peleningumas": true, "lakioji_dalis": true, "fiksuota_anglis": true, "sunkieji_metalai": true, "sunkieji_metalai2": true}
+28	10 01 04	lakieji naftos pelenai ir garo katilų dulkės	t	f	4.986	{"liquid_fuel": 100}	100	{}
+29	11 01 05	ėsdinimo rūgštys	t	f	3.0249999999999986	{"oil": 100}	100	{}
+30	11 01 11	vandeniniai skalavimo skysčiai, kuriuose yra pavojingų cheminių medžiagų	t	f	5.028	{"carbon": 100}	100	{}
+31	11 01 13	riebalų šalinimo atliekos, kuriose yra pavojingų cheminių medžiagų	t	f	3.157	{"carbon": 90}	90	{}
+32	12 01 20	naudotos šlifavimo dalys ir šlifavimo medžiagos, kuriose yra pavojingų cheminių medžiagų	t	f	8.026	{"liquid_fuel": 100}	100	{"peleningumas": true, "fiksuota_anglis": true, "sunkieji_metalai": true, "sunkieji_metalai2": true}
+33	13 05 01	žvyro gaudyklės ir naftos produktų/vandens separatorių kietosios medžiagos	t	t	2.697	{"textile": 4, "halogenated": 16, "liquid_fuel": 80}	100	{"peleningumas": true, "lakioji_dalis": true, "fiksuota_anglis": true, "sunkieji_metalai": true}
+34	13 05 02	naftos produktų/vandens separatorių dumblas	t	t	3.2	{"textile": 20, "halogenated": 80}	100	{"peleningumas": true, "lakioji_dalis": true, "fiksuota_anglis": true, "sunkieji_metalai": true}
+35	14 06 02	kiti halogenintieji tirpikliai ir tirpiklių mišiniai	t	t	1.017	{"other_salts": 100}	100	{"lakioji_dalis": true, "organiniai_jk": true}
+36	14 06 03	kiti tirpikliai ir tirpiklių mišiniai	t	t	3.6549999999999994	{"textile": 100}	100	{"lakioji_dalis": true, "organiniai_jk": true}
+37	14 06 04	dumblas arba kietosios atliekos, kuriuose yra halogenintųjų tirpiklių	t	t	0.39899999999999997	{"liquid_fuel": 80, "other_salts": 20}	100	{"peleningumas": true, "lakioji_dalis": true, "organiniai_jk": true, "fiksuota_anglis": true, "sunkieji_metalai": true}
+38	15 01 01	popieriaus ir kartono pakuotės	f	t	108.42	{"plastics": 100}	100	{"peleningumas": true, "fiksuota_anglis": true, "sunkieji_metalai": true}
+39	15 01 10	pakuotės, kuriose yra pavojingų cheminių medžiagų likučių arba kurios yra jomis užterštos	t	t	0.37879	{"wood": 10, "primary": 70, "liquid_fuel": 20}	100	{"peleningumas": true, "sausa_liekana": true, "fiksuota_anglis": true, "sunkieji_metalai": true, "sunkieji_metalai2": true}
+40	15 01 11	metalinės pakuotės, įskaitant suslėgto oro talpyklas, kuriose yra pavojingų kietų poringų rišamųjų medžiagų (pvz., asbesto), įskaitant tuščius slėginius konteinerius	t	f	1.0897	{"liquid_fuel": 100}	100	{"sunkieji_metalai2": true}
+41	15 02 03	absorbentai, filtrų medžiagos, pašluostės ir apsauginiai drabužiai, nenurodyti 15 02 02	f	t	1.6240000000000094	{"col_K": 100}	100	{"peleningumas": true, "sausa_liekana": true, "tekstile_flag": true, "fiksuota_anglis": true, "sunkieji_metalai": true}
+42	16 01 07	tepalų filtrai	t	t	16.841499999999996	{"primary": 3, "textile": 20, "plastics": 15, "polymers": 2, "liquid_fuel": 60}	100	{"peleningumas": true, "tekstile_flag": true, "fiksuota_anglis": true, "sunkieji_metalai": true}
+43	16 01 10	sprogios sudedamosios dalys (pvz., oro pagalvės)	t	t	0.025	{"col_K": 100}	100	{"peleningumas": true, "tekstile_flag": true, "fiksuota_anglis": true, "sunkieji_metalai": true}
+44	16 01 11	stabdžių trinkelės, kuriose yra asbesto	t	t	0.17200000000000001	{"col_J": 30, "polymers": 6, "liquid_fuel": 60}	96	{"peleningumas": true, "fiksuota_anglis": true, "sunkieji_metalai": true, "sunkieji_metalai2": true}
+45	16 03 03	neorganinės atliekos, kuriose yra pavojingų cheminių medžiagų	t	f	0.17400000000000002	{"liquid_fuel": 100}	100	{"sunkieji_metalai2": true}
+46	16 03 05	organinės atliekos, kuriose yra pavojingų cheminių medžiagų	t	t	9.314	{"wood": 100}	100	{"peleningumas": true, "sausa_liekana": true, "fiksuota_anglis": true, "sunkieji_metalai": true}
+47	16 05 04	dujos slėginiuose konteineriuose, kuriose yra pavojingų cheminių medžiagų (įskaitant halonus)	t	f	0.495	{"liquid_fuel": 100}	100	{"sausa_liekana": true}
+48	16 05 06	laboratorinės cheminės medžiagos, įskaitant laboratorinių cheminių medžiagų mišinius, sudarytos iš pavojingų cheminių medžiagų arba jų turinčios	t	t	11.683500000000002	{"wood": 100}	100	{"peleningumas": true, "sausa_liekana": true, "fiksuota_anglis": true, "sunkieji_metalai": true, "sunkieji_metalai2": true}
+49	16 05 07	nebereikalingos neorganinės cheminės medžiagos, sudarytos iš pavojingų cheminių medžiagų arba jų turinčios	t	f	1.0490000000000066	{}	0	{"sunkieji_metalai2": true}
+50	16 05 08	nebereikalingos organinės cheminės medžiagos, sudarytos iš pavojingų cheminių medžiagų arba jų turinčios	t	t	2.7010000000000005	{"wood": 100}	100	{"peleningumas": true, "lakioji_dalis": true, "sausa_liekana": true, "fiksuota_anglis": true, "sunkieji_metalai": true}
+51	17 01 06	betono, plytų, čerpių ir keramikos gaminių mišiniai arba atskiros dalys, kuriuose yra pavojingų cheminių medžiagų	t	f	1.494	{"liquid_fuel": 100}	100	{"sausa_liekana": true, "sunkieji_metalai2": true}
+52	17 04 09	metalų atliekos, užterštos pavojingomis cheminėmis medžiagomis	t	f	0.516	{"liquid_fuel": 100}	100	{"sausa_liekana": true, "sunkieji_metalai2": true}
+53	17 05 03	gruntas ir akmenys, kuriuose yra pavojingų cheminių medžiagų	t	f	1.6039999999999939	{"liquid_fuel": 100}	100	{"sausa_liekana": true, "sunkieji_metalai2": true}
+54	17 09 03	kitos statybinės ir griovimo atliekos (įskaitant mišrias atliekas), kuriose yra pavojingų cheminių medžiagų	t	t	1.233	{"primary": 4, "plastics": 11, "liquid_fuel": 85}	100	{"sausa_liekana": true, "tekstile_flag": true, "sunkieji_metalai2": true}
+55	18 01 01	aštrūs daiktai (išskyrus 18 01 03)	f	f	0.061	{"liquid_fuel": 100}	100	{}
+56	18 01 06	cheminės medžiagos, sudarytos iš pavojingų cheminių medžiagų arba jų turinčios	t	t	0.342	{"liquid_organic": 100}	100	{"peleningumas": true, "sausa_liekana": true, "fiksuota_anglis": true, "sunkieji_metalai": true, "sunkieji_metalai2": true}
+57	18 01 09	vaistai, nenurodyti 18 01 08	f	t	0.016	{"liquid_organic": 100}	100	{"peleningumas": true, "lakioji_dalis": true, "sausa_liekana": true, "fiksuota_anglis": true, "sunkieji_metalai": true}
+58	18 02 01	aštrūs daiktai (išskyrus 18 02 02)	f	f	0.124	{"liquid_fuel": 100}	100	{}
+59	18 02 03	atliekos, kurių rinkimui ir šalinimui netaikomi specialūs reikalavimai, kad būtų išvengta infekcijos	f	t	0.103	{"col_K": 50, "primary": 50}	100	{"peleningumas": true, "tekstile_flag": true, "fiksuota_anglis": true, "sunkieji_metalai": true, "sunkieji_metalai2": true}
+60	18 02 05	cheminės medžiagos, sudarytos iš pavojingų cheminių medžiagų arba jų turinčios	t	t	0.01	{"liquid_organic": 100}	100	{"peleningumas": true, "sausa_liekana": true, "fiksuota_anglis": true, "sunkieji_metalai": true, "sunkieji_metalai2": true}
+61	18 02 06	cheminės medžiagos, nenurodytos 18 02 05	f	t	0.129	{"liquid_organic": 100}	100	{"peleningumas": true, "sausa_liekana": true, "fiksuota_anglis": true, "sunkieji_metalai": true, "sunkieji_metalai2": true}
+62	18 02 07	citotoksiniai arba citostatiniai vaistai	t	t	0.001	{"liquid_organic": 100}	100	{"peleningumas": true, "sausa_liekana": true, "fiksuota_anglis": true, "sunkieji_metalai": true}
+63	20 01 01	popierius ir kartonas	f	t	8.137	{"plastics": 100}	100	{}
+64	20 01 13	Degi atlieka /	t	t	1.875	{"textile": 100}	100	{}
+65	20 01 14	rūgštys	t	f	2.0150000000000006	{"oil": 100}	100	{}
+66	20 01 15	Burnable waste	t	f	0.925	{"oil": 100}	100	{}
+67	20 01 19	Naudotos filtravimo ir absorbentų medžiagos	t	t	0.373	{"paper": 100}	100	{}
+68	20 01 25	maistinis aliejus ir riebalai	f	t	0.196	{"carbon": 100}	100	{}
+69	20 01 28	dažai, rašalas, klijai ir dervos, nenurodyti 20 01 27	f	t	0.198	{"col_J": 20, "liquid_organic": 80}	100	{}
+70	20 01 29	plovikliai, kuriuose yra pavojingų cheminių medžiagų	t	t	1.513	{"carbon": 100}	100	{}
+71	20 01 31	Kitos cheminių preparatų atliekos	t	t	0.012	{"liquid_organic": 100}	100	{}
+72	20 01 32	vaistai, nenurodyti 20 01 31	f	t	0.011	{"liquid_organic": 100}	100	{}
+73	20 01 37	mediena, kurioje yra pavojingų cheminių medžiagų	t	t	5.499000000000002	{"plastics": 100}	100	{}
+\.
+
+
+--
+-- TOC entry 5199 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: damage_evaluations_id_damage_evaluation_seq; Type: SEQUENCE SET; Schema: public; Owner: zpvisadmin
+--
+
+SELECT pg_catalog.setval('public.damage_evaluations_id_damage_evaluation_seq', 44, true);
+
+
+--
+-- TOC entry 5200 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: emission_compounds_id_seq; Type: SEQUENCE SET; Schema: public; Owner: zpvisadmin
+--
+
+SELECT pg_catalog.setval('public.emission_compounds_id_seq', 107, true);
+
+
+--
+-- TOC entry 5201 (class 0 OID 0)
+-- Dependencies: 224
+-- Name: event_objects_id_event_object_seq; Type: SEQUENCE SET; Schema: public; Owner: zpvisadmin
+--
+
+SELECT pg_catalog.setval('public.event_objects_id_event_object_seq', 76, true);
+
+
+--
+-- TOC entry 5202 (class 0 OID 0)
+-- Dependencies: 226
+-- Name: events_id_event_seq; Type: SEQUENCE SET; Schema: public; Owner: zpvisadmin
+--
+
+SELECT pg_catalog.setval('public.events_id_event_seq', 121, true);
+
+
+--
+-- TOC entry 5203 (class 0 OID 0)
+-- Dependencies: 228
+-- Name: indexing_coefficients_id_indexing_coefficient_seq; Type: SEQUENCE SET; Schema: public; Owner: zpvisadmin
+--
+
+SELECT pg_catalog.setval('public.indexing_coefficients_id_indexing_coefficient_seq', 4, true);
+
+
+--
+-- TOC entry 5204 (class 0 OID 0)
+-- Dependencies: 230
+-- Name: materials_id_material_seq; Type: SEQUENCE SET; Schema: public; Owner: zpvisadmin
+--
+
+SELECT pg_catalog.setval('public.materials_id_material_seq', 71, true);
+
+
+--
+-- TOC entry 5205 (class 0 OID 0)
+-- Dependencies: 233
+-- Name: objects_id_object_seq; Type: SEQUENCE SET; Schema: public; Owner: zpvisadmin
+--
+
+SELECT pg_catalog.setval('public.objects_id_object_seq', 27, true);
+
+
+--
+-- TOC entry 5206 (class 0 OID 0)
+-- Dependencies: 236
+-- Name: users_id_user_seq; Type: SEQUENCE SET; Schema: public; Owner: zpvisadmin
+--
+
+SELECT pg_catalog.setval('public.users_id_user_seq', 12, true);
+
+
+--
+-- TOC entry 5207 (class 0 OID 0)
+-- Dependencies: 238
+-- Name: waste_types_id_seq; Type: SEQUENCE SET; Schema: public; Owner: zpvisadmin
+--
+
+SELECT pg_catalog.setval('public.waste_types_id_seq', 73, true);
+
+
+-- Completed on 2026-06-14 17:01:37
+
+--
+-- PostgreSQL database dump complete
+--
+
+\unrestrict FMi9CvrbU8vi07fb0z5SD0nbSvszVacidaYSwkfNaHZBaLw4jhAAdXJK0S5sDCL
+
